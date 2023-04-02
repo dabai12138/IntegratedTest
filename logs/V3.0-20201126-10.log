@@ -1,0 +1,1026 @@
+
+====================================================================================================
+==================================================用例28==================================================
+==================================================11-26 10:10:06==================================================
+step1:POST /api/v1/stream/start
+result:{"code":"0","message":"SUCCESS","data":[{"streamId":"34020000001320000033_MAIN","errorMsg":null,"RTSPAddr":null,"FLVAddr":null,"RTMPAddr":"rtmp://192.168.2.184:1035/live/34020000001320000033_MAIN","HLSAddr":null}]}
+step2:SHELL pkill -9 mps
+result:
+step3:GET /api/v1/stream
+result:{"code":"400","message":"substrate server error","data":"1606356616622----error>>>>I/O error on GET request for \"http://192.168.2.184:1985/v1/streams2\": Connect to 192.168.2.184:1985 [/192.168.2.184] failed: 拒绝连接 (Connection refused); nested exception is org.apache.http.conn.HttpHostConnectException: Connect to 192.168.2.184:1985 [/192.168.2.184] failed: 拒绝连接 (Connection refused)"}
+step4:SHELL cd wj/MPS/MPS;nohup ./mps -c mps.conf &>/dev/null &
+result:52
+step5:GET /api/v1/stream/stop
+result:{"code":"400","message":"server error : stream not found"}
+
+**************************************************VMS**************************************************
+**192.168.2.184**:This is vms log content:
+2020-11-26 10:10:06.103 [INFO ] [http-nio-8009-exec-18     ] 1606356605800 ----> CALL --------> streamId【34020000001320000033_MAIN】 , START_CALL success
+2020-11-26 10:10:06.104 [INFO ] [http-nio-8009-exec-18     ] 1606356605800 ----> CALL --------> use_time 【303】 , START_CALL end
+2020-11-26 10:10:16.622 [INFO ] [http-nio-8009-exec-27     ] I/O exception (org.apache.http.NoHttpResponseException) caught when processing request to {}->http://192.168.2.184:1985: The target server failed to respond
+2020-11-26 10:10:16.623 [INFO ] [http-nio-8009-exec-27     ] Retrying request to {}->http://192.168.2.184:1985
+2020-11-26 10:10:16.623 [ERROR] [http-nio-8009-exec-27     ] 1606356616622----error>>>>I/O error on GET request for "http://192.168.2.184:1985/v1/streams2": Connect to 192.168.2.184:1985 [/192.168.2.184] failed: 拒绝连接 (Connection refused); nested exception is org.apache.http.conn.HttpHostConnectException: Connect to 192.168.2.184:1985 [/192.168.2.184] failed: 拒绝连接 (Connection refused)
+2020-11-26 10:10:17.917 [INFO ] [http-nio-8009-exec-14     ] 1606356617917 ----> CALL --------> STOP_CALL start
+2020-11-26 10:10:17.926 [INFO ] [http-nio-8009-exec-14     ] 1606356617917 ----> CALL --------> streamId【34020000001320000033_MAIN】 , STOP_CALL success
+2020-11-26 10:10:17.926 [INFO ] [http-nio-8009-exec-14     ] 1606356617917 ----> CALL --------> use_time 【0】 , STOP_CALL end
+2020-11-26 10:10:18.198 [INFO ] [VMS-A-TASK-RELEASE_STREAM ] VMS-A-TASK-RELEASE_STREAM ----> TASK --------> stream info removed 34020000001320000033_MAIN
+2020-11-26 10:10:29.061 [ERROR] [http-nio-8009-exec-17     ] stream not found
+
+****************************************************************************************************
+
+**************************************************CGS**************************************************
+**192.168.2.184**:This is cgs log content:
+I1126 10:10:16.957095 60114 RegistrationServer.cpp:283] find this device and keepalive, DeviceID:34020000001110000213
+I1126 10:10:16.957545 60114 PagerMessageHandler.cpp:575] Receive keepalive DeviceID:34020000001110000213, And Response 200
+I1126 10:10:17.916754 60030 HttpService.cpp:161] recv request: POST /v1/stop_play HTTP/1.1
+
+Accept: application/json, application/*+json
+
+Accept-Encoding: gzip,deflate
+
+Connection: Keep-Alive
+
+Content-Length: 87
+
+Content-Type: application/json
+
+Host: 192.168.2.184:9875
+
+User-Agent: Apache-HttpClient/4.5.12 (Java/1.8.0_121)
+
+
+
+{"streamId":"34020000001320000033_MAIN","requestId":"e97f52f87bfc497c8299b61f82e485a2"}from remote_address: 192.168.2.184
+I1126 10:10:17.917282 60144 Uas.cpp:140] receive stop play json:{"streamId":"34020000001320000033_MAIN","requestId":"e97f52f87bfc497c8299b61f82e485a2"}
+I1126 10:10:17.917510 60144 InviteSessionHandler.cpp:647] onTerminated, streamid:34020000001320000033_MAIN,deviceid:34020000001320000033,errmsg:3
+I1126 10:10:17.918073 60144 InviteSessionHandler.cpp:303] stop stream success, streamid:34020000001320000033_MAIN
+E1126 10:10:17.918124 60144 Uas.cpp:1144] send errcode:0,errMsg:stop success
+W1126 10:10:17.921429 60091 NamingClient.cpp:850] realGetService, Response code: 200
+W1126 10:10:17.921680 60091 NamingClient.cpp:1294]  dom : VMS
+W1126 10:10:17.921728 60091 NamingClient.cpp:1301]  cacheMillis : 3000
+W1126 10:10:17.921761 60091 NamingClient.cpp:1315]  checksum : b328081a2e1531cadb116e54deb7a988
+W1126 10:10:17.921792 60091 NamingClient.cpp:1322]  lastRefTime : 1606356617920
+W1126 10:10:17.921821 60091 NamingClient.cpp:1329]  env : 
+W1126 10:10:17.921860 60091 NamingClient.cpp:1336]  clusters : DEFAULT
+E1126 10:10:17.922087 60091 NamingClient.cpp:230] checksum : b328081a2e1531cadb116e54deb7a988 DEFAULT VMS
+I1126 10:10:17.922161 60091 HttpClient.cpp:153] enter into CHttpClient::postRequest send url:http://192.168.2.184:8009/v1/cgs_callback_stop_play, send body:{
+   "errorCode" : "0",
+   "errorMsg" : "stop success",
+   "requestId" : "e97f52f87bfc497c8299b61f82e485a2",
+   "streamId" : "34020000001320000033_MAIN"
+}
+I1126 10:10:17.926721 60091 HttpClient.cpp:164] CHttpClient::postRequest success, requestid:e97f52f87bfc497c8299b61f82e485a2
+I1126 10:10:17.927086 60091 HttpClient.cpp:172] leave CHttpClient::postRequest, requestid:e97f52f87bfc497c8299b61f82e485a2
+I1126 10:10:17.927248 60091 HttpClient.cpp:108] RunInLoop iret:0,requestid:e97f52f87bfc497c8299b61f82e485a2
+
+****************************************************************************************************
+
+**************************************************MTS**************************************************
+E1126 10:10:16.739627 50552 StreamChannelUdp2nd.cpp:1029] deviceId: 34020000001320000033_MAIN##send h264 raw data failed!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11111111 ret= 1009
+E1126 10:10:16.739970 50552 StreamChannelUdp2nd.cpp:1030] deviceId: 34020000001320000033_MAIN##Type: 80pts:  68817085frame len = 4585unit-type: 9##header: 9
+E1126 10:10:17.194975 50552 StreamChannelUdp2nd.cpp:1222] simple handshake failed.
+E1126 10:10:17.195137 50552 StreamChannelUdp2nd.cpp:1272] 34020000001320000033_MAIN initRtmpClient failed!!!!
+E1126 10:10:17.292730 50552 StreamChannelUdp2nd.cpp:1222] simple handshake failed.
+E1126 10:10:17.292977 50552 StreamChannelUdp2nd.cpp:1272] 34020000001320000033_MAIN initRtmpClient failed!!!!
+E1126 10:10:17.293161 50552 StreamChannelUdp2nd.cpp:1222] simple handshake failed.
+E1126 10:10:17.293252 50552 StreamChannelUdp2nd.cpp:1272] 34020000001320000033_MAIN initRtmpClient failed!!!!
+E1126 10:10:17.293390 50552 StreamChannelUdp2nd.cpp:1222] simple handshake failed.
+E1126 10:10:17.293503 50552 StreamChannelUdp2nd.cpp:1272] 34020000001320000033_MAIN initRtmpClient failed!!!!
+E1126 10:10:17.393081 50552 StreamChannelUdp2nd.cpp:1222] simple handshake failed.
+E1126 10:10:17.393234 50552 StreamChannelUdp2nd.cpp:1272] 34020000001320000033_MAIN initRtmpClient failed!!!!
+E1126 10:10:17.393466 50552 StreamChannelUdp2nd.cpp:1222] simple handshake failed.
+E1126 10:10:17.393522 50552 StreamChannelUdp2nd.cpp:1272] 34020000001320000033_MAIN initRtmpClient failed!!!!
+W1126 10:10:17.691586 50552 StreamChannelUdp2nd.cpp:903] 34020000001320000033_MAIN 444444444444444444444444(putRtpPacketWithNoMark) ====== lost exception timer!!!!!!!!!!!!!!!!!!!!!
+W1126 10:10:17.691725 50552 StreamChannelUdp2nd.cpp:1188] 34020000001320000033_MAIN ~~~~~~~~~~~~~~~~~~~m_pRtp2PsRawFrame->Clean######################
+E1126 10:10:17.895125 50542 StreamChannelUdp2nd.cpp:1425] 34020000001320000033_MAIN CStreamChannelUdp2nd::noMore_StreamOut_Timer_Routine~~~~~~~~~~~~~~~~~~~~~Beyond Rtmp Reconnect NUm~~~~~~~~~~~
+W1126 10:10:17.899116 50542 NamingClient.cpp:885] realGetService, Response code: 200
+E1126 10:10:17.899816 50542 NamingClient.cpp:264] checksum : b328081a2e1531cadb116e54deb7a988  VMS
+W1126 10:10:17.899879 50542 RestHandler.cpp:1027]  vms addr : 192.168.2.184:8009
+W1126 10:10:17.900221 50542 ProgramStreamManager.cpp:1208] 34020000001320000033_MAIN stopUdp NO_MORE_DATA_STOP
+W1126 10:10:17.900279 50542 ProgramStreamManager.cpp:1317] 34020000001320000033_MAIN find port : 20008
+I1126 10:10:17.907282 50577 RestHandler.cpp:442] ===========handlePost=======IN=====path: /v1/media_port_release u64RequestId: 198089
+I1126 10:10:17.907531 50577 RestHandler.cpp:44] R(POST): {"port":"20008","setup":"0"}
+I1126 10:10:17.907738 50577 RestHandler.cpp:473] ===========dealPostRequest============path: /v1/media_port_release u64RequestId: 198089
+
+****************************************************************************************************
+
+**************************************************MPS**************************************************
+**192.168.2.184**:This is mps log content:
+[2020-11-26 10:10:27.173][Trace][do_main][129113][138] SRS/3.0.0.00(Leo), MIT
+[2020-11-26 10:10:27.173][Trace][do_main][129113][139] authors: Winlin,Wenjie,Runner365,John,B.P.Y,Lixin
+[2020-11-26 10:10:27.173][Trace][check_normal_config][129113][3556] srs checking config...
+[2020-11-26 10:10:27.174][Trace][retrieve_local_ips][129113][293] ips, iface[0] ens33 ipv4 0x11043 192.168.2.184, iface[1] ens33 ipv6 0x11043 fe80::710c:65f1:643a:8956.927230e-310ns33
+[2020-11-26 10:10:27.174][Trace][retrieve_local_ips][129113][294] devices, intranet ens33 192.168.2.184, intranet ens33 fe80::710c:65f1:643a:8956.927230e-310ns33
+[2020-11-26 10:10:27.174][Warn][check_normal_config][129113][3695][2] stats network use index=0, ip=192.168.2.184, ifname=ens33
+[2020-11-26 10:10:27.174][Warn][check_normal_config][129113][3707][2] stats disk list: sda sdb xvda xvdb 
+[2020-11-26 10:10:27.174][Trace][check_normal_config][129113][3734] write log to file mps.log
+[2020-11-26 10:10:27.174][Trace][check_normal_config][129113][3735] you can: tailf mps.log
+[2020-11-26 10:10:27.174][Trace][check_normal_config][129113][3736] @see: https://github.com/ossrs/srs/wiki/v1_CN_SrsLog
+[2020-11-26 10:10:27.174][Trace][show_macro_features][129113][260] features, rch:on, dash:on, hls:on, hds:off, srt:off, hc:on, ha:on, hs:on, hp:on, dvr:on, trans:on, inge:on, stat:on, sc:on
+[2020-11-26 10:10:27.174][Trace][show_macro_features][129113][289] SRS on  amd64 x86_64, conf:mps.conf, limit:1000, writev:1024, encoding:little-endian, HZ:100
+[2020-11-26 10:10:27.174][Trace][show_macro_features][129113][307] mw sleep:350ms. mr enabled:on, default:0, sleep:350ms
+[2020-11-26 10:10:27.174][Trace][show_macro_features][129113][343] gc:on, pq:30000ms, cscc:[0,16), csa:on, tn:on(may hurts performance), ss:auto(guess by merged write)
+[2020-11-26 10:10:27.174][Trace][show_macro_features][129113][352] system default latency(ms): mw(0-350) + mr(0-350) + play-queue(0-30000)
+[2020-11-26 10:10:27.175][Warn][show_macro_features][129113][361][2] SRS/3.0.0.00 is develop
+[2020-11-26 10:10:27.176][Trace][run_directly_or_daemon][129113][425] start daemon mode...
+[2020-11-26 10:10:27.177][Trace][run_directly_or_daemon][129114][449] father process exit
+[2020-11-26 10:10:27.177][Trace][run_directly_or_daemon][129115][454] son(daemon) process running.
+[2020-11-26 10:10:27.177][Trace][srs_st_init][129115][77] st_init success, use epoll
+[2020-11-26 10:10:27.177][Trace][run_directly_or_daemon][129113][437] grandpa process exit.
+[2020-11-26 10:10:27.177][Trace][nacos_initiation][129115][472] ip= 192.168.2.184, port = 8848
+[2020-11-26 10:10:27.178][Trace][set_socket_buffer][129115][157] UDP #5 LISTEN at 0.0.0.0:37380, SO_SNDBUF(default=212992, expect=10485760, actual=425984, r0=0), SO_RCVBUF(default=212992, expect=10485760, actual=425984, r0=0)
+[2020-11-26 10:10:27.181][Warn][srs_get_public_internet_address][129115][343][11] use private address as ip: 192.168.2.184, ifname=ens33
+[2020-11-26 10:10:27.181][Trace][RegisterInstance][129115][176] nacos register instance success
+[2020-11-26 10:10:27.182][Trace][initialize_flv_entry][129115][1223] http flv live stream, vhost=__defaultVhost__, mount=[vhost]/[app]/[stream].flv
+[2020-11-26 10:10:27.182][Trace][initialize][129115][238] http: root mount to ./nginx/html
+[2020-11-26 10:10:27.182][Trace][initialize_st][129115][829] server main cid=1039, pid=129115, ppid=129114, asprocess=0
+[2020-11-26 10:10:27.182][Trace][listen][129115][166] RTMP listen at tcp://0.0.0.0:1035, fd=9
+[2020-11-26 10:10:27.182][Trace][listen][129115][166] HTTP-API listen at tcp://192.168.2.184:1985, fd=10
+[2020-11-26 10:10:27.182][Trace][listen][129115][166] HTTP-Server listen at tcp://192.168.2.184:1945, fd=11
+[2020-11-26 10:10:27.182][Trace][start][129115][453] signal installed, reload=1, reopen=10, fast_quit=15, grace_quit=3
+[2020-11-26 10:10:27.183][Trace][http_handle][129115][1041] http: api mount /console to ./nginx/html/console
+[2020-11-26 10:10:29.037][Trace][on_signal][129115][1111] reload config, signo=1
+[2020-11-26 10:10:29.182][Trace][read_token][129115][1017] config parse complete
+[2020-11-26 10:10:29.183][Trace][check_normal_config][129115][3556] srs checking config...
+[2020-11-26 10:10:29.183][Warn][check_normal_config][129115][3695][0] stats network use index=0, ip=192.168.2.184, ifname=ens33
+[2020-11-26 10:10:29.183][Warn][check_normal_config][129115][3707][0] stats disk list: sda sdb xvda xvdb 
+[2020-11-26 10:10:29.183][Trace][check_normal_config][129115][3734] write log to file mps.log
+[2020-11-26 10:10:29.183][Trace][check_normal_config][129115][3735] you can: tailf mps.log
+[2020-11-26 10:10:29.183][Trace][check_normal_config][129115][3736] @see: https://github.com/ossrs/srs/wiki/v1_CN_SrsLog
+[2020-11-26 10:10:29.183][Trace][reload_http_api][129115][1637] reload http_api success, nothing changed.
+[2020-11-26 10:10:29.183][Trace][reload_http_stream][129115][1705] reload http stream success, nothing changed.
+[2020-11-26 10:10:29.183][Trace][reload_rtc_server][129115][1739] reload rtc server success, nothing changed.
+[2020-11-26 10:10:29.183][Trace][reload_vhost][129115][1287] vhost __defaultVhost__ maybe modified, reload its detail.
+[2020-11-26 10:10:29.183][Trace][reload_ingest][129115][1910] ingest nothing changed for vhost=__defaultVhost__
+[2020-11-26 10:10:29.183][Trace][do_cycle][129115][1244] reload config success.
+[2020-11-26 10:10:30.047][Trace][fd2conn][129115][1541] accept conn ip= 192.168.2.184, port = 58944
+[2020-11-26 10:10:30.048][Trace][do_cycle][129115][1790] API server client, ip=192.168.2.184
+[2020-11-26 10:10:30.048][Trace][process_request][129115][1864] HTTP API GET http://192.168.2.184:1985/v1/streams2, content-length=-1, chunked=0/0
+[2020-11-26 10:10:35.052][Trace][process_request][129115][1864] HTTP API GET http://192.168.2.184:1985/v1/streams2, content-length=-1, chunked=0/0
+[2020-11-26 10:10:40.052][Trace][process_request][129115][1864] HTTP API GET http://192.168.2.184:1985/v1/streams2, content-length=-1, chunked=0/0
+[2020-11-26 10:10:06.010][Trace][do_cycle][127280][180] connect app, tcUrl=rtmp://192.168.2.184:1035/live, pageUrl=, swfUrl=, schema=rtmp, vhost=192.168.2.184, port=1035, app=live, args=null
+[2020-11-26 10:10:06.010][Trace][print_debug_info][127280][1560] protocol in.buffer=0, in.ack=0, out.ack=0, in.chunk=128, out.chunk=128
+[2020-11-26 10:10:06.050][Trace][stream_service_cycle][127280][455] client identified, type=fmle-publish, vhost=192.168.2.184, app=live, stream=34020000001320000033_MAIN, param=, duration=0ms
+[2020-11-26 10:10:06.050][Trace][stream_service_cycle][127280][475] connected stream, tcUrl=rtmp://192.168.2.184:1035/live, pageUrl=, swfUrl=, schema=rtmp, vhost=__defaultVhost__, port=1035, app=live, stream=34020000001320000033_MAIN, param=, args=null
+[2020-11-26 10:10:06.050][Trace][fetch_or_create][127280][1765] new source, stream_url=/live/34020000001320000033_MAIN
+[2020-11-26 10:10:06.051][Trace][stream_service_cycle][127280][524] source url=/live/34020000001320000033_MAIN, ip=192.168.2.184, cache=1, is_edge=0, source_id=[127280][-1]
+[2020-11-26 10:10:06.093][Trace][on_publish][127280][169] http: on_publish ok, client_id=198, url=http://192.168.2.184:8009/v1/mps_on_publish, request={"action":"on_publish","client_id":198,"ip":"192.168.2.184","vhost":"__defaultVhost__","app":"live","tcUrl":"rtmp://192.168.2.184:1035/live","stream":"34020000001320000033_MAIN","param":""}, response={"errorCode":"0","errorMsg":"SUCCESS"}
+[2020-11-26 10:10:06.093][Trace][parse_exec_publish][127280][145] ignore disabled exec for vhost=__defaultVhost__
+[2020-11-26 10:10:06.093][Trace][http_mount][127280][968] http: mount flv stream for sid=/live/34020000001320000033_MAIN, mount=/live/34020000001320000033_MAIN.flv
+[2020-11-26 10:10:06.094][Trace][do_publishing][127280][891] start publish mr=0/350, p1stpt=20000, pnt=5000, tcp_nodelay=0
+[2020-11-26 10:10:06.105][Trace][process_request][127280][1864] HTTP API GET http://192.168.2.184:1985/v1/streams2?stream_id=34020000001320000033_MAIN, content-length=-1, chunked=0/0
+[2020-11-26 10:10:06.242][Trace][on_video][127280][1074] 56B video sh,  codec(7, profile=High, level=3.1, 128x1072, 0kbps, 0.0fps, 0.0s)
+[2020-11-26 10:10:10.051][Trace][process_request][127280][1864] HTTP API GET http://192.168.2.184:1985/v1/streams2, content-length=-1, chunked=0/0
+[2020-11-26 10:10:12.493][Trace][process_request][127280][1864] HTTP API GET http://192.168.2.184:1985/v1/streams2?stream_id=34020000001320000033_MAIN, content-length=-1, chunked=0/0
+[2020-11-26 10:10:15.053][Trace][process_request][127280][1864] HTTP API GET http://192.168.2.184:1985/v1/streams2, content-length=-1, chunked=0/0
+
+****************************************************************************************************
+
+====================================================================================================
+==================================================用例29==================================================
+==================================================11-26 10:45:20==================================================
+step1:POST /api/v1/stream/start
+result:{"code":"0","message":"SUCCESS","data":[{"streamId":"34020000001320000033_MAIN","errorMsg":null,"RTSPAddr":null,"FLVAddr":null,"RTMPAddr":"rtmp://192.168.2.184:1035/live/34020000001320000033_MAIN","HLSAddr":null}]}
+step2:SHELL pkill -9 nginx
+result:
+step3:GET /api/v1/stream/stop
+result:HTTPConnectionPool(host='192.168.2.184', port=8080): Max retries exceeded with url: /api/v1/stream/stop?streamId=34020000001320000033_MAIN (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x00000214B5EAF340>: Failed to establish a new connection: [WinError 10061] 由于目标计算机积极拒绝，无法连接。'))
+step4:SHELL /usr/local/nginx/sbin/nginx -c /usr/local/nginx/conf/nginx.conf
+result:
+step5:GET /api/v1/stream/stop
+result:{"code":"0","message":"SUCCESS"}
+
+**************************************************VMS**************************************************
+**192.168.2.184**:This is vms log content:
+2020-11-26 10:45:42.322 [INFO ] [http-nio-8009-exec-15     ] 1606358742322 ----> CALL --------> STOP_CALL start
+2020-11-26 10:45:42.328 [INFO ] [http-nio-8009-exec-15     ] 1606358742322 ----> CALL --------> streamId【34020000001320000033_MAIN】 , STOP_CALL success
+2020-11-26 10:45:42.328 [INFO ] [http-nio-8009-exec-15     ] 1606358742322 ----> CALL --------> use_time 【0】 , STOP_CALL end
+
+****************************************************************************************************
+
+**************************************************CGS**************************************************
+**192.168.2.184**:This is cgs log content:
+I1126 10:45:42.321053 60030 HttpService.cpp:161] recv request: POST /v1/stop_play HTTP/1.1
+Accept: application/json, application/*+json
+Accept-Encoding: gzip,deflate
+Connection: Keep-Alive
+Content-Length: 87
+Content-Type: application/json
+Host: 192.168.2.184:9875
+User-Agent: Apache-HttpClient/4.5.12 (Java/1.8.0_121)
+
+from remote_address: 192.168.2.184
+I1126 10:45:42.321382 60146 Uas.cpp:140] receive stop play json:{"streamId":"34020000001320000033_MAIN","requestId":"2d86ada770884372a08e4c4bd379eeb2"}
+I1126 10:45:42.321528 60146 InviteSessionHandler.cpp:647] onTerminated, streamid:34020000001320000033_MAIN,deviceid:34020000001320000033,errmsg:3
+I1126 10:45:42.321926 60146 InviteSessionHandler.cpp:303] stop stream success, streamid:34020000001320000033_MAIN
+E1126 10:45:42.321991 60146 Uas.cpp:1144] send errcode:0,errMsg:stop success
+W1126 10:45:42.324679 60103 NamingClient.cpp:850] realGetService, Response code: 200
+W1126 10:45:42.325080 60103 NamingClient.cpp:1294]  dom : VMS
+W1126 10:45:42.325125 60103 NamingClient.cpp:1301]  cacheMillis : 3000
+W1126 10:45:42.325147 60103 NamingClient.cpp:1315]  checksum : b328081a2e1531cadb116e54deb7a988
+W1126 10:45:42.325166 60103 NamingClient.cpp:1322]  lastRefTime : 1606358742323
+W1126 10:45:42.325199 60103 NamingClient.cpp:1329]  env : 
+W1126 10:45:42.325246 60103 NamingClient.cpp:1336]  clusters : DEFAULT
+E1126 10:45:42.325377 60103 NamingClient.cpp:230] checksum : b328081a2e1531cadb116e54deb7a988 DEFAULT VMS
+I1126 10:45:42.325479 60103 HttpClient.cpp:153] enter into CHttpClient::postRequest send url:http://192.168.2.184:8009/v1/cgs_callback_stop_play, send body:{
+   "errorCode" : "0",
+   "errorMsg" : "stop success",
+   "requestId" : "2d86ada770884372a08e4c4bd379eeb2",
+   "streamId" : "34020000001320000033_MAIN"
+}
+I1126 10:45:42.329013 60103 HttpClient.cpp:164] CHttpClient::postRequest success, requestid:2d86ada770884372a08e4c4bd379eeb2
+I1126 10:45:42.329097 60103 HttpClient.cpp:172] leave CHttpClient::postRequest, requestid:2d86ada770884372a08e4c4bd379eeb2
+I1126 10:45:42.329190 60103 HttpClient.cpp:108] RunInLoop iret:0,requestid:2d86ada770884372a08e4c4bd379eeb2
+I1126 10:45:46.452242 60114 RegistrationServer.cpp:283] find this device and keepalive, DeviceID:34020000001110000213
+I1126 10:45:46.452430 60114 PagerMessageHandler.cpp:575] Receive keepalive DeviceID:34020000001110000213, And Response 200
+
+****************************************************************************************************
+
+**************************************************MTS**************************************************
+**192.168.2.184**:This is Mts log content:
+W1126 10:45:22.590725 50556 StreamChannelUdp2nd.cpp:903] 34020000001320000033_MAIN 444444444444444444444444(putRtpPacketWithNoMark) ====== lost exception timer!!!!!!!!!!!!!!!!!!!!!
+W1126 10:45:22.715186 50542 NamingClient.cpp:885] realGetService, Response code: 200
+E1126 10:45:22.715555 50542 NamingClient.cpp:264] checksum : b328081a2e1531cadb116e54deb7a988  VMS
+W1126 10:45:22.715595 50542 RestHandler.cpp:1027]  vms addr : 192.168.2.184:8009
+W1126 10:45:30.578167 50556 StreamChannelUdp2nd.cpp:903] 34020000001320000033_MAIN 444444444444444444444444(putRtpPacketWithNoMark) ====== lost exception timer!!!!!!!!!!!!!!!!!!!!!
+W1126 10:45:30.702852 50542 NamingClient.cpp:885] realGetService, Response code: 200
+E1126 10:45:30.703860 50542 NamingClient.cpp:264] checksum : b328081a2e1531cadb116e54deb7a988  VMS
+W1126 10:45:30.704493 50542 RestHandler.cpp:1027]  vms addr : 192.168.2.184:8009
+W1126 10:45:33.618211 50556 StreamChannelUdp2nd.cpp:903] 34020000001320000033_MAIN 444444444444444444444444(putRtpPacketWithNoMark) ====== lost exception timer!!!!!!!!!!!!!!!!!!!!!
+W1126 10:45:33.618497 50556 StreamChannelUdp2nd.cpp:1188] 34020000001320000033_MAIN ~~~~~~~~~~~~~~~~~~~m_pRtp2PsRawFrame->Clean######################
+W1126 10:45:33.742849 50542 NamingClient.cpp:885] realGetService, Response code: 200
+E1126 10:45:33.743562 50542 NamingClient.cpp:264] checksum : b328081a2e1531cadb116e54deb7a988  VMS
+W1126 10:45:33.743629 50542 RestHandler.cpp:1027]  vms addr : 192.168.2.184:8009
+I1126 10:45:42.318462 50573 RestHandler.cpp:442] ===========handlePost=======IN=====path: /v1/media_port_release u64RequestId: 198799
+I1126 10:45:42.318552 50573 RestHandler.cpp:44] R(POST): {"port":"20016","setup":"0"}
+I1126 10:45:42.318567 50573 RestHandler.cpp:473] ===========dealPostRequest============path: /v1/media_port_release u64RequestId: 198799
+
+****************************************************************************************************
+
+**************************************************MPS**************************************************
+[2020-11-26 10:45:20.051][Trace][process_request][129115][1864] HTTP API GET http://192.168.2.184:1985/v1/streams2, content-length=-1, chunked=0/0
+[2020-11-26 10:45:22.590][Trace][on_unpublish][129115][2599] cleanup when unpublish, sid=/live/34020000001320000033_MAIN
+[2020-11-26 10:45:22.590][Trace][http_unmount][129115][986] http stream unmount sid = /live/34020000001320000033_MAIN
+[2020-11-26 10:45:22.591][Trace][fd2conn][129115][1541] accept conn ip= 192.168.2.184, port = 59276
+[2020-11-26 10:45:22.591][Trace][do_cycle][129115][154] RTMP client ip=192.168.2.184, fd=13
+[2020-11-26 10:45:22.591][Trace][handshake_with_client][129115][1125] simple handshake success.
+[2020-11-26 10:45:22.593][Trace][on_unpublish][129115][212] http: on_unpublish ok, client_id=1398, url=http://192.168.2.184:8009/v1/mps_on_unpublish, request={"action":"on_unpublish","client_id":1398,"ip":"192.168.2.184","vhost":"__defaultVhost__","app":"live","stream":"34020000001320000033_MAIN","param":""}, response={"errorCode":"0","errorMsg":"SUCCESS"}
+[2020-11-26 10:45:22.593][Warn][cycle][129115][192][0] client disconnect peer. ret=1007
+[2020-11-26 10:45:22.631][Trace][do_cycle][129115][180] connect app, tcUrl=rtmp://192.168.2.184:1035/live, pageUrl=, swfUrl=, schema=rtmp, vhost=192.168.2.184, port=1035, app=live, args=null
+[2020-11-26 10:45:22.631][Trace][print_debug_info][129115][1560] protocol in.buffer=0, in.ack=0, out.ack=0, in.chunk=128, out.chunk=128
+[2020-11-26 10:45:22.671][Trace][stream_service_cycle][129115][455] client identified, type=fmle-publish, vhost=192.168.2.184, app=live, stream=34020000001320000033_MAIN, param=, duration=0ms
+[2020-11-26 10:45:22.671][Trace][stream_service_cycle][129115][475] connected stream, tcUrl=rtmp://192.168.2.184:1035/live, pageUrl=, swfUrl=, schema=rtmp, vhost=__defaultVhost__, port=1035, app=live, stream=34020000001320000033_MAIN, param=, args=null
+[2020-11-26 10:45:22.671][Trace][stream_service_cycle][129115][524] source url=/live/34020000001320000033_MAIN, ip=192.168.2.184, cache=1, is_edge=0, source_id=[129115][-1]
+[2020-11-26 10:45:22.714][Trace][on_publish][129115][169] http: on_publish ok, client_id=1399, url=http://192.168.2.184:8009/v1/mps_on_publish, request={"action":"on_publish","client_id":1399,"ip":"192.168.2.184","vhost":"__defaultVhost__","app":"live","tcUrl":"rtmp://192.168.2.184:1035/live","stream":"34020000001320000033_MAIN","param":""}, response={"errorCode":"0","errorMsg":"SUCCESS"}
+[2020-11-26 10:45:22.714][Trace][parse_exec_publish][129115][145] ignore disabled exec for vhost=__defaultVhost__
+[2020-11-26 10:45:22.714][Trace][do_publishing][129115][891] start publish mr=0/350, p1stpt=20000, pnt=5000, tcp_nodelay=0
+[2020-11-26 10:45:22.714][Trace][on_video][129115][1074] 56B video sh,  codec(7, profile=High, level=3.1, 128x1072, 0kbps, 0.0fps, 0.0s)
+[2020-11-26 10:45:25.050][Trace][process_request][129115][1864] HTTP API GET http://192.168.2.184:1985/v1/streams2, content-length=-1, chunked=0/0
+[2020-11-26 10:45:30.050][Trace][process_request][129115][1864] HTTP API GET http://192.168.2.184:1985/v1/streams2, content-length=-1, chunked=0/0
+[2020-11-26 10:45:30.578][Trace][on_unpublish][129115][2599] cleanup when unpublish, sid=/live/34020000001320000033_MAIN
+[2020-11-26 10:45:30.578][Trace][http_unmount][129115][986] http stream unmount sid = /live/34020000001320000033_MAIN
+[2020-11-26 10:45:30.579][Trace][fd2conn][129115][1541] accept conn ip= 192.168.2.184, port = 59312
+[2020-11-26 10:45:30.579][Trace][do_cycle][129115][154] RTMP client ip=192.168.2.184, fd=14
+[2020-11-26 10:45:30.581][Trace][handshake_with_client][129115][1125] simple handshake success.
+[2020-11-26 10:45:30.582][Trace][on_unpublish][129115][212] http: on_unpublish ok, client_id=1399, url=http://192.168.2.184:8009/v1/mps_on_unpublish, request={"action":"on_unpublish","client_id":1399,"ip":"192.168.2.184","vhost":"__defaultVhost__","app":"live","stream":"34020000001320000033_MAIN","param":""}, response={"errorCode":"0","errorMsg":"SUCCESS"}
+[2020-11-26 10:45:30.582][Warn][cycle][129115][192][0] client disconnect peer. ret=1007
+[2020-11-26 10:45:30.619][Trace][do_cycle][129115][180] connect app, tcUrl=rtmp://192.168.2.184:1035/live, pageUrl=, swfUrl=, schema=rtmp, vhost=192.168.2.184, port=1035, app=live, args=null
+[2020-11-26 10:45:30.619][Trace][print_debug_info][129115][1560] protocol in.buffer=0, in.ack=0, out.ack=0, in.chunk=128, out.chunk=128
+[2020-11-26 10:45:30.659][Trace][stream_service_cycle][129115][455] client identified, type=fmle-publish, vhost=192.168.2.184, app=live, stream=34020000001320000033_MAIN, param=, duration=0ms
+[2020-11-26 10:45:30.659][Trace][stream_service_cycle][129115][475] connected stream, tcUrl=rtmp://192.168.2.184:1035/live, pageUrl=, swfUrl=, schema=rtmp, vhost=__defaultVhost__, port=1035, app=live, stream=34020000001320000033_MAIN, param=, args=null
+[2020-11-26 10:45:30.659][Trace][stream_service_cycle][129115][524] source url=/live/34020000001320000033_MAIN, ip=192.168.2.184, cache=1, is_edge=0, source_id=[129115][-1]
+[2020-11-26 10:45:30.703][Trace][on_publish][129115][169] http: on_publish ok, client_id=1400, url=http://192.168.2.184:8009/v1/mps_on_publish, request={"action":"on_publish","client_id":1400,"ip":"192.168.2.184","vhost":"__defaultVhost__","app":"live","tcUrl":"rtmp://192.168.2.184:1035/live","stream":"34020000001320000033_MAIN","param":""}, response={"errorCode":"0","errorMsg":"SUCCESS"}
+[2020-11-26 10:45:30.703][Trace][parse_exec_publish][129115][145] ignore disabled exec for vhost=__defaultVhost__
+[2020-11-26 10:45:30.703][Trace][do_publishing][129115][891] start publish mr=0/350, p1stpt=20000, pnt=5000, tcp_nodelay=0
+[2020-11-26 10:45:30.704][Trace][on_video][129115][1074] 56B video sh,  codec(7, profile=High, level=3.1, 128x1072, 0kbps, 0.0fps, 0.0s)
+[2020-11-26 10:45:33.618][Trace][on_unpublish][129115][2599] cleanup when unpublish, sid=/live/34020000001320000033_MAIN
+[2020-11-26 10:45:33.618][Trace][http_unmount][129115][986] http stream unmount sid = /live/34020000001320000033_MAIN
+[2020-11-26 10:45:33.618][Trace][fd2conn][129115][1541] accept conn ip= 192.168.2.184, port = 59336
+[2020-11-26 10:45:33.619][Trace][do_cycle][129115][154] RTMP client ip=192.168.2.184, fd=13
+[2020-11-26 10:45:33.619][Trace][handshake_with_client][129115][1125] simple handshake success.
+[2020-11-26 10:45:33.621][Trace][on_unpublish][129115][212] http: on_unpublish ok, client_id=1400, url=http://192.168.2.184:8009/v1/mps_on_unpublish, request={"action":"on_unpublish","client_id":1400,"ip":"192.168.2.184","vhost":"__defaultVhost__","app":"live","stream":"34020000001320000033_MAIN","param":""}, response={"errorCode":"0","errorMsg":"SUCCESS"}
+[2020-11-26 10:45:33.621][Warn][cycle][129115][192][0] client disconnect peer. ret=1007
+[2020-11-26 10:45:33.658][Trace][do_cycle][129115][180] connect app, tcUrl=rtmp://192.168.2.184:1035/live, pageUrl=, swfUrl=, schema=rtmp, vhost=192.168.2.184, port=1035, app=live, args=null
+[2020-11-26 10:45:33.658][Trace][print_debug_info][129115][1560] protocol in.buffer=0, in.ack=0, out.ack=0, in.chunk=128, out.chunk=128
+[2020-11-26 10:45:33.699][Trace][stream_service_cycle][129115][455] client identified, type=fmle-publish, vhost=192.168.2.184, app=live, stream=34020000001320000033_MAIN, param=, duration=0ms
+[2020-11-26 10:45:33.699][Trace][stream_service_cycle][129115][475] connected stream, tcUrl=rtmp://192.168.2.184:1035/live, pageUrl=, swfUrl=, schema=rtmp, vhost=__defaultVhost__, port=1035, app=live, stream=34020000001320000033_MAIN, param=, args=null
+[2020-11-26 10:45:33.699][Trace][stream_service_cycle][129115][524] source url=/live/34020000001320000033_MAIN, ip=192.168.2.184, cache=1, is_edge=0, source_id=[129115][-1]
+[2020-11-26 10:45:33.741][Trace][on_publish][129115][169] http: on_publish ok, client_id=1401, url=http://192.168.2.184:8009/v1/mps_on_publish, request={"action":"on_publish","client_id":1401,"ip":"192.168.2.184","vhost":"__defaultVhost__","app":"live","tcUrl":"rtmp://192.168.2.184:1035/live","stream":"34020000001320000033_MAIN","param":""}, response={"errorCode":"0","errorMsg":"SUCCESS"}
+[2020-11-26 10:45:33.741][Trace][parse_exec_publish][129115][145] ignore disabled exec for vhost=__defaultVhost__
+[2020-11-26 10:45:33.741][Trace][do_publishing][129115][891] start publish mr=0/350, p1stpt=20000, pnt=5000, tcp_nodelay=0
+[2020-11-26 10:45:33.742][Trace][on_video][129115][1074] 56B video sh,  codec(7, profile=High, level=3.1, 128x1072, 0kbps, 0.0fps, 0.0s)
+[2020-11-26 10:45:35.052][Trace][process_request][129115][1864] HTTP API GET http://192.168.2.184:1985/v1/streams2, content-length=-1, chunked=0/0
+[2020-11-26 10:45:40.051][Trace][process_request][129115][1864] HTTP API GET http://192.168.2.184:1985/v1/streams2, content-length=-1, chunked=0/0
+[2020-11-26 10:45:42.319][Trace][on_unpublish][129115][2599] cleanup when unpublish, sid=/live/34020000001320000033_MAIN
+[2020-11-26 10:45:42.319][Trace][http_unmount][129115][986] http stream unmount sid = /live/34020000001320000033_MAIN
+[2020-11-26 10:45:42.321][Trace][on_unpublish][129115][212] http: on_unpublish ok, client_id=1401, url=http://192.168.2.184:8009/v1/mps_on_unpublish, request={"action":"on_unpublish","client_id":1401,"ip":"192.168.2.184","vhost":"__defaultVhost__","app":"live","stream":"34020000001320000033_MAIN","param":""}, response={"errorCode":"0","errorMsg":"SUCCESS"}
+[2020-11-26 10:45:42.321][Warn][cycle][129115][192][0] client disconnect peer. ret=1007
+[2020-11-26 10:45:45.051][Trace][process_request][129115][1864] HTTP API GET http://192.168.2.184:1985/v1/streams2, content-length=-1, chunked=0/0
+[2020-11-26 10:45:50.051][Trace][process_request][129115][1864] HTTP API GET http://192.168.2.184:1985/v1/streams2, content-length=-1, chunked=0/0
+[2020-11-26 10:45:55.054][Trace][process_request][129115][1864] HTTP API GET http://192.168.2.184:1985/v1/streams2, content-length=-1, chunked=0/0
+
+****************************************************************************************************
+
+====================================================================================================
+==================================================用例29==================================================
+==================================================11-26 10:49:18==================================================
+step1:POST /api/v1/stream/start
+result:{"code":"0","message":"SUCCESS","data":[{"streamId":"34020000001320000033_MAIN","errorMsg":null,"RTSPAddr":null,"FLVAddr":null,"RTMPAddr":"rtmp://192.168.2.184:1035/live/34020000001320000033_MAIN","HLSAddr":null}]}
+step2:SHELL pkill -9 nginx
+result:
+step3:GET /api/v1/stream/stop
+result:HTTPConnectionPool(host='192.168.2.184', port=8080): Max retries exceeded with url: /api/v1/stream/stop?streamId=34020000001320000033_MAIN (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x00000214B5EAA130>: Failed to establish a new connection: [WinError 10061] 由于目标计算机积极拒绝，无法连接。'))
+step4:SHELL /usr/local/nginx/sbin/nginx -c /usr/local/nginx/conf/nginx.conf
+result:
+step5:GET /api/v1/stream/stop
+result:{"code":"0","message":"SUCCESS"}
+
+**************************************************VMS**************************************************
+**192.168.2.184**:This is vms log content:
+2020-11-26 10:49:40.997 [INFO ] [http-nio-8009-exec-31     ] 1606358980997 ----> CALL --------> STOP_CALL start
+2020-11-26 10:49:40.998 [INFO ] [http-nio-8009-exec-31     ] 1606358980997 ----> CALL --------> streamId【34020000001320000033_MAIN】 , STOP_CALL success
+2020-11-26 10:49:40.998 [INFO ] [http-nio-8009-exec-31     ] 1606358980997 ----> CALL --------> use_time 【0】 , STOP_CALL end
+
+****************************************************************************************************
+
+**************************************************CGS**************************************************
+**192.168.2.184**:This is cgs log content:
+I1126 10:49:35.012236 60042 HttpService.cpp:161] recv request: POST /v1/cgs_subscribe HTTP/1.1
+Accept: application/json, application/*+json
+Accept-Encoding: gzip,deflate
+Connection: Keep-Alive
+Content-Length: 261
+Content-Type: application/json
+Host: 192.168.2.184:9875
+User-Agent: Apache-HttpClient/4.5.12 (Java/1.8.0_121)
+
+from remote_address: 192.168.2.184
+I1126 10:49:35.012589 60119 Uas.cpp:544] receive Subscribe json:{"alarmEndTime":null,"expireTime":200,"alarmInterval":null,"requestId":"1606358975003","subcribeId":"34020000001110000213#ZKQPTc1tWIPiLBvVHADwVA..","alarmBeginTime":null,"subType":1,"alarmMethod":null,"operType":0,"deviceId":"34020000001110000213","timeOut":60}
+I1126 10:49:35.012830 60119 SubScribeHandler.cpp:474] unsubscribe success, subscribeId:34020000001110000213#ZKQPTc1tWIPiLBvVHADwVA..
+E1126 10:49:35.012887 60119 Uas.cpp:1144] send errcode:0,errMsg:unsubscribe success
+W1126 10:49:35.015820 60083 NamingClient.cpp:850] realGetService, Response code: 200
+W1126 10:49:35.016083 60083 NamingClient.cpp:1294]  dom : VMS
+W1126 10:49:35.016125 60083 NamingClient.cpp:1301]  cacheMillis : 3000
+W1126 10:49:35.016147 60083 NamingClient.cpp:1315]  checksum : b328081a2e1531cadb116e54deb7a988
+W1126 10:49:35.016168 60083 NamingClient.cpp:1322]  lastRefTime : 1606358975015
+W1126 10:49:35.016189 60083 NamingClient.cpp:1329]  env : 
+W1126 10:49:35.016211 60083 NamingClient.cpp:1336]  clusters : DEFAULT
+E1126 10:49:35.016309 60083 NamingClient.cpp:230] checksum : b328081a2e1531cadb116e54deb7a988 DEFAULT VMS
+I1126 10:49:35.016369 60083 HttpClient.cpp:153] enter into CHttpClient::postRequest send url:http://192.168.2.184:8009/v1/cgs_callback_subscribe, send body:{
+   "deviceId" : "34020000001110000213",
+   "errorCode" : "0",
+   "errorMsg" : "unsubscribe success",
+   "requestId" : "1606358975003"
+}
+I1126 10:49:35.022936 60083 HttpClient.cpp:164] CHttpClient::postRequest success, requestid:1606358975003
+I1126 10:49:35.023023 60083 HttpClient.cpp:172] leave CHttpClient::postRequest, requestid:1606358975003
+I1126 10:49:35.023100 60083 HttpClient.cpp:108] RunInLoop iret:0,requestid:1606358975003
+I1126 10:49:40.008276 60056 HttpService.cpp:161] recv request: POST /v1/cgs_subscribe HTTP/1.1
+Accept: application/json, application/*+json
+Accept-Encoding: gzip,deflate
+Connection: Keep-Alive
+Content-Length: 218
+Content-Type: application/json
+Host: 192.168.2.184:9875
+User-Agent: Apache-HttpClient/4.5.12 (Java/1.8.0_121)
+
+{"alarmEndTime":null,"expireTime":200,"alarmInterval":null,"requestId":"1606358980003","subcribeId":null,"alarmBeginTime":null,"subType":1,"alarmMethod":null,"operType":1,"deviceId":"34020000001110000213","timeOut":60}from remote_address: 192.168.2.184
+I1126 10:49:40.008917 60120 Uas.cpp:544] receive Subscribe json:{"alarmEndTime":null,"expireTime":200,"alarmInterval":null,"requestId":"1606358980003","subcribeId":null,"alarmBeginTime":null,"subType":1,"alarmMethod":null,"operType":1,"deviceId":"34020000001110000213","timeOut":60}
+I1126 10:49:40.010040 60114 SubScribeHandler.cpp:26] timer started, requestid:1606358980003, subtype:1
+I1126 10:49:40.033054 60114 SubScribeHandler.cpp:337] enter onNewSubscription, notify:SIP/2.0 200 OK
+Via: SIP/2.0/UDP 192.168.2.184:5062;branch=z9hG4bK-524287-1---e2d2781b0c11a87a;rport=5062
+Contact: <sip:34020000001110000213@192.168.2.213:5060>
+To: <sip:34020000001110000213@192.168.2.213:5060>;tag=2076519402
+From: <sip:34020000002000000001@192.168.2.184:5062>;tag=462f2816
+Call-ID: 2vP3I4EHsVX_p7SnBTHhxQ..
+CSeq: 1 SUBSCRIBE
+Expires: 200
+Content-Type: Application/MANSCDP+xml
+User-Agent: Embedded Net DVR/NVR/DVS
+Event: presence
+Content-Length: 172
+
+<?xml version="1.0" encoding="gb2312"?>
+<Response>
+<CmdType>Catalog</CmdType>
+<SN>267</SN>
+<DeviceID>34020000001110000213</DeviceID>
+<Result>OK</Result>
+</Response>
+I1126 10:49:40.033387 60114 SubScribeHandler.cpp:49] enter ResponseCallBack, requestid:1606358980003, errCode:0, errMsg:subscribe success
+I1126 10:49:40.033490 60114 SubScribeHandler.cpp:36] timer canceled, requestid:1606358980003, subtype:1
+W1126 10:49:40.035727 60084 NamingClient.cpp:850] realGetService, Response code: 200
+W1126 10:49:40.035995 60084 NamingClient.cpp:1294]  dom : VMS
+W1126 10:49:40.036108 60084 NamingClient.cpp:1301]  cacheMillis : 3000
+W1126 10:49:40.036164 60084 NamingClient.cpp:1315]  checksum : b328081a2e1531cadb116e54deb7a988
+W1126 10:49:40.036192 60084 NamingClient.cpp:1322]  lastRefTime : 1606358980035
+W1126 10:49:40.036229 60084 NamingClient.cpp:1329]  env : 
+W1126 10:49:40.036257 60084 NamingClient.cpp:1336]  clusters : DEFAULT
+E1126 10:49:40.036389 60084 NamingClient.cpp:230] checksum : b328081a2e1531cadb116e54deb7a988 DEFAULT VMS
+I1126 10:49:40.036479 60084 HttpClient.cpp:153] enter into CHttpClient::postRequest send url:http://192.168.2.184:8009/v1/cgs_callback_subscribe, send body:{
+   "deviceId" : "34020000001110000213",
+   "errorCode" : "0",
+   "errorMsg" : "subscribe success",
+   "requestId" : "1606358980003",
+   "subscribeId" : "34020000001110000213#2vP3I4EHsVX_p7SnBTHhxQ.."
+}
+I1126 10:49:40.043273 60084 HttpClient.cpp:164] CHttpClient::postRequest success, requestid:1606358980003
+I1126 10:49:40.043329 60084 HttpClient.cpp:172] leave CHttpClient::postRequest, requestid:1606358980003
+I1126 10:49:40.043427 60084 HttpClient.cpp:108] RunInLoop iret:0,requestid:1606358980003
+I1126 10:49:40.988762 60027 HttpService.cpp:161] recv request: POST /v1/stop_play HTTP/1.1
+Accept: application/json, application/*+json
+Accept-Encoding: gzip,deflate
+Connection: Keep-Alive
+Content-Length: 87
+Content-Type: application/json
+Host: 192.168.2.184:9875
+User-Agent: Apache-HttpClient/4.5.12 (Java/1.8.0_121)
+
+from remote_address: 192.168.2.184
+I1126 10:49:40.989214 60121 Uas.cpp:140] receive stop play json:{"streamId":"34020000001320000033_MAIN","requestId":"86f010a748f64c9a87e6d31a20a603f6"}
+I1126 10:49:40.989320 60121 InviteSessionHandler.cpp:647] onTerminated, streamid:34020000001320000033_MAIN,deviceid:34020000001320000033,errmsg:3
+I1126 10:49:40.989619 60121 InviteSessionHandler.cpp:303] stop stream success, streamid:34020000001320000033_MAIN
+E1126 10:49:40.989647 60121 Uas.cpp:1144] send errcode:0,errMsg:stop success
+W1126 10:49:40.993059 60085 NamingClient.cpp:850] realGetService, Response code: 200
+W1126 10:49:40.993516 60085 NamingClient.cpp:1294]  dom : VMS
+W1126 10:49:40.993567 60085 NamingClient.cpp:1301]  cacheMillis : 3000
+W1126 10:49:40.993590 60085 NamingClient.cpp:1315]  checksum : b328081a2e1531cadb116e54deb7a988
+W1126 10:49:40.993610 60085 NamingClient.cpp:1322]  lastRefTime : 1606358980991
+W1126 10:49:40.993629 60085 NamingClient.cpp:1329]  env : 
+W1126 10:49:40.993649 60085 NamingClient.cpp:1336]  clusters : DEFAULT
+E1126 10:49:40.993765 60085 NamingClient.cpp:230] checksum : b328081a2e1531cadb116e54deb7a988 DEFAULT VMS
+I1126 10:49:40.993818 60085 HttpClient.cpp:153] enter into CHttpClient::postRequest send url:http://192.168.2.184:8009/v1/cgs_callback_stop_play, send body:{
+   "errorCode" : "0",
+   "errorMsg" : "stop success",
+   "requestId" : "86f010a748f64c9a87e6d31a20a603f6",
+   "streamId" : "34020000001320000033_MAIN"
+}
+I1126 10:49:40.996994 60085 HttpClient.cpp:164] CHttpClient::postRequest success, requestid:86f010a748f64c9a87e6d31a20a603f6
+I1126 10:49:40.997035 60085 HttpClient.cpp:172] leave CHttpClient::postRequest, requestid:86f010a748f64c9a87e6d31a20a603f6
+I1126 10:49:40.997082 60085 HttpClient.cpp:108] RunInLoop iret:0,requestid:86f010a748f64c9a87e6d31a20a603f6
+I1126 10:49:47.172065 60114 RegistrationServer.cpp:283] find this device and keepalive, DeviceID:34020000001110000213
+I1126 10:49:47.172201 60114 PagerMessageHandler.cpp:575] Receive keepalive DeviceID:34020000001110000213, And Response 200
+
+****************************************************************************************************
+
+**************************************************MTS**************************************************
+**192.168.2.184**:This is Mts log content:
+W1126 10:49:19.517489 50542 NamingClient.cpp:885] realGetService, Response code: 200
+E1126 10:49:19.517845 50542 NamingClient.cpp:264] checksum : b328081a2e1531cadb116e54deb7a988  VMS
+W1126 10:49:19.517887 50542 RestHandler.cpp:1027]  vms addr : 192.168.2.184:8009
+W1126 10:49:20.587420 50557 StreamChannelUdp2nd.cpp:903] 34020000001320000033_MAIN 444444444444444444444444(putRtpPacketWithNoMark) ====== lost exception timer!!!!!!!!!!!!!!!!!!!!!
+W1126 10:49:20.711788 50542 NamingClient.cpp:885] realGetService, Response code: 200
+E1126 10:49:20.712195 50542 NamingClient.cpp:264] checksum : b328081a2e1531cadb116e54deb7a988  VMS
+W1126 10:49:20.712255 50542 RestHandler.cpp:1027]  vms addr : 192.168.2.184:8009
+W1126 10:49:21.506788 50557 StreamChannelUdp2nd.cpp:903] 34020000001320000033_MAIN 444444444444444444444444(putRtpPacketWithNoMark) ====== lost exception timer!!!!!!!!!!!!!!!!!!!!!
+W1126 10:49:21.631168 50542 NamingClient.cpp:885] realGetService, Response code: 200
+E1126 10:49:21.631652 50542 NamingClient.cpp:264] checksum : b328081a2e1531cadb116e54deb7a988  VMS
+W1126 10:49:21.631695 50542 RestHandler.cpp:1027]  vms addr : 192.168.2.184:8009
+W1126 10:49:23.506256 50557 StreamChannelUdp2nd.cpp:903] 34020000001320000033_MAIN 444444444444444444444444(putRtpPacketWithNoMark) ====== lost exception timer!!!!!!!!!!!!!!!!!!!!!
+W1126 10:49:23.629706 50542 NamingClient.cpp:885] realGetService, Response code: 200
+E1126 10:49:23.630071 50542 NamingClient.cpp:264] checksum : b328081a2e1531cadb116e54deb7a988  VMS
+W1126 10:49:23.630118 50542 RestHandler.cpp:1027]  vms addr : 192.168.2.184:8009
+W1126 10:49:24.558195 50557 StreamChannelUdp2nd.cpp:903] 34020000001320000033_MAIN 444444444444444444444444(putRtpPacketWithNoMark) ====== lost exception timer!!!!!!!!!!!!!!!!!!!!!
+W1126 10:49:24.682230 50542 NamingClient.cpp:885] realGetService, Response code: 200
+E1126 10:49:24.682776 50542 NamingClient.cpp:264] checksum : b328081a2e1531cadb116e54deb7a988  VMS
+W1126 10:49:24.682857 50542 RestHandler.cpp:1027]  vms addr : 192.168.2.184:8009
+W1126 10:49:27.533252 50557 StreamChannelUdp2nd.cpp:903] 34020000001320000033_MAIN 444444444444444444444444(putRtpPacketWithNoMark) ====== lost exception timer!!!!!!!!!!!!!!!!!!!!!
+W1126 10:49:27.658843 50542 NamingClient.cpp:885] realGetService, Response code: 200
+E1126 10:49:27.659524 50542 NamingClient.cpp:264] checksum : b328081a2e1531cadb116e54deb7a988  VMS
+W1126 10:49:27.659562 50542 RestHandler.cpp:1027]  vms addr : 192.168.2.184:8009
+W1126 10:49:28.517197 50557 StreamChannelUdp2nd.cpp:903] 34020000001320000033_MAIN 444444444444444444444444(putRtpPacketWithNoMark) ====== lost exception timer!!!!!!!!!!!!!!!!!!!!!
+W1126 10:49:28.644371 50542 NamingClient.cpp:885] realGetService, Response code: 200
+E1126 10:49:28.644695 50542 NamingClient.cpp:264] checksum : b328081a2e1531cadb116e54deb7a988  VMS
+W1126 10:49:28.644726 50542 RestHandler.cpp:1027]  vms addr : 192.168.2.184:8009
+W1126 10:49:29.987540 50557 StreamChannelUdp2nd.cpp:903] 34020000001320000033_MAIN 444444444444444444444444(putRtpPacketWithNoMark) ====== lost exception timer!!!!!!!!!!!!!!!!!!!!!
+W1126 10:49:30.106778 50557 StreamChannelUdp2nd.cpp:1188] 34020000001320000033_MAIN ~~~~~~~~~~~~~~~~~~~m_pRtp2PsRawFrame->Clean######################
+W1126 10:49:30.483718 50542 NamingClient.cpp:885] realGetService, Response code: 200
+E1126 10:49:30.484791 50542 NamingClient.cpp:264] checksum : b328081a2e1531cadb116e54deb7a988  VMS
+W1126 10:49:30.484865 50542 RestHandler.cpp:1027]  vms addr : 192.168.2.184:8009
+W1126 10:49:32.594951 50557 StreamChannelUdp2nd.cpp:903] 34020000001320000033_MAIN 444444444444444444444444(putRtpPacketWithNoMark) ====== lost exception timer!!!!!!!!!!!!!!!!!!!!!
+W1126 10:49:32.719588 50542 NamingClient.cpp:885] realGetService, Response code: 200
+E1126 10:49:32.719992 50542 NamingClient.cpp:264] checksum : b328081a2e1531cadb116e54deb7a988  VMS
+W1126 10:49:32.720371 50542 RestHandler.cpp:1027]  vms addr : 192.168.2.184:8009
+W1126 10:49:33.609405 50557 StreamChannelUdp2nd.cpp:903] 34020000001320000033_MAIN 444444444444444444444444(putRtpPacketWithNoMark) ====== lost exception timer!!!!!!!!!!!!!!!!!!!!!
+W1126 10:49:33.735539 50542 NamingClient.cpp:885] realGetService, Response code: 200
+E1126 10:49:33.736905 50542 NamingClient.cpp:264] checksum : b328081a2e1531cadb116e54deb7a988  VMS
+W1126 10:49:33.736949 50542 RestHandler.cpp:1027]  vms addr : 192.168.2.184:8009
+W1126 10:49:34.610587 50557 StreamChannelUdp2nd.cpp:903] 34020000001320000033_MAIN 444444444444444444444444(putRtpPacketWithNoMark) ====== lost exception timer!!!!!!!!!!!!!!!!!!!!!
+W1126 10:49:34.735940 50542 NamingClient.cpp:885] realGetService, Response code: 200
+E1126 10:49:34.736513 50542 NamingClient.cpp:264] checksum : b328081a2e1531cadb116e54deb7a988  VMS
+W1126 10:49:34.736589 50542 RestHandler.cpp:1027]  vms addr : 192.168.2.184:8009
+W1126 10:49:35.569010 50557 StreamChannelUdp2nd.cpp:903] 34020000001320000033_MAIN 444444444444444444444444(putRtpPacketWithNoMark) ====== lost exception timer!!!!!!!!!!!!!!!!!!!!!
+W1126 10:49:35.693707 50542 NamingClient.cpp:885] realGetService, Response code: 200
+E1126 10:49:35.694233 50542 NamingClient.cpp:264] checksum : b328081a2e1531cadb116e54deb7a988  VMS
+W1126 10:49:35.694283 50542 RestHandler.cpp:1027]  vms addr : 192.168.2.184:8009
+W1126 10:49:38.626507 50557 StreamChannelUdp2nd.cpp:903] 34020000001320000033_MAIN 444444444444444444444444(putRtpPacketWithNoMark) ====== lost exception timer!!!!!!!!!!!!!!!!!!!!!
+W1126 10:49:38.750483 50542 NamingClient.cpp:885] realGetService, Response code: 200
+E1126 10:49:38.750927 50542 NamingClient.cpp:264] checksum : b328081a2e1531cadb116e54deb7a988  VMS
+W1126 10:49:38.750964 50542 RestHandler.cpp:1027]  vms addr : 192.168.2.184:8009
+I1126 10:49:40.983158 50605 RestHandler.cpp:442] ===========handlePost=======IN=====path: /v1/media_port_release u64RequestId: 198898
+I1126 10:49:40.987500 50605 RestHandler.cpp:44] R(POST): {"port":"20018","setup":"0"}
+I1126 10:49:40.987534 50605 RestHandler.cpp:473] ===========dealPostRequest============path: /v1/media_port_release u64RequestId: 198898
+
+****************************************************************************************************
+
+**************************************************MPS**************************************************
+**192.168.2.184**:This is mps log content:
+[2020-11-26 10:49:18.331][Trace][on_video][129115][1074] 56B video sh,  codec(7, profile=High, level=3.1, 128x1072, 0kbps, 0.0fps, 0.0s)
+[2020-11-26 10:49:18.506][Trace][on_unpublish][129115][2599] cleanup when unpublish, sid=/live/34020000001320000033_MAIN
+[2020-11-26 10:49:18.507][Trace][http_unmount][129115][986] http stream unmount sid = /live/34020000001320000033_MAIN
+[2020-11-26 10:49:18.507][Trace][fd2conn][129115][1541] accept conn ip= 192.168.2.184, port = 60156
+[2020-11-26 10:49:18.507][Trace][do_cycle][129115][154] RTMP client ip=192.168.2.184, fd=14
+[2020-11-26 10:49:18.508][Trace][handshake_with_client][129115][1125] simple handshake success.
+[2020-11-26 10:49:18.510][Trace][on_unpublish][129115][212] http: on_unpublish ok, client_id=1402, url=http://192.168.2.184:8009/v1/mps_on_unpublish, request={"action":"on_unpublish","client_id":1402,"ip":"192.168.2.184","vhost":"__defaultVhost__","app":"live","stream":"34020000001320000033_MAIN","param":""}, response={"errorCode":"0","errorMsg":"SUCCESS"}
+[2020-11-26 10:49:18.510][Warn][cycle][129115][192][0] client disconnect peer. ret=1007
+[2020-11-26 10:49:18.547][Trace][do_cycle][129115][180] connect app, tcUrl=rtmp://192.168.2.184:1035/live, pageUrl=, swfUrl=, schema=rtmp, vhost=192.168.2.184, port=1035, app=live, args=null
+[2020-11-26 10:49:18.547][Trace][print_debug_info][129115][1560] protocol in.buffer=0, in.ack=0, out.ack=0, in.chunk=128, out.chunk=128
+[2020-11-26 10:49:18.587][Trace][stream_service_cycle][129115][455] client identified, type=fmle-publish, vhost=192.168.2.184, app=live, stream=34020000001320000033_MAIN, param=, duration=0ms
+[2020-11-26 10:49:18.588][Trace][stream_service_cycle][129115][475] connected stream, tcUrl=rtmp://192.168.2.184:1035/live, pageUrl=, swfUrl=, schema=rtmp, vhost=__defaultVhost__, port=1035, app=live, stream=34020000001320000033_MAIN, param=, args=null
+[2020-11-26 10:49:18.588][Trace][stream_service_cycle][129115][524] source url=/live/34020000001320000033_MAIN, ip=192.168.2.184, cache=1, is_edge=0, source_id=[129115][-1]
+[2020-11-26 10:49:18.631][Trace][on_publish][129115][169] http: on_publish ok, client_id=1404, url=http://192.168.2.184:8009/v1/mps_on_publish, request={"action":"on_publish","client_id":1404,"ip":"192.168.2.184","vhost":"__defaultVhost__","app":"live","tcUrl":"rtmp://192.168.2.184:1035/live","stream":"34020000001320000033_MAIN","param":""}, response={"errorCode":"0","errorMsg":"SUCCESS"}
+[2020-11-26 10:49:18.631][Trace][parse_exec_publish][129115][145] ignore disabled exec for vhost=__defaultVhost__
+[2020-11-26 10:49:18.631][Trace][do_publishing][129115][891] start publish mr=0/350, p1stpt=20000, pnt=5000, tcp_nodelay=0
+[2020-11-26 10:49:18.632][Trace][on_video][129115][1074] 56B video sh,  codec(7, profile=High, level=3.1, 128x1072, 0kbps, 0.0fps, 0.0s)
+[2020-11-26 10:49:18.632][Trace][on_unpublish][129115][2599] cleanup when unpublish, sid=/live/34020000001320000033_MAIN
+[2020-11-26 10:49:18.632][Trace][http_unmount][129115][986] http stream unmount sid = /live/34020000001320000033_MAIN
+[2020-11-26 10:49:18.634][Trace][on_unpublish][129115][212] http: on_unpublish ok, client_id=1404, url=http://192.168.2.184:8009/v1/mps_on_unpublish, request={"action":"on_unpublish","client_id":1404,"ip":"192.168.2.184","vhost":"__defaultVhost__","app":"live","stream":"34020000001320000033_MAIN","param":""}, response={"errorCode":"0","errorMsg":"SUCCESS"}
+[2020-11-26 10:49:18.634][Warn][cycle][129115][192][0] client disconnect peer. ret=1007
+[2020-11-26 10:49:19.395][Trace][fd2conn][129115][1541] accept conn ip= 192.168.2.184, port = 60168
+[2020-11-26 10:49:19.395][Trace][do_cycle][129115][154] RTMP client ip=192.168.2.184, fd=12
+[2020-11-26 10:49:19.395][Trace][handshake_with_client][129115][1125] simple handshake success.
+[2020-11-26 10:49:19.435][Trace][do_cycle][129115][180] connect app, tcUrl=rtmp://192.168.2.184:1035/live, pageUrl=, swfUrl=, schema=rtmp, vhost=192.168.2.184, port=1035, app=live, args=null
+[2020-11-26 10:49:19.435][Trace][print_debug_info][129115][1560] protocol in.buffer=0, in.ack=0, out.ack=0, in.chunk=128, out.chunk=128
+[2020-11-26 10:49:19.475][Trace][stream_service_cycle][129115][455] client identified, type=fmle-publish, vhost=192.168.2.184, app=live, stream=34020000001320000033_MAIN, param=, duration=0ms
+[2020-11-26 10:49:19.475][Trace][stream_service_cycle][129115][475] connected stream, tcUrl=rtmp://192.168.2.184:1035/live, pageUrl=, swfUrl=, schema=rtmp, vhost=__defaultVhost__, port=1035, app=live, stream=34020000001320000033_MAIN, param=, args=null
+[2020-11-26 10:49:19.475][Trace][stream_service_cycle][129115][524] source url=/live/34020000001320000033_MAIN, ip=192.168.2.184, cache=1, is_edge=0, source_id=[129115][-1]
+[2020-11-26 10:49:19.519][Trace][on_publish][129115][169] http: on_publish ok, client_id=1405, url=http://192.168.2.184:8009/v1/mps_on_publish, request={"action":"on_publish","client_id":1405,"ip":"192.168.2.184","vhost":"__defaultVhost__","app":"live","tcUrl":"rtmp://192.168.2.184:1035/live","stream":"34020000001320000033_MAIN","param":""}, response={"errorCode":"0","errorMsg":"SUCCESS"}
+[2020-11-26 10:49:19.519][Trace][parse_exec_publish][129115][145] ignore disabled exec for vhost=__defaultVhost__
+[2020-11-26 10:49:19.519][Trace][do_publishing][129115][891] start publish mr=0/350, p1stpt=20000, pnt=5000, tcp_nodelay=0
+[2020-11-26 10:49:19.519][Trace][on_video][129115][1074] 56B video sh,  codec(7, profile=High, level=3.1, 128x1072, 0kbps, 0.0fps, 0.0s)
+[2020-11-26 10:49:20.051][Trace][process_request][129115][1864] HTTP API GET http://192.168.2.184:1985/v1/streams2, content-length=-1, chunked=0/0
+[2020-11-26 10:49:20.587][Trace][on_unpublish][129115][2599] cleanup when unpublish, sid=/live/34020000001320000033_MAIN
+[2020-11-26 10:49:20.587][Trace][http_unmount][129115][986] http stream unmount sid = /live/34020000001320000033_MAIN
+[2020-11-26 10:49:20.587][Trace][fd2conn][129115][1541] accept conn ip= 192.168.2.184, port = 60180
+[2020-11-26 10:49:20.588][Trace][do_cycle][129115][154] RTMP client ip=192.168.2.184, fd=14
+[2020-11-26 10:49:20.588][Trace][handshake_with_client][129115][1125] simple handshake success.
+[2020-11-26 10:49:20.590][Trace][on_unpublish][129115][212] http: on_unpublish ok, client_id=1405, url=http://192.168.2.184:8009/v1/mps_on_unpublish, request={"action":"on_unpublish","client_id":1405,"ip":"192.168.2.184","vhost":"__defaultVhost__","app":"live","stream":"34020000001320000033_MAIN","param":""}, response={"errorCode":"0","errorMsg":"SUCCESS"}
+[2020-11-26 10:49:20.590][Warn][cycle][129115][192][0] client disconnect peer. ret=1007
+[2020-11-26 10:49:20.628][Trace][do_cycle][129115][180] connect app, tcUrl=rtmp://192.168.2.184:1035/live, pageUrl=, swfUrl=, schema=rtmp, vhost=192.168.2.184, port=1035, app=live, args=null
+[2020-11-26 10:49:20.628][Trace][print_debug_info][129115][1560] protocol in.buffer=0, in.ack=0, out.ack=0, in.chunk=128, out.chunk=128
+[2020-11-26 10:49:20.668][Trace][stream_service_cycle][129115][455] client identified, type=fmle-publish, vhost=192.168.2.184, app=live, stream=34020000001320000033_MAIN, param=, duration=0ms
+[2020-11-26 10:49:20.668][Trace][stream_service_cycle][129115][475] connected stream, tcUrl=rtmp://192.168.2.184:1035/live, pageUrl=, swfUrl=, schema=rtmp, vhost=__defaultVhost__, port=1035, app=live, stream=34020000001320000033_MAIN, param=, args=null
+[2020-11-26 10:49:20.668][Trace][stream_service_cycle][129115][524] source url=/live/34020000001320000033_MAIN, ip=192.168.2.184, cache=1, is_edge=0, source_id=[129115][-1]
+[2020-11-26 10:49:20.712][Trace][on_publish][129115][169] http: on_publish ok, client_id=1406, url=http://192.168.2.184:8009/v1/mps_on_publish, request={"action":"on_publish","client_id":1406,"ip":"192.168.2.184","vhost":"__defaultVhost__","app":"live","tcUrl":"rtmp://192.168.2.184:1035/live","stream":"34020000001320000033_MAIN","param":""}, response={"errorCode":"0","errorMsg":"SUCCESS"}
+[2020-11-26 10:49:20.712][Trace][parse_exec_publish][129115][145] ignore disabled exec for vhost=__defaultVhost__
+[2020-11-26 10:49:20.713][Trace][do_publishing][129115][891] start publish mr=0/350, p1stpt=20000, pnt=5000, tcp_nodelay=0
+[2020-11-26 10:49:20.713][Trace][on_video][129115][1074] 56B video sh,  codec(7, profile=High, level=3.1, 128x1072, 0kbps, 0.0fps, 0.0s)
+[2020-11-26 10:49:21.506][Trace][on_unpublish][129115][2599] cleanup when unpublish, sid=/live/34020000001320000033_MAIN
+[2020-11-26 10:49:21.507][Trace][http_unmount][129115][986] http stream unmount sid = /live/34020000001320000033_MAIN
+[2020-11-26 10:49:21.507][Trace][fd2conn][129115][1541] accept conn ip= 192.168.2.184, port = 60194
+[2020-11-26 10:49:21.507][Trace][do_cycle][129115][154] RTMP client ip=192.168.2.184, fd=13
+[2020-11-26 10:49:21.508][Trace][handshake_with_client][129115][1125] simple handshake success.
+[2020-11-26 10:49:21.510][Trace][on_unpublish][129115][212] http: on_unpublish ok, client_id=1406, url=http://192.168.2.184:8009/v1/mps_on_unpublish, request={"action":"on_unpublish","client_id":1406,"ip":"192.168.2.184","vhost":"__defaultVhost__","app":"live","stream":"34020000001320000033_MAIN","param":""}, response={"errorCode":"0","errorMsg":"SUCCESS"}
+[2020-11-26 10:49:21.510][Warn][cycle][129115][192][0] client disconnect peer. ret=1007
+[2020-11-26 10:49:21.548][Trace][do_cycle][129115][180] connect app, tcUrl=rtmp://192.168.2.184:1035/live, pageUrl=, swfUrl=, schema=rtmp, vhost=192.168.2.184, port=1035, app=live, args=null
+[2020-11-26 10:49:21.548][Trace][print_debug_info][129115][1560] protocol in.buffer=0, in.ack=0, out.ack=0, in.chunk=128, out.chunk=128
+[2020-11-26 10:49:21.588][Trace][stream_service_cycle][129115][455] client identified, type=fmle-publish, vhost=192.168.2.184, app=live, stream=34020000001320000033_MAIN, param=, duration=0ms
+[2020-11-26 10:49:21.589][Trace][stream_service_cycle][129115][475] connected stream, tcUrl=rtmp://192.168.2.184:1035/live, pageUrl=, swfUrl=, schema=rtmp, vhost=__defaultVhost__, port=1035, app=live, stream=34020000001320000033_MAIN, param=, args=null
+[2020-11-26 10:49:21.589][Trace][stream_service_cycle][129115][524] source url=/live/34020000001320000033_MAIN, ip=192.168.2.184, cache=1, is_edge=0, source_id=[129115][-1]
+[2020-11-26 10:49:21.632][Trace][on_publish][129115][169] http: on_publish ok, client_id=1407, url=http://192.168.2.184:8009/v1/mps_on_publish, request={"action":"on_publish","client_id":1407,"ip":"192.168.2.184","vhost":"__defaultVhost__","app":"live","tcUrl":"rtmp://192.168.2.184:1035/live","stream":"34020000001320000033_MAIN","param":""}, response={"errorCode":"0","errorMsg":"SUCCESS"}
+[2020-11-26 10:49:21.632][Trace][parse_exec_publish][129115][145] ignore disabled exec for vhost=__defaultVhost__
+[2020-11-26 10:49:21.633][Trace][do_publishing][129115][891] start publish mr=0/350, p1stpt=20000, pnt=5000, tcp_nodelay=0
+[2020-11-26 10:49:21.633][Trace][on_video][129115][1074] 56B video sh,  codec(7, profile=High, level=3.1, 128x1072, 0kbps, 0.0fps, 0.0s)
+[2020-11-26 10:49:23.506][Trace][on_unpublish][129115][2599] cleanup when unpublish, sid=/live/34020000001320000033_MAIN
+[2020-11-26 10:49:23.506][Trace][http_unmount][129115][986] http stream unmount sid = /live/34020000001320000033_MAIN
+[2020-11-26 10:49:23.506][Trace][fd2conn][129115][1541] accept conn ip= 192.168.2.184, port = 60210
+[2020-11-26 10:49:23.506][Trace][do_cycle][129115][154] RTMP client ip=192.168.2.184, fd=14
+[2020-11-26 10:49:23.507][Trace][handshake_with_client][129115][1125] simple handshake success.
+[2020-11-26 10:49:23.509][Trace][on_unpublish][129115][212] http: on_unpublish ok, client_id=1407, url=http://192.168.2.184:8009/v1/mps_on_unpublish, request={"action":"on_unpublish","client_id":1407,"ip":"192.168.2.184","vhost":"__defaultVhost__","app":"live","stream":"34020000001320000033_MAIN","param":""}, response={"errorCode":"0","errorMsg":"SUCCESS"}
+[2020-11-26 10:49:23.509][Warn][cycle][129115][192][0] client disconnect peer. ret=1007
+[2020-11-26 10:49:23.546][Trace][do_cycle][129115][180] connect app, tcUrl=rtmp://192.168.2.184:1035/live, pageUrl=, swfUrl=, schema=rtmp, vhost=192.168.2.184, port=1035, app=live, args=null
+[2020-11-26 10:49:23.546][Trace][print_debug_info][129115][1560] protocol in.buffer=0, in.ack=0, out.ack=0, in.chunk=128, out.chunk=128
+[2020-11-26 10:49:23.587][Trace][stream_service_cycle][129115][455] client identified, type=fmle-publish, vhost=192.168.2.184, app=live, stream=34020000001320000033_MAIN, param=, duration=0ms
+[2020-11-26 10:49:23.587][Trace][stream_service_cycle][129115][475] connected stream, tcUrl=rtmp://192.168.2.184:1035/live, pageUrl=, swfUrl=, schema=rtmp, vhost=__defaultVhost__, port=1035, app=live, stream=34020000001320000033_MAIN, param=, args=null
+[2020-11-26 10:49:23.587][Trace][stream_service_cycle][129115][524] source url=/live/34020000001320000033_MAIN, ip=192.168.2.184, cache=1, is_edge=0, source_id=[129115][-1]
+[2020-11-26 10:49:23.629][Trace][on_publish][129115][169] http: on_publish ok, client_id=1408, url=http://192.168.2.184:8009/v1/mps_on_publish, request={"action":"on_publish","client_id":1408,"ip":"192.168.2.184","vhost":"__defaultVhost__","app":"live","tcUrl":"rtmp://192.168.2.184:1035/live","stream":"34020000001320000033_MAIN","param":""}, response={"errorCode":"0","errorMsg":"SUCCESS"}
+[2020-11-26 10:49:23.630][Trace][parse_exec_publish][129115][145] ignore disabled exec for vhost=__defaultVhost__
+[2020-11-26 10:49:23.630][Trace][do_publishing][129115][891] start publish mr=0/350, p1stpt=20000, pnt=5000, tcp_nodelay=0
+[2020-11-26 10:49:23.630][Trace][on_video][129115][1074] 56B video sh,  codec(7, profile=High, level=3.1, 128x1072, 0kbps, 0.0fps, 0.0s)
+[2020-11-26 10:49:24.558][Trace][on_unpublish][129115][2599] cleanup when unpublish, sid=/live/34020000001320000033_MAIN
+[2020-11-26 10:49:24.558][Trace][http_unmount][129115][986] http stream unmount sid = /live/34020000001320000033_MAIN
+[2020-11-26 10:49:24.558][Trace][fd2conn][129115][1541] accept conn ip= 192.168.2.184, port = 60226
+[2020-11-26 10:49:24.558][Trace][do_cycle][129115][154] RTMP client ip=192.168.2.184, fd=13
+[2020-11-26 10:49:24.559][Trace][handshake_with_client][129115][1125] simple handshake success.
+[2020-11-26 10:49:24.561][Trace][on_unpublish][129115][212] http: on_unpublish ok, client_id=1408, url=http://192.168.2.184:8009/v1/mps_on_unpublish, request={"action":"on_unpublish","client_id":1408,"ip":"192.168.2.184","vhost":"__defaultVhost__","app":"live","stream":"34020000001320000033_MAIN","param":""}, response={"errorCode":"0","errorMsg":"SUCCESS"}
+[2020-11-26 10:49:24.561][Warn][cycle][129115][192][0] client disconnect peer. ret=1007
+[2020-11-26 10:49:24.599][Trace][do_cycle][129115][180] connect app, tcUrl=rtmp://192.168.2.184:1035/live, pageUrl=, swfUrl=, schema=rtmp, vhost=192.168.2.184, port=1035, app=live, args=null
+[2020-11-26 10:49:24.599][Trace][print_debug_info][129115][1560] protocol in.buffer=0, in.ack=0, out.ack=0, in.chunk=128, out.chunk=128
+[2020-11-26 10:49:24.640][Trace][stream_service_cycle][129115][455] client identified, type=fmle-publish, vhost=192.168.2.184, app=live, stream=34020000001320000033_MAIN, param=, duration=0ms
+[2020-11-26 10:49:24.640][Trace][stream_service_cycle][129115][475] connected stream, tcUrl=rtmp://192.168.2.184:1035/live, pageUrl=, swfUrl=, schema=rtmp, vhost=__defaultVhost__, port=1035, app=live, stream=34020000001320000033_MAIN, param=, args=null
+[2020-11-26 10:49:24.640][Trace][stream_service_cycle][129115][524] source url=/live/34020000001320000033_MAIN, ip=192.168.2.184, cache=1, is_edge=0, source_id=[129115][-1]
+[2020-11-26 10:49:24.684][Trace][on_publish][129115][169] http: on_publish ok, client_id=1409, url=http://192.168.2.184:8009/v1/mps_on_publish, request={"action":"on_publish","client_id":1409,"ip":"192.168.2.184","vhost":"__defaultVhost__","app":"live","tcUrl":"rtmp://192.168.2.184:1035/live","stream":"34020000001320000033_MAIN","param":""}, response={"errorCode":"0","errorMsg":"SUCCESS"}
+[2020-11-26 10:49:24.684][Trace][parse_exec_publish][129115][145] ignore disabled exec for vhost=__defaultVhost__
+[2020-11-26 10:49:24.684][Trace][do_publishing][129115][891] start publish mr=0/350, p1stpt=20000, pnt=5000, tcp_nodelay=0
+[2020-11-26 10:49:24.684][Trace][on_video][129115][1074] 56B video sh,  codec(7, profile=High, level=3.1, 128x1072, 0kbps, 0.0fps, 0.0s)
+[2020-11-26 10:49:25.052][Trace][process_request][129115][1864] HTTP API GET http://192.168.2.184:1985/v1/streams2, content-length=-1, chunked=0/0
+[2020-11-26 10:49:27.533][Trace][on_unpublish][129115][2599] cleanup when unpublish, sid=/live/34020000001320000033_MAIN
+[2020-11-26 10:49:27.533][Trace][http_unmount][129115][986] http stream unmount sid = /live/34020000001320000033_MAIN
+[2020-11-26 10:49:27.534][Trace][fd2conn][129115][1541] accept conn ip= 192.168.2.184, port = 60242
+[2020-11-26 10:49:27.534][Trace][do_cycle][129115][154] RTMP client ip=192.168.2.184, fd=14
+[2020-11-26 10:49:27.535][Trace][handshake_with_client][129115][1125] simple handshake success.
+[2020-11-26 10:49:27.536][Trace][on_unpublish][129115][212] http: on_unpublish ok, client_id=1409, url=http://192.168.2.184:8009/v1/mps_on_unpublish, request={"action":"on_unpublish","client_id":1409,"ip":"192.168.2.184","vhost":"__defaultVhost__","app":"live","stream":"34020000001320000033_MAIN","param":""}, response={"errorCode":"0","errorMsg":"SUCCESS"}
+[2020-11-26 10:49:27.536][Warn][cycle][129115][192][0] client disconnect peer. ret=1007
+[2020-11-26 10:49:27.574][Trace][do_cycle][129115][180] connect app, tcUrl=rtmp://192.168.2.184:1035/live, pageUrl=, swfUrl=, schema=rtmp, vhost=192.168.2.184, port=1035, app=live, args=null
+[2020-11-26 10:49:27.575][Trace][print_debug_info][129115][1560] protocol in.buffer=0, in.ack=0, out.ack=0, in.chunk=128, out.chunk=128
+[2020-11-26 10:49:27.614][Trace][stream_service_cycle][129115][455] client identified, type=fmle-publish, vhost=192.168.2.184, app=live, stream=34020000001320000033_MAIN, param=, duration=0ms
+[2020-11-26 10:49:27.615][Trace][stream_service_cycle][129115][475] connected stream, tcUrl=rtmp://192.168.2.184:1035/live, pageUrl=, swfUrl=, schema=rtmp, vhost=__defaultVhost__, port=1035, app=live, stream=34020000001320000033_MAIN, param=, args=null
+[2020-11-26 10:49:27.615][Trace][stream_service_cycle][129115][524] source url=/live/34020000001320000033_MAIN, ip=192.168.2.184, cache=1, is_edge=0, source_id=[129115][-1]
+[2020-11-26 10:49:27.658][Trace][on_publish][129115][169] http: on_publish ok, client_id=1410, url=http://192.168.2.184:8009/v1/mps_on_publish, request={"action":"on_publish","client_id":1410,"ip":"192.168.2.184","vhost":"__defaultVhost__","app":"live","tcUrl":"rtmp://192.168.2.184:1035/live","stream":"34020000001320000033_MAIN","param":""}, response={"errorCode":"0","errorMsg":"SUCCESS"}
+[2020-11-26 10:49:27.658][Trace][parse_exec_publish][129115][145] ignore disabled exec for vhost=__defaultVhost__
+[2020-11-26 10:49:27.658][Trace][do_publishing][129115][891] start publish mr=0/350, p1stpt=20000, pnt=5000, tcp_nodelay=0
+[2020-11-26 10:49:27.658][Trace][on_video][129115][1074] 56B video sh,  codec(7, profile=High, level=3.1, 128x1072, 0kbps, 0.0fps, 0.0s)
+[2020-11-26 10:49:28.519][Trace][fd2conn][129115][1541] accept conn ip= 192.168.2.184, port = 60258
+[2020-11-26 10:49:28.519][Trace][do_cycle][129115][154] RTMP client ip=192.168.2.184, fd=12
+[2020-11-26 10:49:28.519][Trace][on_unpublish][129115][2599] cleanup when unpublish, sid=/live/34020000001320000033_MAIN
+[2020-11-26 10:49:28.519][Trace][http_unmount][129115][986] http stream unmount sid = /live/34020000001320000033_MAIN
+[2020-11-26 10:49:28.521][Trace][handshake_with_client][129115][1125] simple handshake success.
+[2020-11-26 10:49:28.526][Trace][on_unpublish][129115][212] http: on_unpublish ok, client_id=1410, url=http://192.168.2.184:8009/v1/mps_on_unpublish, request={"action":"on_unpublish","client_id":1410,"ip":"192.168.2.184","vhost":"__defaultVhost__","app":"live","stream":"34020000001320000033_MAIN","param":""}, response={"errorCode":"0","errorMsg":"SUCCESS"}
+[2020-11-26 10:49:28.526][Warn][cycle][129115][192][0] client disconnect peer. ret=1007
+[2020-11-26 10:49:28.561][Trace][do_cycle][129115][180] connect app, tcUrl=rtmp://192.168.2.184:1035/live, pageUrl=, swfUrl=, schema=rtmp, vhost=192.168.2.184, port=1035, app=live, args=null
+[2020-11-26 10:49:28.561][Trace][print_debug_info][129115][1560] protocol in.buffer=0, in.ack=0, out.ack=0, in.chunk=128, out.chunk=128
+[2020-11-26 10:49:28.602][Trace][stream_service_cycle][129115][455] client identified, type=fmle-publish, vhost=192.168.2.184, app=live, stream=34020000001320000033_MAIN, param=, duration=0ms
+[2020-11-26 10:49:28.602][Trace][stream_service_cycle][129115][475] connected stream, tcUrl=rtmp://192.168.2.184:1035/live, pageUrl=, swfUrl=, schema=rtmp, vhost=__defaultVhost__, port=1035, app=live, stream=34020000001320000033_MAIN, param=, args=null
+[2020-11-26 10:49:28.602][Trace][stream_service_cycle][129115][524] source url=/live/34020000001320000033_MAIN, ip=192.168.2.184, cache=1, is_edge=0, source_id=[129115][-1]
+[2020-11-26 10:49:28.645][Trace][on_publish][129115][169] http: on_publish ok, client_id=1411, url=http://192.168.2.184:8009/v1/mps_on_publish, request={"action":"on_publish","client_id":1411,"ip":"192.168.2.184","vhost":"__defaultVhost__","app":"live","tcUrl":"rtmp://192.168.2.184:1035/live","stream":"34020000001320000033_MAIN","param":""}, response={"errorCode":"0","errorMsg":"SUCCESS"}
+[2020-11-26 10:49:28.646][Trace][parse_exec_publish][129115][145] ignore disabled exec for vhost=__defaultVhost__
+[2020-11-26 10:49:28.646][Trace][do_publishing][129115][891] start publish mr=0/350, p1stpt=20000, pnt=5000, tcp_nodelay=0
+[2020-11-26 10:49:28.646][Trace][on_video][129115][1074] 56B video sh,  codec(7, profile=High, level=3.1, 128x1072, 0kbps, 0.0fps, 0.0s)
+[2020-11-26 10:49:29.987][Trace][on_unpublish][129115][2599] cleanup when unpublish, sid=/live/34020000001320000033_MAIN
+[2020-11-26 10:49:29.987][Trace][http_unmount][129115][986] http stream unmount sid = /live/34020000001320000033_MAIN
+[2020-11-26 10:49:29.990][Trace][on_unpublish][129115][212] http: on_unpublish ok, client_id=1411, url=http://192.168.2.184:8009/v1/mps_on_unpublish, request={"action":"on_unpublish","client_id":1411,"ip":"192.168.2.184","vhost":"__defaultVhost__","app":"live","stream":"34020000001320000033_MAIN","param":""}, response={"errorCode":"0","errorMsg":"SUCCESS"}
+[2020-11-26 10:49:29.990][Warn][cycle][129115][192][0] client disconnect peer. ret=1007
+[2020-11-26 10:49:30.049][Trace][process_request][129115][1864] HTTP API GET http://192.168.2.184:1985/v1/streams2, content-length=-1, chunked=0/0
+[2020-11-26 10:49:30.360][Trace][fd2conn][129115][1541] accept conn ip= 192.168.2.184, port = 60274
+[2020-11-26 10:49:30.360][Trace][do_cycle][129115][154] RTMP client ip=192.168.2.184, fd=12
+[2020-11-26 10:49:30.361][Trace][handshake_with_client][129115][1125] simple handshake success.
+[2020-11-26 10:49:30.400][Trace][do_cycle][129115][180] connect app, tcUrl=rtmp://192.168.2.184:1035/live, pageUrl=, swfUrl=, schema=rtmp, vhost=192.168.2.184, port=1035, app=live, args=null
+[2020-11-26 10:49:30.400][Trace][print_debug_info][129115][1560] protocol in.buffer=0, in.ack=0, out.ack=0, in.chunk=128, out.chunk=128
+[2020-11-26 10:49:30.440][Trace][stream_service_cycle][129115][455] client identified, type=fmle-publish, vhost=192.168.2.184, app=live, stream=34020000001320000033_MAIN, param=, duration=0ms
+[2020-11-26 10:49:30.440][Trace][stream_service_cycle][129115][475] connected stream, tcUrl=rtmp://192.168.2.184:1035/live, pageUrl=, swfUrl=, schema=rtmp, vhost=__defaultVhost__, port=1035, app=live, stream=34020000001320000033_MAIN, param=, args=null
+[2020-11-26 10:49:30.440][Trace][stream_service_cycle][129115][524] source url=/live/34020000001320000033_MAIN, ip=192.168.2.184, cache=1, is_edge=0, source_id=[129115][-1]
+[2020-11-26 10:49:30.484][Trace][on_publish][129115][169] http: on_publish ok, client_id=1412, url=http://192.168.2.184:8009/v1/mps_on_publish, request={"action":"on_publish","client_id":1412,"ip":"192.168.2.184","vhost":"__defaultVhost__","app":"live","tcUrl":"rtmp://192.168.2.184:1035/live","stream":"34020000001320000033_MAIN","param":""}, response={"errorCode":"0","errorMsg":"SUCCESS"}
+[2020-11-26 10:49:30.484][Trace][parse_exec_publish][129115][145] ignore disabled exec for vhost=__defaultVhost__
+[2020-11-26 10:49:30.484][Trace][do_publishing][129115][891] start publish mr=0/350, p1stpt=20000, pnt=5000, tcp_nodelay=0
+[2020-11-26 10:49:30.485][Trace][on_video][129115][1074] 56B video sh,  codec(7, profile=High, level=3.1, 128x1072, 0kbps, 0.0fps, 0.0s)
+[2020-11-26 10:49:32.595][Trace][on_unpublish][129115][2599] cleanup when unpublish, sid=/live/34020000001320000033_MAIN
+[2020-11-26 10:49:32.595][Trace][http_unmount][129115][986] http stream unmount sid = /live/34020000001320000033_MAIN
+[2020-11-26 10:49:32.595][Trace][fd2conn][129115][1541] accept conn ip= 192.168.2.184, port = 60290
+[2020-11-26 10:49:32.595][Trace][do_cycle][129115][154] RTMP client ip=192.168.2.184, fd=14
+[2020-11-26 10:49:32.595][Trace][handshake_with_client][129115][1125] simple handshake success.
+[2020-11-26 10:49:32.598][Trace][on_unpublish][129115][212] http: on_unpublish ok, client_id=1412, url=http://192.168.2.184:8009/v1/mps_on_unpublish, request={"action":"on_unpublish","client_id":1412,"ip":"192.168.2.184","vhost":"__defaultVhost__","app":"live","stream":"34020000001320000033_MAIN","param":""}, response={"errorCode":"0","errorMsg":"SUCCESS"}
+[2020-11-26 10:49:32.598][Warn][cycle][129115][192][0] client disconnect peer. ret=1007
+[2020-11-26 10:49:32.635][Trace][do_cycle][129115][180] connect app, tcUrl=rtmp://192.168.2.184:1035/live, pageUrl=, swfUrl=, schema=rtmp, vhost=192.168.2.184, port=1035, app=live, args=null
+[2020-11-26 10:49:32.635][Trace][print_debug_info][129115][1560] protocol in.buffer=0, in.ack=0, out.ack=0, in.chunk=128, out.chunk=128
+[2020-11-26 10:49:32.675][Trace][stream_service_cycle][129115][455] client identified, type=fmle-publish, vhost=192.168.2.184, app=live, stream=34020000001320000033_MAIN, param=, duration=0ms
+[2020-11-26 10:49:32.675][Trace][stream_service_cycle][129115][475] connected stream, tcUrl=rtmp://192.168.2.184:1035/live, pageUrl=, swfUrl=, schema=rtmp, vhost=__defaultVhost__, port=1035, app=live, stream=34020000001320000033_MAIN, param=, args=null
+[2020-11-26 10:49:32.675][Trace][stream_service_cycle][129115][524] source url=/live/34020000001320000033_MAIN, ip=192.168.2.184, cache=1, is_edge=0, source_id=[129115][-1]
+[2020-11-26 10:49:32.719][Trace][on_publish][129115][169] http: on_publish ok, client_id=1413, url=http://192.168.2.184:8009/v1/mps_on_publish, request={"action":"on_publish","client_id":1413,"ip":"192.168.2.184","vhost":"__defaultVhost__","app":"live","tcUrl":"rtmp://192.168.2.184:1035/live","stream":"34020000001320000033_MAIN","param":""}, response={"errorCode":"0","errorMsg":"SUCCESS"}
+[2020-11-26 10:49:32.719][Trace][parse_exec_publish][129115][145] ignore disabled exec for vhost=__defaultVhost__
+[2020-11-26 10:49:32.719][Trace][do_publishing][129115][891] start publish mr=0/350, p1stpt=20000, pnt=5000, tcp_nodelay=0
+[2020-11-26 10:49:32.720][Trace][on_video][129115][1074] 56B video sh,  codec(7, profile=High, level=3.1, 128x1072, 0kbps, 0.0fps, 0.0s)
+[2020-11-26 10:49:33.610][Trace][on_unpublish][129115][2599] cleanup when unpublish, sid=/live/34020000001320000033_MAIN
+[2020-11-26 10:49:33.610][Trace][http_unmount][129115][986] http stream unmount sid = /live/34020000001320000033_MAIN
+[2020-11-26 10:49:33.610][Trace][fd2conn][129115][1541] accept conn ip= 192.168.2.184, port = 60304
+[2020-11-26 10:49:33.610][Trace][do_cycle][129115][154] RTMP client ip=192.168.2.184, fd=13
+[2020-11-26 10:49:33.611][Trace][handshake_with_client][129115][1125] simple handshake success.
+[2020-11-26 10:49:33.613][Trace][on_unpublish][129115][212] http: on_unpublish ok, client_id=1413, url=http://192.168.2.184:8009/v1/mps_on_unpublish, request={"action":"on_unpublish","client_id":1413,"ip":"192.168.2.184","vhost":"__defaultVhost__","app":"live","stream":"34020000001320000033_MAIN","param":""}, response={"errorCode":"0","errorMsg":"SUCCESS"}
+[2020-11-26 10:49:33.613][Warn][cycle][129115][192][0] client disconnect peer. ret=1007
+[2020-11-26 10:49:33.650][Trace][do_cycle][129115][180] connect app, tcUrl=rtmp://192.168.2.184:1035/live, pageUrl=, swfUrl=, schema=rtmp, vhost=192.168.2.184, port=1035, app=live, args=null
+[2020-11-26 10:49:33.650][Trace][print_debug_info][129115][1560] protocol in.buffer=0, in.ack=0, out.ack=0, in.chunk=128, out.chunk=128
+[2020-11-26 10:49:33.691][Trace][stream_service_cycle][129115][455] client identified, type=fmle-publish, vhost=192.168.2.184, app=live, stream=34020000001320000033_MAIN, param=, duration=0ms
+[2020-11-26 10:49:33.691][Trace][stream_service_cycle][129115][475] connected stream, tcUrl=rtmp://192.168.2.184:1035/live, pageUrl=, swfUrl=, schema=rtmp, vhost=__defaultVhost__, port=1035, app=live, stream=34020000001320000033_MAIN, param=, args=null
+[2020-11-26 10:49:33.691][Trace][stream_service_cycle][129115][524] source url=/live/34020000001320000033_MAIN, ip=192.168.2.184, cache=1, is_edge=0, source_id=[129115][-1]
+[2020-11-26 10:49:33.735][Trace][on_publish][129115][169] http: on_publish ok, client_id=1414, url=http://192.168.2.184:8009/v1/mps_on_publish, request={"action":"on_publish","client_id":1414,"ip":"192.168.2.184","vhost":"__defaultVhost__","app":"live","tcUrl":"rtmp://192.168.2.184:1035/live","stream":"34020000001320000033_MAIN","param":""}, response={"errorCode":"0","errorMsg":"SUCCESS"}
+[2020-11-26 10:49:33.735][Trace][parse_exec_publish][129115][145] ignore disabled exec for vhost=__defaultVhost__
+[2020-11-26 10:49:33.735][Trace][do_publishing][129115][891] start publish mr=0/350, p1stpt=20000, pnt=5000, tcp_nodelay=0
+[2020-11-26 10:49:33.736][Trace][on_video][129115][1074] 56B video sh,  codec(7, profile=High, level=3.1, 128x1072, 0kbps, 0.0fps, 0.0s)
+[2020-11-26 10:49:34.610][Trace][on_unpublish][129115][2599] cleanup when unpublish, sid=/live/34020000001320000033_MAIN
+[2020-11-26 10:49:34.611][Trace][http_unmount][129115][986] http stream unmount sid = /live/34020000001320000033_MAIN
+[2020-11-26 10:49:34.611][Trace][fd2conn][129115][1541] accept conn ip= 192.168.2.184, port = 60320
+[2020-11-26 10:49:34.611][Trace][do_cycle][129115][154] RTMP client ip=192.168.2.184, fd=14
+[2020-11-26 10:49:34.613][Trace][handshake_with_client][129115][1125] simple handshake success.
+[2020-11-26 10:49:34.614][Trace][on_unpublish][129115][212] http: on_unpublish ok, client_id=1414, url=http://192.168.2.184:8009/v1/mps_on_unpublish, request={"action":"on_unpublish","client_id":1414,"ip":"192.168.2.184","vhost":"__defaultVhost__","app":"live","stream":"34020000001320000033_MAIN","param":""}, response={"errorCode":"0","errorMsg":"SUCCESS"}
+[2020-11-26 10:49:34.614][Warn][cycle][129115][192][0] client disconnect peer. ret=1007
+[2020-11-26 10:49:34.652][Trace][do_cycle][129115][180] connect app, tcUrl=rtmp://192.168.2.184:1035/live, pageUrl=, swfUrl=, schema=rtmp, vhost=192.168.2.184, port=1035, app=live, args=null
+[2020-11-26 10:49:34.652][Trace][print_debug_info][129115][1560] protocol in.buffer=0, in.ack=0, out.ack=0, in.chunk=128, out.chunk=128
+[2020-11-26 10:49:34.692][Trace][stream_service_cycle][129115][455] client identified, type=fmle-publish, vhost=192.168.2.184, app=live, stream=34020000001320000033_MAIN, param=, duration=0ms
+[2020-11-26 10:49:34.692][Trace][stream_service_cycle][129115][475] connected stream, tcUrl=rtmp://192.168.2.184:1035/live, pageUrl=, swfUrl=, schema=rtmp, vhost=__defaultVhost__, port=1035, app=live, stream=34020000001320000033_MAIN, param=, args=null
+[2020-11-26 10:49:34.692][Trace][stream_service_cycle][129115][524] source url=/live/34020000001320000033_MAIN, ip=192.168.2.184, cache=1, is_edge=0, source_id=[129115][-1]
+[2020-11-26 10:49:34.735][Trace][on_publish][129115][169] http: on_publish ok, client_id=1415, url=http://192.168.2.184:8009/v1/mps_on_publish, request={"action":"on_publish","client_id":1415,"ip":"192.168.2.184","vhost":"__defaultVhost__","app":"live","tcUrl":"rtmp://192.168.2.184:1035/live","stream":"34020000001320000033_MAIN","param":""}, response={"errorCode":"0","errorMsg":"SUCCESS"}
+[2020-11-26 10:49:34.735][Trace][parse_exec_publish][129115][145] ignore disabled exec for vhost=__defaultVhost__
+[2020-11-26 10:49:34.735][Trace][do_publishing][129115][891] start publish mr=0/350, p1stpt=20000, pnt=5000, tcp_nodelay=0
+[2020-11-26 10:49:34.735][Trace][on_video][129115][1074] 56B video sh,  codec(7, profile=High, level=3.1, 128x1072, 0kbps, 0.0fps, 0.0s)
+[2020-11-26 10:49:35.050][Trace][process_request][129115][1864] HTTP API GET http://192.168.2.184:1985/v1/streams2, content-length=-1, chunked=0/0
+[2020-11-26 10:49:35.569][Trace][on_unpublish][129115][2599] cleanup when unpublish, sid=/live/34020000001320000033_MAIN
+[2020-11-26 10:49:35.569][Trace][http_unmount][129115][986] http stream unmount sid = /live/34020000001320000033_MAIN
+[2020-11-26 10:49:35.570][Trace][fd2conn][129115][1541] accept conn ip= 192.168.2.184, port = 60336
+[2020-11-26 10:49:35.570][Trace][do_cycle][129115][154] RTMP client ip=192.168.2.184, fd=13
+[2020-11-26 10:49:35.570][Trace][handshake_with_client][129115][1125] simple handshake success.
+[2020-11-26 10:49:35.572][Trace][on_unpublish][129115][212] http: on_unpublish ok, client_id=1415, url=http://192.168.2.184:8009/v1/mps_on_unpublish, request={"action":"on_unpublish","client_id":1415,"ip":"192.168.2.184","vhost":"__defaultVhost__","app":"live","stream":"34020000001320000033_MAIN","param":""}, response={"errorCode":"0","errorMsg":"SUCCESS"}
+[2020-11-26 10:49:35.572][Warn][cycle][129115][192][0] client disconnect peer. ret=1007
+[2020-11-26 10:49:35.610][Trace][do_cycle][129115][180] connect app, tcUrl=rtmp://192.168.2.184:1035/live, pageUrl=, swfUrl=, schema=rtmp, vhost=192.168.2.184, port=1035, app=live, args=null
+[2020-11-26 10:49:35.610][Trace][print_debug_info][129115][1560] protocol in.buffer=0, in.ack=0, out.ack=0, in.chunk=128, out.chunk=128
+[2020-11-26 10:49:35.650][Trace][stream_service_cycle][129115][455] client identified, type=fmle-publish, vhost=192.168.2.184, app=live, stream=34020000001320000033_MAIN, param=, duration=0ms
+[2020-11-26 10:49:35.650][Trace][stream_service_cycle][129115][475] connected stream, tcUrl=rtmp://192.168.2.184:1035/live, pageUrl=, swfUrl=, schema=rtmp, vhost=__defaultVhost__, port=1035, app=live, stream=34020000001320000033_MAIN, param=, args=null
+[2020-11-26 10:49:35.650][Trace][stream_service_cycle][129115][524] source url=/live/34020000001320000033_MAIN, ip=192.168.2.184, cache=1, is_edge=0, source_id=[129115][-1]
+[2020-11-26 10:49:35.693][Trace][on_publish][129115][169] http: on_publish ok, client_id=1416, url=http://192.168.2.184:8009/v1/mps_on_publish, request={"action":"on_publish","client_id":1416,"ip":"192.168.2.184","vhost":"__defaultVhost__","app":"live","tcUrl":"rtmp://192.168.2.184:1035/live","stream":"34020000001320000033_MAIN","param":""}, response={"errorCode":"0","errorMsg":"SUCCESS"}
+[2020-11-26 10:49:35.693][Trace][parse_exec_publish][129115][145] ignore disabled exec for vhost=__defaultVhost__
+[2020-11-26 10:49:35.693][Trace][do_publishing][129115][891] start publish mr=0/350, p1stpt=20000, pnt=5000, tcp_nodelay=0
+[2020-11-26 10:49:35.693][Trace][on_video][129115][1074] 56B video sh,  codec(7, profile=High, level=3.1, 128x1072, 0kbps, 0.0fps, 0.0s)
+[2020-11-26 10:49:38.626][Trace][on_unpublish][129115][2599] cleanup when unpublish, sid=/live/34020000001320000033_MAIN
+[2020-11-26 10:49:38.626][Trace][http_unmount][129115][986] http stream unmount sid = /live/34020000001320000033_MAIN
+[2020-11-26 10:49:38.627][Trace][fd2conn][129115][1541] accept conn ip= 192.168.2.184, port = 60354
+[2020-11-26 10:49:38.627][Trace][do_cycle][129115][154] RTMP client ip=192.168.2.184, fd=14
+[2020-11-26 10:49:38.627][Trace][handshake_with_client][129115][1125] simple handshake success.
+[2020-11-26 10:49:38.629][Trace][on_unpublish][129115][212] http: on_unpublish ok, client_id=1416, url=http://192.168.2.184:8009/v1/mps_on_unpublish, request={"action":"on_unpublish","client_id":1416,"ip":"192.168.2.184","vhost":"__defaultVhost__","app":"live","stream":"34020000001320000033_MAIN","param":""}, response={"errorCode":"0","errorMsg":"SUCCESS"}
+[2020-11-26 10:49:38.629][Warn][cycle][129115][192][0] client disconnect peer. ret=1007
+[2020-11-26 10:49:38.667][Trace][do_cycle][129115][180] connect app, tcUrl=rtmp://192.168.2.184:1035/live, pageUrl=, swfUrl=, schema=rtmp, vhost=192.168.2.184, port=1035, app=live, args=null
+[2020-11-26 10:49:38.667][Trace][print_debug_info][129115][1560] protocol in.buffer=0, in.ack=0, out.ack=0, in.chunk=128, out.chunk=128
+[2020-11-26 10:49:38.707][Trace][stream_service_cycle][129115][455] client identified, type=fmle-publish, vhost=192.168.2.184, app=live, stream=34020000001320000033_MAIN, param=, duration=0ms
+[2020-11-26 10:49:38.707][Trace][stream_service_cycle][129115][475] connected stream, tcUrl=rtmp://192.168.2.184:1035/live, pageUrl=, swfUrl=, schema=rtmp, vhost=__defaultVhost__, port=1035, app=live, stream=34020000001320000033_MAIN, param=, args=null
+[2020-11-26 10:49:38.707][Trace][stream_service_cycle][129115][524] source url=/live/34020000001320000033_MAIN, ip=192.168.2.184, cache=1, is_edge=0, source_id=[129115][-1]
+[2020-11-26 10:49:38.751][Trace][on_publish][129115][169] http: on_publish ok, client_id=1417, url=http://192.168.2.184:8009/v1/mps_on_publish, request={"action":"on_publish","client_id":1417,"ip":"192.168.2.184","vhost":"__defaultVhost__","app":"live","tcUrl":"rtmp://192.168.2.184:1035/live","stream":"34020000001320000033_MAIN","param":""}, response={"errorCode":"0","errorMsg":"SUCCESS"}
+[2020-11-26 10:49:38.751][Trace][parse_exec_publish][129115][145] ignore disabled exec for vhost=__defaultVhost__
+[2020-11-26 10:49:38.751][Trace][do_publishing][129115][891] start publish mr=0/350, p1stpt=20000, pnt=5000, tcp_nodelay=0
+[2020-11-26 10:49:38.752][Trace][on_video][129115][1074] 56B video sh,  codec(7, profile=High, level=3.1, 128x1072, 0kbps, 0.0fps, 0.0s)
+[2020-11-26 10:49:40.049][Trace][process_request][129115][1864] HTTP API GET http://192.168.2.184:1985/v1/streams2, content-length=-1, chunked=0/0
+[2020-11-26 10:49:40.998][Trace][on_unpublish][129115][2599] cleanup when unpublish, sid=/live/34020000001320000033_MAIN
+[2020-11-26 10:49:40.998][Trace][http_unmount][129115][986] http stream unmount sid = /live/34020000001320000033_MAIN
+[2020-11-26 10:49:41.001][Trace][on_unpublish][129115][212] http: on_unpublish ok, client_id=1417, url=http://192.168.2.184:8009/v1/mps_on_unpublish, request={"action":"on_unpublish","client_id":1417,"ip":"192.168.2.184","vhost":"__defaultVhost__","app":"live","stream":"34020000001320000033_MAIN","param":""}, response={"errorCode":"0","errorMsg":"SUCCESS"}
+[2020-11-26 10:49:41.001][Warn][cycle][129115][192][0] client disconnect peer. ret=1007
+[2020-11-26 10:49:45.049][Trace][process_request][129115][1864] HTTP API GET http://192.168.2.184:1985/v1/streams2, content-length=-1, chunked=0/0
+[2020-11-26 10:49:50.052][Trace][process_request][129115][1864] HTTP API GET http://192.168.2.184:1985/v1/streams2, content-length=-1, chunked=0/0
+[2020-11-26 10:49:55.054][Trace][process_request][129115][1864] HTTP API GET http://192.168.2.184:1985/v1/streams2, content-length=-1, chunked=0/0
+
+****************************************************************************************************
+
+====================================================================================================
+==================================================用例29==================================================
+==================================================11-26 10:54:25==================================================
+step1:POST /api/v1/stream/start
+result:{"code":"0","message":"SUCCESS","data":[{"streamId":"34020000001320000033_MAIN","errorMsg":null,"RTSPAddr":null,"FLVAddr":null,"RTMPAddr":"rtmp://192.168.2.184:1035/live/34020000001320000033_MAIN","HLSAddr":null}]}
+step2:SHELL pkill -9 nginx
+result:
+step3:GET /api/v1/stream/stop
+result:HTTPConnectionPool(host='192.168.2.184', port=8080): Max retries exceeded with url: /api/v1/stream/stop?streamId=34020000001320000033_MAIN (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x00000214B6B72490>: Failed to establish a new connection: [WinError 10061] 由于目标计算机积极拒绝，无法连接。'))
+step4:SHELL /usr/local/nginx/sbin/nginx -c /usr/local/nginx/conf/nginx.conf
+result:
+step5:GET /api/v1/stream/stop
+result:{"code":"0","message":"SUCCESS"}
+
+**************************************************VMS**************************************************
+**192.168.2.184**:This is vms log content:
+2020-11-26 10:54:25.121 [INFO ] [http-nio-8009-exec-1      ] 1606359265121 ----> LOAD -------->  192.168.2.184#8000#DEFAULT#DEFAULT@@MTS info : currentCpu【0.204708】 max_cpu【98.0】 currentMemory【0.0】 max_memory【98.0】 currentStream【0】
+2020-11-26 10:54:25.122 [INFO ] [http-nio-8009-exec-1      ] 1606359265121 ----> LOAD -------->  192.168.2.184#8000#DEFAULT#DEFAULT@@MTS estimate total : cpu【15.0】 memory【15.0】 stream【1】
+2020-11-26 10:54:25.122 [INFO ] [http-nio-8009-exec-1      ] 1606359265121 ----> LOAD -------->  192.168.2.184#8000#DEFAULT#DEFAULT@@MTS estimate one : cpu【15.204708】 memory【15.0】
+2020-11-26 10:54:25.122 [INFO ] [http-nio-8009-exec-1      ] 34020000001320000033_MAIN ----> BIND -------->  192.168.2.184#8000#DEFAULT#DEFAULT@@MTS
+2020-11-26 10:54:25.129 [INFO ] [http-nio-8009-exec-1      ] 34020000001320000033_MAIN ----> APPLY --------> 192.168.2.184#8000#DEFAULT#DEFAULT@@MTS port 20004
+2020-11-26 10:54:25.145 [INFO ] [http-nio-8009-exec-1      ] 1606359265145 ----> CALL --------> START_CALL start
+2020-11-26 10:54:25.191 [INFO ] [http-nio-8009-exec-25     ] 1606359265191 ----> LOAD -------->  192.168.2.184#1985#DEFAULT#DEFAULT@@MPS info : currentCpu【0.0】 max_cpu【98.0】 currentMemory【0.0】 max_memory【98.0】 currentStream【0】
+2020-11-26 10:54:25.191 [INFO ] [http-nio-8009-exec-25     ] 1606359265191 ----> LOAD -------->  192.168.2.184#1985#DEFAULT#DEFAULT@@MPS estimate total : cpu【15.0】 memory【15.0】 stream【1】
+2020-11-26 10:54:25.191 [INFO ] [http-nio-8009-exec-25     ] 1606359265191 ----> LOAD -------->  192.168.2.184#1985#DEFAULT#DEFAULT@@MPS estimate one : cpu【15.0】 memory【15.0】
+2020-11-26 10:54:25.192 [INFO ] [http-nio-8009-exec-25     ] 34020000001320000033_MAIN ----> BIND -------->  192.168.2.184#1985#DEFAULT#DEFAULT@@MPS
+2020-11-26 10:54:25.550 [INFO ] [http-nio-8009-exec-1      ] 1606359265145 ----> CALL --------> streamId【34020000001320000033_MAIN】 , START_CALL success
+2020-11-26 10:54:25.550 [INFO ] [http-nio-8009-exec-1      ] 1606359265145 ----> CALL --------> use_time 【404】 , START_CALL end
+2020-11-26 10:54:48.612 [INFO ] [http-nio-8009-exec-48     ] 1606359288612 ----> CALL --------> STOP_CALL start
+2020-11-26 10:54:48.619 [INFO ] [http-nio-8009-exec-48     ] 1606359288612 ----> CALL --------> streamId【34020000001320000033_MAIN】 , STOP_CALL success
+2020-11-26 10:54:48.619 [INFO ] [http-nio-8009-exec-48     ] 1606359288612 ----> CALL --------> use_time 【0】 , STOP_CALL end
+
+****************************************************************************************************
+
+**************************************************CGS**************************************************
+**192.168.2.184**:This is cgs log content:
+I1126 10:54:47.583989 60114 RegistrationServer.cpp:283] find this device and keepalive, DeviceID:34020000001110000213
+I1126 10:54:47.584239 60114 PagerMessageHandler.cpp:575] Receive keepalive DeviceID:34020000001110000213, And Response 200
+I1126 10:54:48.611922 60023 HttpService.cpp:161] recv request: POST /v1/stop_play HTTP/1.1
+Accept: application/json, application/*+json
+Accept-Encoding: gzip,deflate
+Connection: Keep-Alive
+Content-Length: 87
+Content-Type: application/json
+Host: 192.168.2.184:9875
+User-Agent: Apache-HttpClient/4.5.12 (Java/1.8.0_121)
+
+{"streamId":"34020000001320000033_MAIN","requestId":"00a921b0bce24abab3aff5c686aa0dbb"}from remote_address: 192.168.2.184
+I1126 10:54:48.612232 60130 Uas.cpp:140] receive stop play json:{"streamId":"34020000001320000033_MAIN","requestId":"00a921b0bce24abab3aff5c686aa0dbb"}
+I1126 10:54:48.612368 60130 InviteSessionHandler.cpp:647] onTerminated, streamid:34020000001320000033_MAIN,deviceid:34020000001320000033,errmsg:3
+I1126 10:54:48.612787 60130 InviteSessionHandler.cpp:303] stop stream success, streamid:34020000001320000033_MAIN
+E1126 10:54:48.612826 60130 Uas.cpp:1144] send errcode:0,errMsg:stop success
+W1126 10:54:48.615330 60101 NamingClient.cpp:850] realGetService, Response code: 200
+W1126 10:54:48.615859 60101 NamingClient.cpp:1294]  dom : VMS
+W1126 10:54:48.616119 60101 NamingClient.cpp:1301]  cacheMillis : 3000
+W1126 10:54:48.616161 60101 NamingClient.cpp:1315]  checksum : b328081a2e1531cadb116e54deb7a988
+W1126 10:54:48.616199 60101 NamingClient.cpp:1322]  lastRefTime : 1606359288614
+W1126 10:54:48.616225 60101 NamingClient.cpp:1329]  env : 
+W1126 10:54:48.616367 60101 NamingClient.cpp:1336]  clusters : DEFAULT
+E1126 10:54:48.616753 60101 NamingClient.cpp:230] checksum : b328081a2e1531cadb116e54deb7a988 DEFAULT VMS
+I1126 10:54:48.616812 60101 HttpClient.cpp:153] enter into CHttpClient::postRequest send url:http://192.168.2.184:8009/v1/cgs_callback_stop_play, send body:{
+   "errorCode" : "0",
+   "errorMsg" : "stop success",
+   "requestId" : "00a921b0bce24abab3aff5c686aa0dbb",
+   "streamId" : "34020000001320000033_MAIN"
+}
+I1126 10:54:48.620318 60101 HttpClient.cpp:164] CHttpClient::postRequest success, requestid:00a921b0bce24abab3aff5c686aa0dbb
+I1126 10:54:48.620427 60101 HttpClient.cpp:172] leave CHttpClient::postRequest, requestid:00a921b0bce24abab3aff5c686aa0dbb
+I1126 10:54:48.620525 60101 HttpClient.cpp:108] RunInLoop iret:0,requestid:00a921b0bce24abab3aff5c686aa0dbb
+
+****************************************************************************************************
+
+**************************************************MTS**************************************************
+**192.168.2.184**:This is Mts log content:
+W1126 10:54:27.613101 50550 StreamChannelUdp2nd.cpp:903] 34020000001320000033_MAIN 444444444444444444444444(putRtpPacketWithNoMark) ====== lost exception timer!!!!!!!!!!!!!!!!!!!!!
+W1126 10:54:27.737655 50542 NamingClient.cpp:885] realGetService, Response code: 200
+E1126 10:54:27.738189 50542 NamingClient.cpp:264] checksum : b328081a2e1531cadb116e54deb7a988  VMS
+W1126 10:54:27.738224 50542 RestHandler.cpp:1027]  vms addr : 192.168.2.184:8009
+W1126 10:54:29.613027 50550 StreamChannelUdp2nd.cpp:903] 34020000001320000033_MAIN 444444444444444444444444(putRtpPacketWithNoMark) ====== lost exception timer!!!!!!!!!!!!!!!!!!!!!
+W1126 10:54:29.736459 50542 NamingClient.cpp:885] realGetService, Response code: 200
+E1126 10:54:29.737290 50542 NamingClient.cpp:264] checksum : b328081a2e1531cadb116e54deb7a988  VMS
+W1126 10:54:29.737349 50542 RestHandler.cpp:1027]  vms addr : 192.168.2.184:8009
+W1126 10:54:36.653179 50550 StreamChannelUdp2nd.cpp:903] 34020000001320000033_MAIN 444444444444444444444444(putRtpPacketWithNoMark) ====== lost exception timer!!!!!!!!!!!!!!!!!!!!!
+W1126 10:54:36.776355 50542 NamingClient.cpp:885] realGetService, Response code: 200
+E1126 10:54:36.777635 50542 NamingClient.cpp:264] checksum : b328081a2e1531cadb116e54deb7a988  VMS
+W1126 10:54:36.777673 50542 RestHandler.cpp:1027]  vms addr : 192.168.2.184:8009
+W1126 10:54:37.653106 50550 StreamChannelUdp2nd.cpp:903] 34020000001320000033_MAIN 444444444444444444444444(putRtpPacketWithNoMark) ====== lost exception timer!!!!!!!!!!!!!!!!!!!!!
+W1126 10:54:37.777130 50542 NamingClient.cpp:885] realGetService, Response code: 200
+E1126 10:54:37.777643 50542 NamingClient.cpp:264] checksum : b328081a2e1531cadb116e54deb7a988  VMS
+W1126 10:54:37.777693 50542 RestHandler.cpp:1027]  vms addr : 192.168.2.184:8009
+W1126 10:54:40.704210 50550 StreamChannelUdp2nd.cpp:903] 34020000001320000033_MAIN 444444444444444444444444(putRtpPacketWithNoMark) ====== lost exception timer!!!!!!!!!!!!!!!!!!!!!
+W1126 10:54:40.828229 50542 NamingClient.cpp:885] realGetService, Response code: 200
+E1126 10:54:40.828670 50542 NamingClient.cpp:264] checksum : b328081a2e1531cadb116e54deb7a988  VMS
+W1126 10:54:40.828711 50542 RestHandler.cpp:1027]  vms addr : 192.168.2.184:8009
+W1126 10:54:43.652117 50550 StreamChannelUdp2nd.cpp:903] 34020000001320000033_MAIN 444444444444444444444444(putRtpPacketWithNoMark) ====== lost exception timer!!!!!!!!!!!!!!!!!!!!!
+W1126 10:54:43.777606 50542 NamingClient.cpp:885] realGetService, Response code: 200
+E1126 10:54:43.778448 50542 NamingClient.cpp:264] checksum : b328081a2e1531cadb116e54deb7a988  VMS
+W1126 10:54:43.778487 50542 RestHandler.cpp:1027]  vms addr : 192.168.2.184:8009
+W1126 10:54:46.593348 50550 StreamChannelUdp2nd.cpp:903] 34020000001320000033_MAIN 444444444444444444444444(putRtpPacketWithNoMark) ====== lost exception timer!!!!!!!!!!!!!!!!!!!!!
+W1126 10:54:46.719106 50542 NamingClient.cpp:885] realGetService, Response code: 200
+E1126 10:54:46.720611 50542 NamingClient.cpp:264] checksum : b328081a2e1531cadb116e54deb7a988  VMS
+W1126 10:54:46.720660 50542 RestHandler.cpp:1027]  vms addr : 192.168.2.184:8009
+I1126 10:54:48.605886 50591 RestHandler.cpp:442] ===========handlePost=======IN=====path: /v1/media_port_release u64RequestId: 199029
+I1126 10:54:48.606035 50591 RestHandler.cpp:44] R(POST): {"port":"20004","setup":"0"}
+I1126 10:54:48.606073 50591 RestHandler.cpp:473] ===========dealPostRequest============path: /v1/media_port_release u64RequestId: 199029
+
+****************************************************************************************************
+
+**************************************************MPS**************************************************
+[2020-11-26 10:54:25.051][Trace][process_request][129115][1864] HTTP API GET http://192.168.2.184:1985/v1/streams2, content-length=-1, chunked=0/0
+[2020-11-26 10:54:25.368][Trace][fd2conn][129115][1541] accept conn ip= 192.168.2.184, port = 33290
+[2020-11-26 10:54:25.369][Trace][do_cycle][129115][154] RTMP client ip=192.168.2.184, fd=12
+[2020-11-26 10:54:25.369][Trace][handshake_with_client][129115][1125] simple handshake success.
+[2020-11-26 10:54:25.409][Trace][do_cycle][129115][180] connect app, tcUrl=rtmp://192.168.2.184:1035/live, pageUrl=, swfUrl=, schema=rtmp, vhost=192.168.2.184, port=1035, app=live, args=null
+[2020-11-26 10:54:25.409][Trace][print_debug_info][129115][1560] protocol in.buffer=0, in.ack=0, out.ack=0, in.chunk=128, out.chunk=128
+[2020-11-26 10:54:25.449][Trace][stream_service_cycle][129115][455] client identified, type=fmle-publish, vhost=192.168.2.184, app=live, stream=34020000001320000033_MAIN, param=, duration=0ms
+[2020-11-26 10:54:25.450][Trace][stream_service_cycle][129115][475] connected stream, tcUrl=rtmp://192.168.2.184:1035/live, pageUrl=, swfUrl=, schema=rtmp, vhost=__defaultVhost__, port=1035, app=live, stream=34020000001320000033_MAIN, param=, args=null
+[2020-11-26 10:54:25.450][Trace][fetch_or_create][129115][1765] new source, stream_url=/live/34020000001320000033_MAIN
+[2020-11-26 10:54:25.450][Trace][stream_service_cycle][129115][524] source url=/live/34020000001320000033_MAIN, ip=192.168.2.184, cache=1, is_edge=0, source_id=[129115][-1]
+[2020-11-26 10:54:25.489][Warn][cycle][129115][192][104] client disconnect peer. ret=1009
+[2020-11-26 10:54:25.491][Trace][fd2conn][129115][1541] accept conn ip= 192.168.2.184, port = 33294
+[2020-11-26 10:54:25.491][Trace][do_cycle][129115][154] RTMP client ip=192.168.2.184, fd=12
+[2020-11-26 10:54:25.491][Trace][handshake_with_client][129115][1125] simple handshake success.
+[2020-11-26 10:54:25.531][Trace][do_cycle][129115][180] connect app, tcUrl=rtmp://192.168.2.184:1035/live, pageUrl=, swfUrl=, schema=rtmp, vhost=192.168.2.184, port=1035, app=live, args=null
+[2020-11-26 10:54:25.531][Trace][print_debug_info][129115][1560] protocol in.buffer=0, in.ack=0, out.ack=0, in.chunk=128, out.chunk=128
+[2020-11-26 10:54:25.551][Trace][process_request][129115][1864] HTTP API GET http://192.168.2.184:1985/v1/streams2?stream_id=34020000001320000033_MAIN, content-length=-1, chunked=0/0
+[2020-11-26 10:54:25.571][Trace][stream_service_cycle][129115][455] client identified, type=fmle-publish, vhost=192.168.2.184, app=live, stream=34020000001320000033_MAIN, param=, duration=0ms
+[2020-11-26 10:54:25.571][Trace][stream_service_cycle][129115][475] connected stream, tcUrl=rtmp://192.168.2.184:1035/live, pageUrl=, swfUrl=, schema=rtmp, vhost=__defaultVhost__, port=1035, app=live, stream=34020000001320000033_MAIN, param=, args=null
+[2020-11-26 10:54:25.571][Trace][stream_service_cycle][129115][524] source url=/live/34020000001320000033_MAIN, ip=192.168.2.184, cache=1, is_edge=0, source_id=[129115][-1]
+[2020-11-26 10:54:25.614][Trace][on_publish][129115][169] http: on_publish ok, client_id=1433, url=http://192.168.2.184:8009/v1/mps_on_publish, request={"action":"on_publish","client_id":1433,"ip":"192.168.2.184","vhost":"__defaultVhost__","app":"live","tcUrl":"rtmp://192.168.2.184:1035/live","stream":"34020000001320000033_MAIN","param":""}, response={"errorCode":"0","errorMsg":"SUCCESS"}
+[2020-11-26 10:54:25.614][Trace][parse_exec_publish][129115][145] ignore disabled exec for vhost=__defaultVhost__
+[2020-11-26 10:54:25.614][Trace][http_mount][129115][968] http: mount flv stream for sid=/live/34020000001320000033_MAIN, mount=/live/34020000001320000033_MAIN.flv
+[2020-11-26 10:54:25.614][Trace][do_publishing][129115][891] start publish mr=0/350, p1stpt=20000, pnt=5000, tcp_nodelay=0
+[2020-11-26 10:54:25.614][Trace][on_video][129115][1074] 56B video sh,  codec(7, profile=High, level=3.1, 128x1072, 0kbps, 0.0fps, 0.0s)
+[2020-11-26 10:54:27.613][Trace][on_unpublish][129115][2599] cleanup when unpublish, sid=/live/34020000001320000033_MAIN
+[2020-11-26 10:54:27.613][Trace][http_unmount][129115][986] http stream unmount sid = /live/34020000001320000033_MAIN
+[2020-11-26 10:54:27.613][Trace][fd2conn][129115][1541] accept conn ip= 192.168.2.184, port = 33310
+[2020-11-26 10:54:27.613][Trace][do_cycle][129115][154] RTMP client ip=192.168.2.184, fd=14
+[2020-11-26 10:54:27.614][Trace][handshake_with_client][129115][1125] simple handshake success.
+[2020-11-26 10:54:27.616][Trace][on_unpublish][129115][212] http: on_unpublish ok, client_id=1433, url=http://192.168.2.184:8009/v1/mps_on_unpublish, request={"action":"on_unpublish","client_id":1433,"ip":"192.168.2.184","vhost":"__defaultVhost__","app":"live","stream":"34020000001320000033_MAIN","param":""}, response={"errorCode":"0","errorMsg":"SUCCESS"}
+[2020-11-26 10:54:27.616][Warn][cycle][129115][192][0] client disconnect peer. ret=1007
+[2020-11-26 10:54:27.653][Trace][do_cycle][129115][180] connect app, tcUrl=rtmp://192.168.2.184:1035/live, pageUrl=, swfUrl=, schema=rtmp, vhost=192.168.2.184, port=1035, app=live, args=null
+[2020-11-26 10:54:27.653][Trace][print_debug_info][129115][1560] protocol in.buffer=0, in.ack=0, out.ack=0, in.chunk=128, out.chunk=128
+[2020-11-26 10:54:27.694][Trace][stream_service_cycle][129115][455] client identified, type=fmle-publish, vhost=192.168.2.184, app=live, stream=34020000001320000033_MAIN, param=, duration=0ms
+[2020-11-26 10:54:27.694][Trace][stream_service_cycle][129115][475] connected stream, tcUrl=rtmp://192.168.2.184:1035/live, pageUrl=, swfUrl=, schema=rtmp, vhost=__defaultVhost__, port=1035, app=live, stream=34020000001320000033_MAIN, param=, args=null
+[2020-11-26 10:54:27.694][Trace][stream_service_cycle][129115][524] source url=/live/34020000001320000033_MAIN, ip=192.168.2.184, cache=1, is_edge=0, source_id=[129115][-1]
+[2020-11-26 10:54:27.736][Trace][on_publish][129115][169] http: on_publish ok, client_id=1435, url=http://192.168.2.184:8009/v1/mps_on_publish, request={"action":"on_publish","client_id":1435,"ip":"192.168.2.184","vhost":"__defaultVhost__","app":"live","tcUrl":"rtmp://192.168.2.184:1035/live","stream":"34020000001320000033_MAIN","param":""}, response={"errorCode":"0","errorMsg":"SUCCESS"}
+[2020-11-26 10:54:27.736][Trace][parse_exec_publish][129115][145] ignore disabled exec for vhost=__defaultVhost__
+[2020-11-26 10:54:27.737][Trace][do_publishing][129115][891] start publish mr=0/350, p1stpt=20000, pnt=5000, tcp_nodelay=0
+[2020-11-26 10:54:27.737][Trace][on_video][129115][1074] 56B video sh,  codec(7, profile=High, level=3.1, 128x1072, 0kbps, 0.0fps, 0.0s)
+[2020-11-26 10:54:29.613][Trace][on_unpublish][129115][2599] cleanup when unpublish, sid=/live/34020000001320000033_MAIN
+[2020-11-26 10:54:29.613][Trace][http_unmount][129115][986] http stream unmount sid = /live/34020000001320000033_MAIN
+[2020-11-26 10:54:29.613][Trace][fd2conn][129115][1541] accept conn ip= 192.168.2.184, port = 33330
+[2020-11-26 10:54:29.613][Trace][do_cycle][129115][154] RTMP client ip=192.168.2.184, fd=13
+[2020-11-26 10:54:29.613][Trace][handshake_with_client][129115][1125] simple handshake success.
+[2020-11-26 10:54:29.615][Trace][on_unpublish][129115][212] http: on_unpublish ok, client_id=1435, url=http://192.168.2.184:8009/v1/mps_on_unpublish, request={"action":"on_unpublish","client_id":1435,"ip":"192.168.2.184","vhost":"__defaultVhost__","app":"live","stream":"34020000001320000033_MAIN","param":""}, response={"errorCode":"0","errorMsg":"SUCCESS"}
+[2020-11-26 10:54:29.615][Warn][cycle][129115][192][0] client disconnect peer. ret=1007
+[2020-11-26 10:54:29.653][Trace][do_cycle][129115][180] connect app, tcUrl=rtmp://192.168.2.184:1035/live, pageUrl=, swfUrl=, schema=rtmp, vhost=192.168.2.184, port=1035, app=live, args=null
+[2020-11-26 10:54:29.654][Trace][print_debug_info][129115][1560] protocol in.buffer=0, in.ack=0, out.ack=0, in.chunk=128, out.chunk=128
+[2020-11-26 10:54:29.693][Trace][stream_service_cycle][129115][455] client identified, type=fmle-publish, vhost=192.168.2.184, app=live, stream=34020000001320000033_MAIN, param=, duration=0ms
+[2020-11-26 10:54:29.694][Trace][stream_service_cycle][129115][475] connected stream, tcUrl=rtmp://192.168.2.184:1035/live, pageUrl=, swfUrl=, schema=rtmp, vhost=__defaultVhost__, port=1035, app=live, stream=34020000001320000033_MAIN, param=, args=null
+[2020-11-26 10:54:29.694][Trace][stream_service_cycle][129115][524] source url=/live/34020000001320000033_MAIN, ip=192.168.2.184, cache=1, is_edge=0, source_id=[129115][-1]
+[2020-11-26 10:54:29.738][Trace][on_publish][129115][169] http: on_publish ok, client_id=1436, url=http://192.168.2.184:8009/v1/mps_on_publish, request={"action":"on_publish","client_id":1436,"ip":"192.168.2.184","vhost":"__defaultVhost__","app":"live","tcUrl":"rtmp://192.168.2.184:1035/live","stream":"34020000001320000033_MAIN","param":""}, response={"errorCode":"0","errorMsg":"SUCCESS"}
+[2020-11-26 10:54:29.738][Trace][parse_exec_publish][129115][145] ignore disabled exec for vhost=__defaultVhost__
+[2020-11-26 10:54:29.738][Trace][do_publishing][129115][891] start publish mr=0/350, p1stpt=20000, pnt=5000, tcp_nodelay=0
+[2020-11-26 10:54:29.738][Trace][on_video][129115][1074] 56B video sh,  codec(7, profile=High, level=3.1, 128x1072, 0kbps, 0.0fps, 0.0s)
+[2020-11-26 10:54:30.052][Trace][process_request][129115][1864] HTTP API GET http://192.168.2.184:1985/v1/streams2, content-length=-1, chunked=0/0
+[2020-11-26 10:54:35.050][Trace][process_request][129115][1864] HTTP API GET http://192.168.2.184:1985/v1/streams2, content-length=-1, chunked=0/0
+[2020-11-26 10:54:36.653][Trace][on_unpublish][129115][2599] cleanup when unpublish, sid=/live/34020000001320000033_MAIN
+[2020-11-26 10:54:36.653][Trace][http_unmount][129115][986] http stream unmount sid = /live/34020000001320000033_MAIN
+[2020-11-26 10:54:36.654][Trace][fd2conn][129115][1541] accept conn ip= 192.168.2.184, port = 33358
+[2020-11-26 10:54:36.654][Trace][do_cycle][129115][154] RTMP client ip=192.168.2.184, fd=14
+[2020-11-26 10:54:36.654][Trace][handshake_with_client][129115][1125] simple handshake success.
+[2020-11-26 10:54:36.656][Trace][on_unpublish][129115][212] http: on_unpublish ok, client_id=1436, url=http://192.168.2.184:8009/v1/mps_on_unpublish, request={"action":"on_unpublish","client_id":1436,"ip":"192.168.2.184","vhost":"__defaultVhost__","app":"live","stream":"34020000001320000033_MAIN","param":""}, response={"errorCode":"0","errorMsg":"SUCCESS"}
+[2020-11-26 10:54:36.657][Warn][cycle][129115][192][0] client disconnect peer. ret=1007
+[2020-11-26 10:54:36.693][Trace][do_cycle][129115][180] connect app, tcUrl=rtmp://192.168.2.184:1035/live, pageUrl=, swfUrl=, schema=rtmp, vhost=192.168.2.184, port=1035, app=live, args=null
+[2020-11-26 10:54:36.693][Trace][print_debug_info][129115][1560] protocol in.buffer=0, in.ack=0, out.ack=0, in.chunk=128, out.chunk=128
+[2020-11-26 10:54:36.733][Trace][stream_service_cycle][129115][455] client identified, type=fmle-publish, vhost=192.168.2.184, app=live, stream=34020000001320000033_MAIN, param=, duration=0ms
+[2020-11-26 10:54:36.734][Trace][stream_service_cycle][129115][475] connected stream, tcUrl=rtmp://192.168.2.184:1035/live, pageUrl=, swfUrl=, schema=rtmp, vhost=__defaultVhost__, port=1035, app=live, stream=34020000001320000033_MAIN, param=, args=null
+[2020-11-26 10:54:36.734][Trace][stream_service_cycle][129115][524] source url=/live/34020000001320000033_MAIN, ip=192.168.2.184, cache=1, is_edge=0, source_id=[129115][-1]
+[2020-11-26 10:54:36.776][Trace][on_publish][129115][169] http: on_publish ok, client_id=1437, url=http://192.168.2.184:8009/v1/mps_on_publish, request={"action":"on_publish","client_id":1437,"ip":"192.168.2.184","vhost":"__defaultVhost__","app":"live","tcUrl":"rtmp://192.168.2.184:1035/live","stream":"34020000001320000033_MAIN","param":""}, response={"errorCode":"0","errorMsg":"SUCCESS"}
+[2020-11-26 10:54:36.776][Trace][parse_exec_publish][129115][145] ignore disabled exec for vhost=__defaultVhost__
+[2020-11-26 10:54:36.777][Trace][do_publishing][129115][891] start publish mr=0/350, p1stpt=20000, pnt=5000, tcp_nodelay=0
+[2020-11-26 10:54:36.777][Trace][on_video][129115][1074] 56B video sh,  codec(7, profile=High, level=3.1, 128x1072, 0kbps, 0.0fps, 0.0s)
+[2020-11-26 10:54:37.653][Trace][on_unpublish][129115][2599] cleanup when unpublish, sid=/live/34020000001320000033_MAIN
+[2020-11-26 10:54:37.653][Trace][http_unmount][129115][986] http stream unmount sid = /live/34020000001320000033_MAIN
+[2020-11-26 10:54:37.653][Trace][fd2conn][129115][1541] accept conn ip= 192.168.2.184, port = 33372
+[2020-11-26 10:54:37.653][Trace][do_cycle][129115][154] RTMP client ip=192.168.2.184, fd=13
+[2020-11-26 10:54:37.653][Trace][handshake_with_client][129115][1125] simple handshake success.
+[2020-11-26 10:54:37.656][Trace][on_unpublish][129115][212] http: on_unpublish ok, client_id=1437, url=http://192.168.2.184:8009/v1/mps_on_unpublish, request={"action":"on_unpublish","client_id":1437,"ip":"192.168.2.184","vhost":"__defaultVhost__","app":"live","stream":"34020000001320000033_MAIN","param":""}, response={"errorCode":"0","errorMsg":"SUCCESS"}
+[2020-11-26 10:54:37.656][Warn][cycle][129115][192][0] client disconnect peer. ret=1007
+[2020-11-26 10:54:37.693][Trace][do_cycle][129115][180] connect app, tcUrl=rtmp://192.168.2.184:1035/live, pageUrl=, swfUrl=, schema=rtmp, vhost=192.168.2.184, port=1035, app=live, args=null
+[2020-11-26 10:54:37.693][Trace][print_debug_info][129115][1560] protocol in.buffer=0, in.ack=0, out.ack=0, in.chunk=128, out.chunk=128
+[2020-11-26 10:54:37.733][Trace][stream_service_cycle][129115][455] client identified, type=fmle-publish, vhost=192.168.2.184, app=live, stream=34020000001320000033_MAIN, param=, duration=0ms
+[2020-11-26 10:54:37.734][Trace][stream_service_cycle][129115][475] connected stream, tcUrl=rtmp://192.168.2.184:1035/live, pageUrl=, swfUrl=, schema=rtmp, vhost=__defaultVhost__, port=1035, app=live, stream=34020000001320000033_MAIN, param=, args=null
+[2020-11-26 10:54:37.734][Trace][stream_service_cycle][129115][524] source url=/live/34020000001320000033_MAIN, ip=192.168.2.184, cache=1, is_edge=0, source_id=[129115][-1]
+[2020-11-26 10:54:37.776][Trace][on_publish][129115][169] http: on_publish ok, client_id=1438, url=http://192.168.2.184:8009/v1/mps_on_publish, request={"action":"on_publish","client_id":1438,"ip":"192.168.2.184","vhost":"__defaultVhost__","app":"live","tcUrl":"rtmp://192.168.2.184:1035/live","stream":"34020000001320000033_MAIN","param":""}, response={"errorCode":"0","errorMsg":"SUCCESS"}
+[2020-11-26 10:54:37.776][Trace][parse_exec_publish][129115][145] ignore disabled exec for vhost=__defaultVhost__
+[2020-11-26 10:54:37.777][Trace][do_publishing][129115][891] start publish mr=0/350, p1stpt=20000, pnt=5000, tcp_nodelay=0
+[2020-11-26 10:54:37.777][Trace][on_video][129115][1074] 56B video sh,  codec(7, profile=High, level=3.1, 128x1072, 0kbps, 0.0fps, 0.0s)
+[2020-11-26 10:54:40.050][Trace][process_request][129115][1864] HTTP API GET http://192.168.2.184:1985/v1/streams2, content-length=-1, chunked=0/0
+[2020-11-26 10:54:40.704][Trace][on_unpublish][129115][2599] cleanup when unpublish, sid=/live/34020000001320000033_MAIN
+[2020-11-26 10:54:40.704][Trace][http_unmount][129115][986] http stream unmount sid = /live/34020000001320000033_MAIN
+[2020-11-26 10:54:40.704][Trace][fd2conn][129115][1541] accept conn ip= 192.168.2.184, port = 33394
+[2020-11-26 10:54:40.704][Trace][do_cycle][129115][154] RTMP client ip=192.168.2.184, fd=14
+[2020-11-26 10:54:40.706][Trace][handshake_with_client][129115][1125] simple handshake success.
+[2020-11-26 10:54:40.707][Trace][on_unpublish][129115][212] http: on_unpublish ok, client_id=1438, url=http://192.168.2.184:8009/v1/mps_on_unpublish, request={"action":"on_unpublish","client_id":1438,"ip":"192.168.2.184","vhost":"__defaultVhost__","app":"live","stream":"34020000001320000033_MAIN","param":""}, response={"errorCode":"0","errorMsg":"SUCCESS"}
+[2020-11-26 10:54:40.707][Warn][cycle][129115][192][0] client disconnect peer. ret=1007
+[2020-11-26 10:54:40.745][Trace][do_cycle][129115][180] connect app, tcUrl=rtmp://192.168.2.184:1035/live, pageUrl=, swfUrl=, schema=rtmp, vhost=192.168.2.184, port=1035, app=live, args=null
+[2020-11-26 10:54:40.745][Trace][print_debug_info][129115][1560] protocol in.buffer=0, in.ack=0, out.ack=0, in.chunk=128, out.chunk=128
+[2020-11-26 10:54:40.785][Trace][stream_service_cycle][129115][455] client identified, type=fmle-publish, vhost=192.168.2.184, app=live, stream=34020000001320000033_MAIN, param=, duration=0ms
+[2020-11-26 10:54:40.785][Trace][stream_service_cycle][129115][475] connected stream, tcUrl=rtmp://192.168.2.184:1035/live, pageUrl=, swfUrl=, schema=rtmp, vhost=__defaultVhost__, port=1035, app=live, stream=34020000001320000033_MAIN, param=, args=null
+[2020-11-26 10:54:40.785][Trace][stream_service_cycle][129115][524] source url=/live/34020000001320000033_MAIN, ip=192.168.2.184, cache=1, is_edge=0, source_id=[129115][-1]
+[2020-11-26 10:54:40.829][Trace][on_publish][129115][169] http: on_publish ok, client_id=1439, url=http://192.168.2.184:8009/v1/mps_on_publish, request={"action":"on_publish","client_id":1439,"ip":"192.168.2.184","vhost":"__defaultVhost__","app":"live","tcUrl":"rtmp://192.168.2.184:1035/live","stream":"34020000001320000033_MAIN","param":""}, response={"errorCode":"0","errorMsg":"SUCCESS"}
+[2020-11-26 10:54:40.829][Trace][parse_exec_publish][129115][145] ignore disabled exec for vhost=__defaultVhost__
+[2020-11-26 10:54:40.829][Trace][do_publishing][129115][891] start publish mr=0/350, p1stpt=20000, pnt=5000, tcp_nodelay=0
+[2020-11-26 10:54:40.829][Trace][on_video][129115][1074] 56B video sh,  codec(7, profile=High, level=3.1, 128x1072, 0kbps, 0.0fps, 0.0s)
+[2020-11-26 10:54:43.652][Trace][on_unpublish][129115][2599] cleanup when unpublish, sid=/live/34020000001320000033_MAIN
+[2020-11-26 10:54:43.652][Trace][http_unmount][129115][986] http stream unmount sid = /live/34020000001320000033_MAIN
+[2020-11-26 10:54:43.654][Trace][fd2conn][129115][1541] accept conn ip= 192.168.2.184, port = 33414
+[2020-11-26 10:54:43.654][Trace][do_cycle][129115][154] RTMP client ip=192.168.2.184, fd=13
+[2020-11-26 10:54:43.654][Trace][handshake_with_client][129115][1125] simple handshake success.
+[2020-11-26 10:54:43.655][Trace][on_unpublish][129115][212] http: on_unpublish ok, client_id=1439, url=http://192.168.2.184:8009/v1/mps_on_unpublish, request={"action":"on_unpublish","client_id":1439,"ip":"192.168.2.184","vhost":"__defaultVhost__","app":"live","stream":"34020000001320000033_MAIN","param":""}, response={"errorCode":"0","errorMsg":"SUCCESS"}
+[2020-11-26 10:54:43.655][Warn][cycle][129115][192][0] client disconnect peer. ret=1007
+[2020-11-26 10:54:43.694][Trace][do_cycle][129115][180] connect app, tcUrl=rtmp://192.168.2.184:1035/live, pageUrl=, swfUrl=, schema=rtmp, vhost=192.168.2.184, port=1035, app=live, args=null
+[2020-11-26 10:54:43.694][Trace][print_debug_info][129115][1560] protocol in.buffer=0, in.ack=0, out.ack=0, in.chunk=128, out.chunk=128
+[2020-11-26 10:54:43.734][Trace][stream_service_cycle][129115][455] client identified, type=fmle-publish, vhost=192.168.2.184, app=live, stream=34020000001320000033_MAIN, param=, duration=0ms
+[2020-11-26 10:54:43.734][Trace][stream_service_cycle][129115][475] connected stream, tcUrl=rtmp://192.168.2.184:1035/live, pageUrl=, swfUrl=, schema=rtmp, vhost=__defaultVhost__, port=1035, app=live, stream=34020000001320000033_MAIN, param=, args=null
+[2020-11-26 10:54:43.735][Trace][stream_service_cycle][129115][524] source url=/live/34020000001320000033_MAIN, ip=192.168.2.184, cache=1, is_edge=0, source_id=[129115][-1]
+[2020-11-26 10:54:43.777][Trace][on_publish][129115][169] http: on_publish ok, client_id=1440, url=http://192.168.2.184:8009/v1/mps_on_publish, request={"action":"on_publish","client_id":1440,"ip":"192.168.2.184","vhost":"__defaultVhost__","app":"live","tcUrl":"rtmp://192.168.2.184:1035/live","stream":"34020000001320000033_MAIN","param":""}, response={"errorCode":"0","errorMsg":"SUCCESS"}
+[2020-11-26 10:54:43.777][Trace][parse_exec_publish][129115][145] ignore disabled exec for vhost=__defaultVhost__
+[2020-11-26 10:54:43.777][Trace][do_publishing][129115][891] start publish mr=0/350, p1stpt=20000, pnt=5000, tcp_nodelay=0
+[2020-11-26 10:54:43.777][Trace][on_video][129115][1074] 56B video sh,  codec(7, profile=High, level=3.1, 128x1072, 0kbps, 0.0fps, 0.0s)
+[2020-11-26 10:54:45.049][Trace][process_request][129115][1864] HTTP API GET http://192.168.2.184:1985/v1/streams2, content-length=-1, chunked=0/0
+[2020-11-26 10:54:46.593][Trace][on_unpublish][129115][2599] cleanup when unpublish, sid=/live/34020000001320000033_MAIN
+[2020-11-26 10:54:46.593][Trace][http_unmount][129115][986] http stream unmount sid = /live/34020000001320000033_MAIN
+[2020-11-26 10:54:46.593][Trace][fd2conn][129115][1541] accept conn ip= 192.168.2.184, port = 33432
+[2020-11-26 10:54:46.594][Trace][do_cycle][129115][154] RTMP client ip=192.168.2.184, fd=14
+[2020-11-26 10:54:46.596][Trace][handshake_with_client][129115][1125] simple handshake success.
+[2020-11-26 10:54:46.597][Trace][on_unpublish][129115][212] http: on_unpublish ok, client_id=1440, url=http://192.168.2.184:8009/v1/mps_on_unpublish, request={"action":"on_unpublish","client_id":1440,"ip":"192.168.2.184","vhost":"__defaultVhost__","app":"live","stream":"34020000001320000033_MAIN","param":""}, response={"errorCode":"0","errorMsg":"SUCCESS"}
+[2020-11-26 10:54:46.597][Warn][cycle][129115][192][0] client disconnect peer. ret=1007
+[2020-11-26 10:54:46.635][Trace][do_cycle][129115][180] connect app, tcUrl=rtmp://192.168.2.184:1035/live, pageUrl=, swfUrl=, schema=rtmp, vhost=192.168.2.184, port=1035, app=live, args=null
+[2020-11-26 10:54:46.635][Trace][print_debug_info][129115][1560] protocol in.buffer=0, in.ack=0, out.ack=0, in.chunk=128, out.chunk=128
+[2020-11-26 10:54:46.676][Trace][stream_service_cycle][129115][455] client identified, type=fmle-publish, vhost=192.168.2.184, app=live, stream=34020000001320000033_MAIN, param=, duration=0ms
+[2020-11-26 10:54:46.676][Trace][stream_service_cycle][129115][475] connected stream, tcUrl=rtmp://192.168.2.184:1035/live, pageUrl=, swfUrl=, schema=rtmp, vhost=__defaultVhost__, port=1035, app=live, stream=34020000001320000033_MAIN, param=, args=null
+[2020-11-26 10:54:46.676][Trace][stream_service_cycle][129115][524] source url=/live/34020000001320000033_MAIN, ip=192.168.2.184, cache=1, is_edge=0, source_id=[129115][-1]
+[2020-11-26 10:54:46.719][Trace][on_publish][129115][169] http: on_publish ok, client_id=1441, url=http://192.168.2.184:8009/v1/mps_on_publish, request={"action":"on_publish","client_id":1441,"ip":"192.168.2.184","vhost":"__defaultVhost__","app":"live","tcUrl":"rtmp://192.168.2.184:1035/live","stream":"34020000001320000033_MAIN","param":""}, response={"errorCode":"0","errorMsg":"SUCCESS"}
+[2020-11-26 10:54:46.719][Trace][parse_exec_publish][129115][145] ignore disabled exec for vhost=__defaultVhost__
+[2020-11-26 10:54:46.719][Trace][do_publishing][129115][891] start publish mr=0/350, p1stpt=20000, pnt=5000, tcp_nodelay=0
+[2020-11-26 10:54:46.719][Trace][on_video][129115][1074] 56B video sh,  codec(7, profile=High, level=3.1, 128x1072, 0kbps, 0.0fps, 0.0s)
+[2020-11-26 10:54:48.606][Trace][on_unpublish][129115][2599] cleanup when unpublish, sid=/live/34020000001320000033_MAIN
+[2020-11-26 10:54:48.606][Trace][http_unmount][129115][986] http stream unmount sid = /live/34020000001320000033_MAIN
+[2020-11-26 10:54:48.609][Trace][on_unpublish][129115][212] http: on_unpublish ok, client_id=1441, url=http://192.168.2.184:8009/v1/mps_on_unpublish, request={"action":"on_unpublish","client_id":1441,"ip":"192.168.2.184","vhost":"__defaultVhost__","app":"live","stream":"34020000001320000033_MAIN","param":""}, response={"errorCode":"0","errorMsg":"SUCCESS"}
+[2020-11-26 10:54:48.609][Warn][cycle][129115][192][0] client disconnect peer. ret=1007
+[2020-11-26 10:54:50.050][Trace][process_request][129115][1864] HTTP API GET http://192.168.2.184:1985/v1/streams2, content-length=-1, chunked=0/0
+[2020-11-26 10:54:55.048][Trace][process_request][129115][1864] HTTP API GET http://192.168.2.184:1985/v1/streams2, content-length=-1, chunked=0/0
+[2020-11-26 10:55:00.055][Trace][process_request][129115][1864] HTTP API GET http://192.168.2.184:1985/v1/streams2, content-length=-1, chunked=0/0
+
+****************************************************************************************************

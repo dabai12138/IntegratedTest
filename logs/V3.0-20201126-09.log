@@ -1,0 +1,1448 @@
+
+====================================================================================================
+==================================================用例27==================================================
+==================================================11-26 09:47:49==================================================
+step1:POST /api/v1/stream/start
+result:{"code":"0","message":"SUCCESS","data":[{"streamId":"34020000001320000033_MAIN","errorMsg":"192.168.2.184#9875#DEFAULT#DEFAULT@@CGS- cgs start stream callback codeï¼š1005","RTSPAddr":null,"FLVAddr":null,"RTMPAddr":null,"HLSAddr":null}]}
+step2:SHELL pkill -9 mps;sleep 5
+result:
+step3:GET /api/v1/stream
+result:{"code":"400","message":"server error"}
+step4:SHELL cd wj/MPS/MPS;nohup ./mps -c mps.conf &>/dev/null &
+result:52
+step5:GET /api/v1/stream/stop
+result:{"code":"400","message":"server error : stream not found"}
+
+**************************************************VMS**************************************************
+**192.168.2.184**:This is vms log content:
+2020-11-26 09:48:00.011 [INFO ] [pool-3-thread-2           ] fetchcatalog >>>>>>>>>>> 34020000001110000213
+2020-11-26 09:48:00.015 [INFO ] [http-nio-8009-exec-16     ] requestId = 1606355280015
+2020-11-26 09:48:04.485 [ERROR] [http-nio-8009-exec-47     ] null
+java.lang.NullPointerException: null
+	at org.springframework.cglib.empty.Object$$BeanCopierByCGLIB$$5063ae23.copy(<generated>)
+	at com.secusoft.base.api.service.impl.ApiStreamInfoServiceImpl.stream(ApiStreamInfoServiceImpl.java:50)
+	at com.secusoft.base.api.controller.VmsStreamController.stream(VmsStreamController.java:123)
+	at com.secusoft.base.api.controller.VmsStreamController$$FastClassBySpringCGLIB$$ce5d8464.invoke(<generated>)
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:771)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:749)
+	at org.springframework.validation.beanvalidation.MethodValidationInterceptor.invoke(MethodValidationInterceptor.java:119)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:749)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:95)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:749)
+	at org.springframework.aop.aspectj.MethodInvocationProceedingJoinPoint.proceed(MethodInvocationProceedingJoinPoint.java:88)
+	at com.secusoft.base.aop.RequestLogAspect.metrics(RequestLogAspect.java:63)
+	at sun.reflect.GeneratedMethodAccessor243.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethodWithGivenArgs(AbstractAspectJAdvice.java:644)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethod(AbstractAspectJAdvice.java:633)
+	at org.springframework.aop.aspectj.AspectJAroundAdvice.invoke(AspectJAroundAdvice.java:70)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:749)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:691)
+	at com.secusoft.base.api.controller.VmsStreamController$$EnhancerBySpringCGLIB$$6208fbd5.stream(<generated>)
+	at sun.reflect.GeneratedMethodAccessor479.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:190)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:138)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:105)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:879)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:793)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1040)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:943)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:898)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:634)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:741)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.boot.actuate.metrics.web.servlet.WebMvcMetricsFilter.doFilterInternal(WebMvcMetricsFilter.java:109)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:202)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:96)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:541)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:139)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:343)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:373)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:868)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1590)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.lang.Thread.run(Thread.java:745)
+2020-11-26 09:48:16.922 [ERROR] [http-nio-8009-exec-13     ] stream not found
+
+****************************************************************************************************
+
+**************************************************CGS**************************************************
+**192.168.2.184**:This is cgs log content:
+I1126 09:48:00.021129 60043 HttpService.cpp:161] recv request: POST /v1/query_catalog HTTP/1.1
+
+Accept: application/json, application/*+json
+
+Accept-Encoding: gzip,deflate
+
+Connection: Keep-Alive
+
+Content-Length: 76
+
+Content-Type: application/json
+
+Host: 192.168.2.184:9875
+
+User-Agent: Apache-HttpClient/4.5.12 (Java/1.8.0_121)
+
+
+
+{"requestId":"1606355280015","deviceId":"34020000001110000213","timeOut":30}from remote_address: 192.168.2.184
+I1126 09:48:00.021620 60120 Uas.cpp:235] receive query catalog json:{"requestId":"1606355280015","deviceId":"34020000001110000213","timeOut":30}
+I1126 09:48:00.047204 60114 PagerMessageHandler.cpp:480] Message response success, sn:149, requestId:1606355280015
+I1126 09:48:00.048507 60114 PagerMessageHandler.cpp:121] recv catalog list requestId:1606355280015,sn:149,errcode:0,errmsg:recv one part success,sumnum:16,cataloglist size:2
+I1126 09:48:00.049320 60114 PagerMessageHandler.cpp:121] recv catalog list requestId:1606355280015,sn:149,errcode:0,errmsg:recv one part success,sumnum:16,cataloglist size:2
+W1126 09:48:00.052876 60103 NamingClient.cpp:850] realGetService, Response code: 200
+W1126 09:48:00.053030 60104 NamingClient.cpp:850] realGetService, Response code: 200
+W1126 09:48:00.053472 60103 NamingClient.cpp:1294]  dom : VMS
+W1126 09:48:00.053576 60103 NamingClient.cpp:1301]  cacheMillis : 3000
+W1126 09:48:00.053925 60103 NamingClient.cpp:1315]  checksum : b328081a2e1531cadb116e54deb7a988
+W1126 09:48:00.053807 60104 NamingClient.cpp:1294]  dom : VMS
+W1126 09:48:00.054121 60104 NamingClient.cpp:1301]  cacheMillis : 3000
+W1126 09:48:00.054159 60104 NamingClient.cpp:1315]  checksum : b328081a2e1531cadb116e54deb7a988
+W1126 09:48:00.054188 60104 NamingClient.cpp:1322]  lastRefTime : 1606355280052
+W1126 09:48:00.054214 60104 NamingClient.cpp:1329]  env : 
+W1126 09:48:00.054039 60103 NamingClient.cpp:1322]  lastRefTime : 1606355280052
+W1126 09:48:00.054354 60103 NamingClient.cpp:1329]  env : 
+W1126 09:48:00.054389 60103 NamingClient.cpp:1336]  clusters : DEFAULT
+W1126 09:48:00.054311 60104 NamingClient.cpp:1336]  clusters : DEFAULT
+E1126 09:48:00.054555 60103 NamingClient.cpp:230] checksum : b328081a2e1531cadb116e54deb7a988 DEFAULT VMS
+I1126 09:48:00.054639 60103 HttpClient.cpp:153] enter into CHttpClient::postRequest send url:http://192.168.2.184:8009/v1/cgs_callback_query_catalog, send body:{
+   "channelList" : [
+      {
+         "SVCSpaceSupportMode" : 0,
+         "SVCTimeSupportMode" : 0,
+         "address" : "AnalogChan",
+         "block" : "",
+         "businessGroupId" : "",
+         "certNum" : "",
+         "certifiable" : 0,
+         "channelId" : "34020000001320000033",
+         "civilCode" : "CivilCode",
+         "directionType" : 0,
+         "downloadSpeed" : "",
+         "endTime" : "",
+         "errCode" : 0,
+         "ipAddress" : "",
+         "latitude" : 0.0,
+         "longitude" : 0.0,
+         "manufacture" : "Manufacturer",
+         "model" : "Camera",
+         "name" : "213Camera 33",
+         "owner" : "Owner",
+         "parentId" : "",
+         "parental" : 0,
+         "password" : "",
+         "port" : 0,
+         "positionType" : 0,
+         "ptzType" : 0,
+         "registerWay" : 1,
+         "resolution" : "",
+         "roomType" : 0,
+         "safetyWay" : 0,
+         "secrecy" : "0",
+         "status" : "ON",
+         "supplyLightType" : 0,
+         "useType" : 0
+      },
+      {
+         "SVCSpaceSupportMode" : 0,
+         "SVCTimeSupportMode" : 0,
+         "address" : "AnalogChan",
+         "block" : "",
+         "businessGroupId" : "",
+         "certNum" : "",
+         "certifiable" : 0,
+         "channelId" : "34020000001320000034",
+         "civilCode" : "CivilCode",
+         "directionType" : 0,
+         "downloadSpeed" : "",
+         "endTime" : "",
+         "errCode" : 0,
+         "ipAddress" : "",
+         "latitude" : 0.0,
+         "longitude" : 0.0,
+         "manufacture" : "Manufacturer",
+         "model" : "Camera",
+         "name" : "213Camera 34",
+         "owner" : "Owner",
+         "parentId" : "",
+         "parental" : 0,
+         "password" : "",
+         "port" : 0,
+         "positionType" : 0,
+         "ptzType" : 0,
+         "registerWay" : 1,
+         "resolution" : "",
+         "roomType" : 0,
+         "safetyWay" : 0,
+         "secrecy" : "0",
+         "status" : "ON",
+         "supplyLightType" : 0,
+         "useType" : 0
+      }
+   ],
+   "deviceId" : "34020000001110000213",
+   "errorCode" : "0",
+   "errorMsg" : "recv one part success",
+   "num" : 2,
+   "requestId" : "1606355280015",
+   "sumNum" : 16
+}
+E1126 09:48:00.054615 60104 NamingClient.cpp:230] checksum : b328081a2e1531cadb116e54deb7a988 DEFAULT VMS
+I1126 09:48:00.055065 60104 HttpClient.cpp:153] enter into CHttpClient::postRequest send url:http://192.168.2.184:8009/v1/cgs_callback_query_catalog, send body:{
+   "channelList" : [
+      {
+         "SVCSpaceSupportMode" : 0,
+         "SVCTimeSupportMode" : 0,
+         "address" : "AnalogChan",
+         "block" : "",
+         "businessGroupId" : "",
+         "certNum" : "",
+         "certifiable" : 0,
+         "channelId" : "34020000001320000035",
+         "civilCode" : "CivilCode",
+         "directionType" : 0,
+         "downloadSpeed" : "",
+         "endTime" : "",
+         "errCode" : 0,
+         "ipAddress" : "",
+         "latitude" : 0.0,
+         "longitude" : 0.0,
+         "manufacture" : "Manufacturer",
+         "model" : "Camera",
+         "name" : "213Camera 35",
+         "owner" : "Owner",
+         "parentId" : "",
+         "parental" : 0,
+         "password" : "",
+         "port" : 0,
+         "positionType" : 0,
+         "ptzType" : 0,
+         "registerWay" : 1,
+         "resolution" : "",
+         "roomType" : 0,
+         "safetyWay" : 0,
+         "secrecy" : "0",
+         "status" : "ON",
+         "supplyLightType" : 0,
+         "useType" : 0
+      },
+      {
+         "SVCSpaceSupportMode" : 0,
+         "SVCTimeSupportMode" : 0,
+         "address" : "AnalogChan",
+         "block" : "",
+         "businessGroupId" : "",
+         "certNum" : "",
+         "certifiable" : 0,
+         "channelId" : "34020000001320000036",
+         "civilCode" : "CivilCode",
+         "directionType" : 0,
+         "downloadSpeed" : "",
+         "endTime" : "",
+         "errCode" : 0,
+         "ipAddress" : "",
+         "latitude" : 0.0,
+         "longitude" : 0.0,
+         "manufacture" : "Manufacturer",
+         "model" : "Camera",
+         "name" : "213Camera 36",
+         "owner" : "Owner",
+         "parentId" : "",
+         "parental" : 0,
+         "password" : "",
+         "port" : 0,
+         "positionType" : 0,
+         "ptzType" : 0,
+         "registerWay" : 1,
+         "resolution" : "",
+         "roomType" : 0,
+         "safetyWay" : 0,
+         "secrecy" : "0",
+         "status" : "ON",
+         "supplyLightType" : 0,
+         "useType" : 0
+      }
+   ],
+   "deviceId" : "34020000001110000213",
+   "errorCode" : "0",
+   "errorMsg" : "recv one part success",
+   "num" : 2,
+   "requestId" : "1606355280015",
+   "sumNum" : 16
+}
+I1126 09:48:00.062765 60104 HttpClient.cpp:164] CHttpClient::postRequest success, requestid:1606355280015
+I1126 09:48:00.063067 60104 HttpClient.cpp:172] leave CHttpClient::postRequest, requestid:1606355280015
+I1126 09:48:00.063156 60104 HttpClient.cpp:108] RunInLoop iret:0,requestid:1606355280015
+I1126 09:48:00.066538 60114 PagerMessageHandler.cpp:121] recv catalog list requestId:1606355280015,sn:149,errcode:0,errmsg:recv one part success,sumnum:16,cataloglist size:2
+I1126 09:48:00.067363 60114 PagerMessageHandler.cpp:121] recv catalog list requestId:1606355280015,sn:149,errcode:0,errmsg:recv one part success,sumnum:16,cataloglist size:2
+I1126 09:48:00.068063 60114 PagerMessageHandler.cpp:121] recv catalog list requestId:1606355280015,sn:149,errcode:0,errmsg:recv one part success,sumnum:16,cataloglist size:2
+I1126 09:48:00.068799 60114 PagerMessageHandler.cpp:121] recv catalog list requestId:1606355280015,sn:149,errcode:0,errmsg:recv one part success,sumnum:16,cataloglist size:2
+W1126 09:48:00.071137 60108 NamingClient.cpp:850] realGetService, Response code: 200
+W1126 09:48:00.071333 60107 NamingClient.cpp:850] realGetService, Response code: 200
+I1126 09:48:00.071646 60114 PagerMessageHandler.cpp:121] recv catalog list requestId:1606355280015,sn:149,errcode:0,errmsg:recv one part success,sumnum:16,cataloglist size:2
+W1126 09:48:00.071681 60108 NamingClient.cpp:1294]  dom : VMS
+W1126 09:48:00.073632 60108 NamingClient.cpp:1301]  cacheMillis : 3000
+W1126 09:48:00.073671 60108 NamingClient.cpp:1315]  checksum : b328081a2e1531cadb116e54deb7a988
+W1126 09:48:00.073693 60108 NamingClient.cpp:1322]  lastRefTime : 1606355280070
+W1126 09:48:00.073714 60108 NamingClient.cpp:1329]  env : 
+W1126 09:48:00.073751 60108 NamingClient.cpp:1336]  clusters : DEFAULT
+W1126 09:48:00.071746 60107 NamingClient.cpp:1294]  dom : VMS
+W1126 09:48:00.073828 60107 NamingClient.cpp:1301]  cacheMillis : 3000
+E1126 09:48:00.073848 60108 NamingClient.cpp:230] checksum : b328081a2e1531cadb116e54deb7a988 DEFAULT VMS
+I1126 09:48:00.073902 60108 HttpClient.cpp:153] enter into CHttpClient::postRequest send url:http://192.168.2.184:8009/v1/cgs_callback_query_catalog, send body:{
+   "channelList" : [
+      {
+         "SVCSpaceSupportMode" : 0,
+         "SVCTimeSupportMode" : 0,
+         "address" : "AnalogChan",
+         "block" : "",
+         "businessGroupId" : "",
+         "certNum" : "",
+         "certifiable" : 0,
+         "channelId" : "34020000001320000043",
+         "civilCode" : "CivilCode",
+         "directionType" : 0,
+         "downloadSpeed" : "",
+         "endTime" : "",
+         "errCode" : 0,
+         "ipAddress" : "",
+         "latitude" : 0.0,
+         "longitude" : 0.0,
+         "manufacture" : "Manufacturer",
+         "model" : "Camera",
+         "name" : "213Camera 43",
+         "owner" : "Owner",
+         "parentId" : "",
+         "parental" : 0,
+         "password" : "",
+         "port" : 0,
+         "positionType" : 0,
+         "ptzType" : 0,
+         "registerWay" : 1,
+         "resolution" : "",
+         "roomType" : 0,
+         "safetyWay" : 0,
+         "secrecy" : "0",
+         "status" : "ON",
+         "supplyLightType" : 0,
+         "useType" : 0
+      },
+      {
+         "SVCSpaceSupportMode" : 0,
+         "SVCTimeSupportMode" : 0,
+         "address" : "AnalogChan",
+         "block" : "",
+         "businessGroupId" : "",
+         "certNum" : "",
+         "certifiable" : 0,
+         "channelId" : "34020000001320000044",
+         "civilCode" : "CivilCode",
+         "directionType" : 0,
+         "downloadSpeed" : "",
+         "endTime" : "",
+         "errCode" : 0,
+         "ipAddress" : "",
+         "latitude" : 0.0,
+         "longitude" : 0.0,
+         "manufacture" : "Manufacturer",
+         "model" : "Camera",
+         "name" : "213Camera 44",
+         "owner" : "Owner",
+         "parentId" : "",
+         "parental" : 0,
+         "password" : "",
+         "port" : 0,
+         "positionType" : 0,
+         "ptzType" : 0,
+         "registerWay" : 1,
+         "resolution" : "",
+         "roomType" : 0,
+         "safetyWay" : 0,
+         "secrecy" : "0",
+         "status" : "ON",
+         "supplyLightType" : 0,
+         "useType" : 0
+      }
+   ],
+   "deviceId" : "34020000001110000213",
+   "errorCode" : "0",
+   "errorMsg" : "recv one part success",
+   "num" : 2,
+   "requestId" : "1606355280015",
+   "sumNum" : 16
+}
+W1126 09:48:00.073854 60107 NamingClient.cpp:1315]  checksum : b328081a2e1531cadb116e54deb7a988
+I1126 09:48:00.072598 60103 HttpClient.cpp:164] CHttpClient::postRequest success, requestid:1606355280015
+W1126 09:48:00.074344 60107 NamingClient.cpp:1322]  lastRefTime : 1606355280070
+W1126 09:48:00.074481 60107 NamingClient.cpp:1329]  env : 
+W1126 09:48:00.075431 60107 NamingClient.cpp:1336]  clusters : DEFAULT
+W1126 09:48:00.073462 60109 NamingClient.cpp:850] realGetService, Response code: 200
+I1126 09:48:00.074371 60103 HttpClient.cpp:172] leave CHttpClient::postRequest, requestid:1606355280015
+I1126 09:48:00.076577 60103 HttpClient.cpp:108] RunInLoop iret:0,requestid:1606355280015
+W1126 09:48:00.070335 60106 NamingClient.cpp:850] realGetService, Response code: 200
+E1126 09:48:00.075723 60107 NamingClient.cpp:230] checksum : b328081a2e1531cadb116e54deb7a988 DEFAULT VMS
+W1126 09:48:00.068815 60105 NamingClient.cpp:850] realGetService, Response code: 200
+W1126 09:48:00.077491 60106 NamingClient.cpp:1294]  dom : VMS
+W1126 09:48:00.077538 60105 NamingClient.cpp:1294]  dom : VMS
+W1126 09:48:00.077594 60105 NamingClient.cpp:1301]  cacheMillis : 3000
+W1126 09:48:00.077617 60105 NamingClient.cpp:1315]  checksum : b328081a2e1531cadb116e54deb7a988
+W1126 09:48:00.077548 60106 NamingClient.cpp:1301]  cacheMillis : 3000
+W1126 09:48:00.077704 60106 NamingClient.cpp:1315]  checksum : b328081a2e1531cadb116e54deb7a988
+W1126 09:48:00.077842 60106 NamingClient.cpp:1322]  lastRefTime : 1606355280069
+W1126 09:48:00.077869 60106 NamingClient.cpp:1329]  env : 
+W1126 09:48:00.077940 60106 NamingClient.cpp:1336]  clusters : DEFAULT
+E1126 09:48:00.078088 60106 NamingClient.cpp:230] checksum : b328081a2e1531cadb116e54deb7a988 DEFAULT VMS
+I1126 09:48:00.078140 60106 HttpClient.cpp:153] enter into CHttpClient::postRequest send url:http://192.168.2.184:8009/v1/cgs_callback_query_catalog, send body:{
+   "channelList" : [
+      {
+         "SVCSpaceSupportMode" : 0,
+         "SVCTimeSupportMode" : 0,
+         "address" : "AnalogChan",
+         "block" : "",
+         "businessGroupId" : "",
+         "certNum" : "",
+         "certifiable" : 0,
+         "channelId" : "34020000001320000039",
+         "civilCode" : "CivilCode",
+         "directionType" : 0,
+         "downloadSpeed" : "",
+         "endTime" : "",
+         "errCode" : 0,
+         "ipAddress" : "",
+         "latitude" : 0.0,
+         "longitude" : 0.0,
+         "manufacture" : "Manufacturer",
+         "model" : "Camera",
+         "name" : "213Camera 39",
+         "owner" : "Owner",
+         "parentId" : "",
+         "parental" : 0,
+         "password" : "",
+         "port" : 0,
+         "positionType" : 0,
+         "ptzType" : 0,
+         "registerWay" : 1,
+         "resolution" : "",
+         "roomType" : 0,
+         "safetyWay" : 0,
+         "secrecy" : "0",
+         "status" : "ON",
+         "supplyLightType" : 0,
+         "useType" : 0
+      },
+      {
+         "SVCSpaceSupportMode" : 0,
+         "SVCTimeSupportMode" : 0,
+         "address" : "AnalogChan",
+         "block" : "",
+         "businessGroupId" : "",
+         "certNum" : "",
+         "certifiable" : 0,
+         "channelId" : "34020000001320000040",
+         "civilCode" : "CivilCode",
+         "directionType" : 0,
+         "downloadSpeed" : "",
+         "endTime" : "",
+         "errCode" : 0,
+         "ipAddress" : "",
+         "latitude" : 0.0,
+         "longitude" : 0.0,
+         "manufacture" : "Manufacturer",
+         "model" : "Camera",
+         "name" : "213Camera 40",
+         "owner" : "Owner",
+         "parentId" : "",
+         "parental" : 0,
+         "password" : "",
+         "port" : 0,
+         "positionType" : 0,
+         "ptzType" : 0,
+         "registerWay" : 1,
+         "resolution" : "",
+         "roomType" : 0,
+         "safetyWay" : 0,
+         "secrecy" : "0",
+         "status" : "ON",
+         "supplyLightType" : 0,
+         "useType" : 0
+      }
+   ],
+   "deviceId" : "34020000001110000213",
+   "errorCode" : "0",
+   "errorMsg" : "recv one part success",
+   "num" : 2,
+   "requestId" : "1606355280015",
+   "sumNum" : 16
+}
+I1126 09:48:00.077394 60107 HttpClient.cpp:153] enter into CHttpClient::postRequest send url:http://192.168.2.184:8009/v1/cgs_callback_query_catalog, send body:{
+   "channelList" : [
+      {
+         "SVCSpaceSupportMode" : 0,
+         "SVCTimeSupportMode" : 0,
+         "address" : "AnalogChan",
+         "block" : "",
+         "businessGroupId" : "",
+         "certNum" : "",
+         "certifiable" : 0,
+         "channelId" : "34020000001320000041",
+         "civilCode" : "CivilCode",
+         "directionType" : 0,
+         "downloadSpeed" : "",
+         "endTime" : "",
+         "errCode" : 0,
+         "ipAddress" : "",
+         "latitude" : 0.0,
+         "longitude" : 0.0,
+         "manufacture" : "Manufacturer",
+         "model" : "Camera",
+         "name" : "213Camera 41",
+         "owner" : "Owner",
+         "parentId" : "",
+         "parental" : 0,
+         "password" : "",
+         "port" : 0,
+         "positionType" : 0,
+         "ptzType" : 0,
+         "registerWay" : 1,
+         "resolution" : "",
+         "roomType" : 0,
+         "safetyWay" : 0,
+         "secrecy" : "0",
+         "status" : "ON",
+         "supplyLightType" : 0,
+         "useType" : 0
+      },
+      {
+         "SVCSpaceSupportMode" : 0,
+         "SVCTimeSupportMode" : 0,
+         "address" : "AnalogChan",
+         "block" : "",
+         "businessGroupId" : "",
+         "certNum" : "",
+         "certifiable" : 0,
+         "channelId" : "34020000001320000042",
+         "civilCode" : "CivilCode",
+         "directionType" : 0,
+         "downloadSpeed" : "",
+         "endTime" : "",
+         "errCode" : 0,
+         "ipAddress" : "",
+         "latitude" : 0.0,
+         "longitude" : 0.0,
+         "manufacture" : "Manufacturer",
+         "model" : "Camera",
+         "name" : "213Camera 42",
+         "owner" : "Owner",
+         "parentId" : "",
+         "parental" : 0,
+         "password" : "",
+         "port" : 0,
+         "positionType" : 0,
+         "ptzType" : 0,
+         "registerWay" : 1,
+         "resolution" : "",
+         "roomType" : 0,
+         "safetyWay" : 0,
+         "secrecy" : "0",
+         "status" : "ON",
+         "supplyLightType" : 0,
+         "useType" : 0
+      }
+   ],
+   "deviceId" : "34020000001110000213",
+   "errorCode" : "0",
+   "errorMsg" : "recv one part success",
+   "num" : 2,
+   "requestId" : "1606355280015",
+   "sumNum" : 16
+}
+W1126 09:48:00.078523 60110 NamingClient.cpp:850] realGetService, Response code: 200
+W1126 09:48:00.076642 60109 NamingClient.cpp:1294]  dom : VMS
+W1126 09:48:00.078840 60109 NamingClient.cpp:1301]  cacheMillis : 3000
+W1126 09:48:00.078863 60109 NamingClient.cpp:1315]  checksum : b328081a2e1531cadb116e54deb7a988
+W1126 09:48:00.078899 60109 NamingClient.cpp:1322]  lastRefTime : 1606355280073
+W1126 09:48:00.078931 60109 NamingClient.cpp:1329]  env : 
+W1126 09:48:00.079664 60109 NamingClient.cpp:1336]  clusters : DEFAULT
+E1126 09:48:00.081557 60109 NamingClient.cpp:230] checksum : b328081a2e1531cadb116e54deb7a988 DEFAULT VMS
+I1126 09:48:00.081620 60109 HttpClient.cpp:153] enter into CHttpClient::postRequest send url:http://192.168.2.184:8009/v1/cgs_callback_query_catalog, send body:{
+   "channelList" : [
+      {
+         "SVCSpaceSupportMode" : 0,
+         "SVCTimeSupportMode" : 0,
+         "address" : "AnalogChan",
+         "block" : "",
+         "businessGroupId" : "",
+         "certNum" : "",
+         "certifiable" : 0,
+         "channelId" : "34020000001320000045",
+         "civilCode" : "CivilCode",
+         "directionType" : 0,
+         "downloadSpeed" : "",
+         "endTime" : "",
+         "errCode" : 0,
+         "ipAddress" : "",
+         "latitude" : 0.0,
+         "longitude" : 0.0,
+         "manufacture" : "Manufacturer",
+         "model" : "Camera",
+         "name" : "213Camera 45",
+         "owner" : "Owner",
+         "parentId" : "",
+         "parental" : 0,
+         "password" : "",
+         "port" : 0,
+         "positionType" : 0,
+         "ptzType" : 0,
+         "registerWay" : 1,
+         "resolution" : "",
+         "roomType" : 0,
+         "safetyWay" : 0,
+         "secrecy" : "0",
+         "status" : "ON",
+         "supplyLightType" : 0,
+         "useType" : 0
+      },
+      {
+         "SVCSpaceSupportMode" : 0,
+         "SVCTimeSupportMode" : 0,
+         "address" : "AnalogChan",
+         "block" : "",
+         "businessGroupId" : "",
+         "certNum" : "",
+         "certifiable" : 0,
+         "channelId" : "34020000001320000046",
+         "civilCode" : "CivilCode",
+         "directionType" : 0,
+         "downloadSpeed" : "",
+         "endTime" : "",
+         "errCode" : 0,
+         "ipAddress" : "",
+         "latitude" : 0.0,
+         "longitude" : 0.0,
+         "manufacture" : "Manufacturer",
+         "model" : "Camera",
+         "name" : "213Camera 46",
+         "owner" : "Owner",
+         "parentId" : "",
+         "parental" : 0,
+         "password" : "",
+         "port" : 0,
+         "positionType" : 0,
+         "ptzType" : 0,
+         "registerWay" : 1,
+         "resolution" : "",
+         "roomType" : 0,
+         "safetyWay" : 0,
+         "secrecy" : "0",
+         "status" : "ON",
+         "supplyLightType" : 0,
+         "useType" : 0
+      }
+   ],
+   "deviceId" : "34020000001110000213",
+   "errorCode" : "0",
+   "errorMsg" : "recv one part success",
+   "num" : 2,
+   "requestId" : "1606355280015",
+   "sumNum" : 16
+}
+W1126 09:48:00.078981 60110 NamingClient.cpp:1294]  dom : VMS
+W1126 09:48:00.081898 60110 NamingClient.cpp:1301]  cacheMillis : 3000
+W1126 09:48:00.081923 60110 NamingClient.cpp:1315]  checksum : b328081a2e1531cadb116e54deb7a988
+W1126 09:48:00.081956 60110 NamingClient.cpp:1322]  lastRefTime : 1606355280078
+W1126 09:48:00.081976 60110 NamingClient.cpp:1329]  env : 
+W1126 09:48:00.082046 60110 NamingClient.cpp:1336]  clusters : DEFAULT
+E1126 09:48:00.082141 60110 NamingClient.cpp:230] checksum : b328081a2e1531cadb116e54deb7a988 DEFAULT VMS
+I1126 09:48:00.082183 60110 HttpClient.cpp:153] enter into CHttpClient::postRequest send url:http://192.168.2.184:8009/v1/cgs_callback_query_catalog, send body:{
+   "channelList" : [
+      {
+         "SVCSpaceSupportMode" : 0,
+         "SVCTimeSupportMode" : 0,
+         "address" : "AnalogChan",
+         "block" : "",
+         "businessGroupId" : "",
+         "certNum" : "",
+         "certifiable" : 0,
+         "channelId" : "34020000001320000047",
+         "civilCode" : "CivilCode",
+         "directionType" : 0,
+         "downloadSpeed" : "",
+         "endTime" : "",
+         "errCode" : 0,
+         "ipAddress" : "",
+         "latitude" : 0.0,
+         "longitude" : 0.0,
+         "manufacture" : "Manufacturer",
+         "model" : "Camera",
+         "name" : "213Camera 47",
+         "owner" : "Owner",
+         "parentId" : "",
+         "parental" : 0,
+         "password" : "",
+         "port" : 0,
+         "positionType" : 0,
+         "ptzType" : 0,
+         "registerWay" : 1,
+         "resolution" : "",
+         "roomType" : 0,
+         "safetyWay" : 0,
+         "secrecy" : "0",
+         "status" : "ON",
+         "supplyLightType" : 0,
+         "useType" : 0
+      },
+      {
+         "SVCSpaceSupportMode" : 0,
+         "SVCTimeSupportMode" : 0,
+         "address" : "AnalogChan",
+         "block" : "",
+         "businessGroupId" : "",
+         "certNum" : "",
+         "certifiable" : 0,
+         "channelId" : "34020000001320000048",
+         "civilCode" : "CivilCode",
+         "directionType" : 0,
+         "downloadSpeed" : "",
+         "endTime" : "",
+         "errCode" : 0,
+         "ipAddress" : "",
+         "latitude" : 0.0,
+         "longitude" : 0.0,
+         "manufacture" : "Manufacturer",
+         "model" : "Camera",
+         "name" : "213Camera 48",
+         "owner" : "Owner",
+         "parentId" : "",
+         "parental" : 0,
+         "password" : "",
+         "port" : 0,
+         "positionType" : 0,
+         "ptzType" : 0,
+         "registerWay" : 1,
+         "resolution" : "",
+         "roomType" : 0,
+         "safetyWay" : 0,
+         "secrecy" : "0",
+         "status" : "ON",
+         "supplyLightType" : 0,
+         "useType" : 0
+      }
+   ],
+   "deviceId" : "34020000001110000213",
+   "errorCode" : "0",
+   "errorMsg" : "recv one part success",
+   "num" : 2,
+   "requestId" : "1606355280015",
+   "sumNum" : 16
+}
+W1126 09:48:00.077658 60105 NamingClient.cpp:1322]  lastRefTime : 1606355280067
+W1126 09:48:00.082671 60105 NamingClient.cpp:1329]  env : 
+W1126 09:48:00.082703 60105 NamingClient.cpp:1336]  clusters : DEFAULT
+E1126 09:48:00.082813 60105 NamingClient.cpp:230] checksum : b328081a2e1531cadb116e54deb7a988 DEFAULT VMS
+I1126 09:48:00.082875 60105 HttpClient.cpp:153] enter into CHttpClient::postRequest send url:http://192.168.2.184:8009/v1/cgs_callback_query_catalog, send body:{
+   "channelList" : [
+      {
+         "SVCSpaceSupportMode" : 0,
+         "SVCTimeSupportMode" : 0,
+         "address" : "AnalogChan",
+         "block" : "",
+         "businessGroupId" : "",
+         "certNum" : "",
+         "certifiable" : 0,
+         "channelId" : "34020000001320000037",
+         "civilCode" : "CivilCode",
+         "directionType" : 0,
+         "downloadSpeed" : "",
+         "endTime" : "",
+         "errCode" : 0,
+         "ipAddress" : "",
+         "latitude" : 0.0,
+         "longitude" : 0.0,
+         "manufacture" : "Manufacturer",
+         "model" : "Camera",
+         "name" : "213Camera 37",
+         "owner" : "Owner",
+         "parentId" : "",
+         "parental" : 0,
+         "password" : "",
+         "port" : 0,
+         "positionType" : 0,
+         "ptzType" : 0,
+         "registerWay" : 1,
+         "resolution" : "",
+         "roomType" : 0,
+         "safetyWay" : 0,
+         "secrecy" : "0",
+         "status" : "ON",
+         "supplyLightType" : 0,
+         "useType" : 0
+      },
+      {
+         "SVCSpaceSupportMode" : 0,
+         "SVCTimeSupportMode" : 0,
+         "address" : "AnalogChan",
+         "block" : "",
+         "businessGroupId" : "",
+         "certNum" : "",
+         "certifiable" : 0,
+         "channelId" : "34020000001320000038",
+         "civilCode" : "CivilCode",
+         "directionType" : 0,
+         "downloadSpeed" : "",
+         "endTime" : "",
+         "errCode" : 0,
+         "ipAddress" : "",
+         "latitude" : 0.0,
+         "longitude" : 0.0,
+         "manufacture" : "Manufacturer",
+         "model" : "Camera",
+         "name" : "213Camera 38",
+         "owner" : "Owner",
+         "parentId" : "",
+         "parental" : 0,
+         "password" : "",
+         "port" : 0,
+         "positionType" : 0,
+         "ptzType" : 0,
+         "registerWay" : 1,
+         "resolution" : "",
+         "roomType" : 0,
+         "safetyWay" : 0,
+         "secrecy" : "0",
+         "status" : "ON",
+         "supplyLightType" : 0,
+         "useType" : 0
+      }
+   ],
+   "deviceId" : "34020000001110000213",
+   "errorCode" : "0",
+   "errorMsg" : "recv one part success",
+   "num" : 2,
+   "requestId" : "1606355280015",
+   "sumNum" : 16
+}
+I1126 09:48:00.080577 60108 HttpClient.cpp:164] CHttpClient::postRequest success, requestid:1606355280015
+I1126 09:48:00.083667 60108 HttpClient.cpp:172] leave CHttpClient::postRequest, requestid:1606355280015
+I1126 09:48:00.083747 60108 HttpClient.cpp:108] RunInLoop iret:0,requestid:1606355280015
+I1126 09:48:00.076865 60114 PagerMessageHandler.cpp:121] recv catalog list requestId:1606355280015,sn:149,errcode:0,errmsg:recv one part success,sumnum:16,cataloglist size:2
+I1126 09:48:00.085127 60114 PagerMessageHandler.cpp:126] recv  catalog all success, requestId:1606355280015 sn:149
+I1126 09:48:00.085369 60114 PagerMessageHandler.cpp:207] CRecordHandle canceled, m_ulSN:149
+I1126 09:48:00.085522 60106 HttpClient.cpp:164] CHttpClient::postRequest success, requestid:1606355280015
+I1126 09:48:00.087141 60106 HttpClient.cpp:172] leave CHttpClient::postRequest, requestid:1606355280015
+I1126 09:48:00.087209 60106 HttpClient.cpp:108] RunInLoop iret:0,requestid:1606355280015
+I1126 09:48:00.088434 60105 HttpClient.cpp:164] CHttpClient::postRequest success, requestid:1606355280015
+I1126 09:48:00.088472 60105 HttpClient.cpp:172] leave CHttpClient::postRequest, requestid:1606355280015
+I1126 09:48:00.088521 60105 HttpClient.cpp:108] RunInLoop iret:0,requestid:1606355280015
+I1126 09:48:00.090835 60110 HttpClient.cpp:164] CHttpClient::postRequest success, requestid:1606355280015
+I1126 09:48:00.090873 60110 HttpClient.cpp:172] leave CHttpClient::postRequest, requestid:1606355280015
+I1126 09:48:00.090978 60110 HttpClient.cpp:108] RunInLoop iret:0,requestid:1606355280015
+I1126 09:48:00.093168 60109 HttpClient.cpp:164] CHttpClient::postRequest success, requestid:1606355280015
+I1126 09:48:00.093272 60109 HttpClient.cpp:172] leave CHttpClient::postRequest, requestid:1606355280015
+I1126 09:48:00.093356 60109 HttpClient.cpp:108] RunInLoop iret:0,requestid:1606355280015
+I1126 09:48:00.144318 60107 HttpClient.cpp:164] CHttpClient::postRequest success, requestid:1606355280015
+I1126 09:48:00.144443 60107 HttpClient.cpp:172] leave CHttpClient::postRequest, requestid:1606355280015
+I1126 09:48:00.144469 60107 HttpClient.cpp:108] RunInLoop iret:0,requestid:1606355280015
+I1126 09:48:15.314937 60114 RegistrationServer.cpp:283] find this device and keepalive, DeviceID:34020000001110000213
+I1126 09:48:15.315080 60114 PagerMessageHandler.cpp:575] Receive keepalive DeviceID:34020000001110000213, And Response 200
+
+****************************************************************************************************
+
+**************************************************MTS**************************************************
+MTSContent is filtered out
+****************************************************************************************************
+
+**************************************************MPS**************************************************
+[2020-11-26 09:47:50.050][Trace][process_request][124143][1864] HTTP API GET http://192.168.2.184:1985/v1/streams2, content-length=-1, chunked=0/0
+[2020-11-26 09:47:55.049][Trace][process_request][124143][1864] HTTP API GET http://192.168.2.184:1985/v1/streams2, content-length=-1, chunked=0/0
+
+****************************************************************************************************
+
+====================================================================================================
+==================================================用例27==================================================
+==================================================11-26 09:53:05==================================================
+step1:POST /api/v1/stream/start
+result:{"code":"0","message":"SUCCESS","data":[{"streamId":"34020000001320000033_MAIN","errorMsg":null,"RTSPAddr":null,"FLVAddr":null,"RTMPAddr":"rtmp://192.168.2.184:1035/live/34020000001320000033_MAIN","HLSAddr":null}]}
+step2:SHELL pkill -9 mps;sleep 5
+result:
+step3:GET /api/v1/stream
+result:{"code":"400","message":"substrate server error","data":"1606355600662----error>>>>I/O error on GET request for \"http://192.168.2.184:1985/v1/streams2\": Connect to 192.168.2.184:1985 [/192.168.2.184] failed: 拒绝连接 (Connection refused); nested exception is org.apache.http.conn.HttpHostConnectException: Connect to 192.168.2.184:1985 [/192.168.2.184] failed: 拒绝连接 (Connection refused)"}
+step4:SHELL cd wj/MPS/MPS;nohup ./mps -c mps.conf &>/dev/null &
+result:52
+step5:GET /api/v1/stream/stop
+result:{"code":"0","message":"SUCCESS"}
+
+**************************************************VMS**************************************************
+**192.168.2.184**:This is vms log content:
+2020-11-26 09:53:05.154 [INFO ] [http-nio-8009-exec-46     ] 1606355584850 ----> CALL --------> streamId【34020000001320000033_MAIN】 , START_CALL success
+2020-11-26 09:53:05.154 [INFO ] [http-nio-8009-exec-46     ] 1606355584850 ----> CALL --------> use_time 【304】 , START_CALL end
+2020-11-26 09:53:18.327 [INFO ] [VMS-A-TASK-11             ] 1606355598327 ----> CALL --------> STOP_CALL start
+2020-11-26 09:53:18.334 [INFO ] [VMS-A-TASK-11             ] 1606355598327 ----> CALL --------> streamId【34020000001320000033_MAIN】 , STOP_CALL success
+2020-11-26 09:53:18.334 [INFO ] [VMS-A-TASK-11             ] 1606355598327 ----> CALL --------> use_time 【0】 , STOP_CALL end
+2020-11-26 09:53:18.340 [INFO ] [VMS-A-TASK-11             ] 1606355598340 ----> LOAD -------->  192.168.2.184#8000#DEFAULT#DEFAULT@@MTS info : currentCpu【1.230769】 max_cpu【98.0】 currentMemory【0.0】 max_memory【98.0】 currentStream【0】
+2020-11-26 09:53:18.340 [INFO ] [VMS-A-TASK-11             ] 1606355598340 ----> LOAD -------->  192.168.2.184#8000#DEFAULT#DEFAULT@@MTS estimate total : cpu【15.0】 memory【15.0】 stream【1】
+2020-11-26 09:53:18.340 [INFO ] [VMS-A-TASK-11             ] 1606355598340 ----> LOAD -------->  192.168.2.184#8000#DEFAULT#DEFAULT@@MTS estimate one : cpu【16.230769】 memory【15.0】
+2020-11-26 09:53:18.341 [INFO ] [VMS-A-TASK-11             ] 34020000001320000033_MAIN ----> BIND -------->  192.168.2.184#8000#DEFAULT#DEFAULT@@MTS
+2020-11-26 09:53:18.383 [INFO ] [VMS-A-TASK-11             ] 34020000001320000033_MAIN ----> APPLY --------> 192.168.2.184#8000#DEFAULT#DEFAULT@@MTS port 20000
+2020-11-26 09:53:18.386 [INFO ] [VMS-A-TASK-11             ] 1606355598386 ----> CALL --------> START_CALL start
+2020-11-26 09:53:18.437 [INFO ] [http-nio-8009-exec-27     ] 1606355598437 ----> LOAD -------->  192.168.2.184#1985#DEFAULT#DEFAULT@@MPS info : currentCpu【0.0】 max_cpu【98.0】 currentMemory【0.0】 max_memory【98.0】 currentStream【0】
+2020-11-26 09:53:18.437 [INFO ] [http-nio-8009-exec-27     ] 1606355598437 ----> LOAD -------->  192.168.2.184#1985#DEFAULT#DEFAULT@@MPS estimate total : cpu【15.0】 memory【15.0】 stream【1】
+2020-11-26 09:53:18.437 [INFO ] [http-nio-8009-exec-27     ] 1606355598437 ----> LOAD -------->  192.168.2.184#1985#DEFAULT#DEFAULT@@MPS estimate one : cpu【15.0】 memory【15.0】
+2020-11-26 09:53:18.438 [INFO ] [http-nio-8009-exec-27     ] 34020000001320000033_MAIN ----> BIND -------->  192.168.2.184#1985#DEFAULT#DEFAULT@@MPS
+2020-11-26 09:53:19.499 [INFO ] [VMS-A-TASK-11             ] 1606355598386 ----> CALL --------> streamId【34020000001320000033_MAIN】 , START_CALL 192.168.2.184#8000#DEFAULT#DEFAULT@@MTS- mts status callback error - on_unforward
+2020-11-26 09:53:19.499 [INFO ] [VMS-A-TASK-11             ] 1606355598386 ----> CALL --------> use_time 【1113】 , START_CALL end
+2020-11-26 09:53:19.502 [INFO ] [VMS-A-TASK-11             ] VMS-A-TASK-11 ----> TASK --------> restart fail 34020000001320000033_MAIN
+2020-11-26 09:53:20.663 [INFO ] [http-nio-8009-exec-20     ] I/O exception (org.apache.http.conn.HttpHostConnectException) caught when processing request to {}->http://192.168.2.184:1985: Connect to 192.168.2.184:1985 [/192.168.2.184] failed: 拒绝连接 (Connection refused)
+2020-11-26 09:53:20.663 [INFO ] [http-nio-8009-exec-20     ] Retrying request to {}->http://192.168.2.184:1985
+2020-11-26 09:53:20.664 [ERROR] [http-nio-8009-exec-20     ] 1606355600662----error>>>>I/O error on GET request for "http://192.168.2.184:1985/v1/streams2": Connect to 192.168.2.184:1985 [/192.168.2.184] failed: 拒绝连接 (Connection refused); nested exception is org.apache.http.conn.HttpHostConnectException: Connect to 192.168.2.184:1985 [/192.168.2.184] failed: 拒绝连接 (Connection refused)
+2020-11-26 09:53:22.335 [INFO ] [VMS-A-TASK-14             ] 1606355602335 ----> LOAD -------->  192.168.2.184#8000#DEFAULT#DEFAULT@@MTS info : currentCpu【1.232033】 max_cpu【98.0】 currentMemory【0.0】 max_memory【98.0】 currentStream【0】
+2020-11-26 09:53:22.335 [INFO ] [VMS-A-TASK-14             ] 1606355602335 ----> LOAD -------->  192.168.2.184#8000#DEFAULT#DEFAULT@@MTS estimate total : cpu【15.0】 memory【15.0】 stream【1】
+2020-11-26 09:53:22.336 [INFO ] [VMS-A-TASK-14             ] 1606355602335 ----> LOAD -------->  192.168.2.184#8000#DEFAULT#DEFAULT@@MTS estimate one : cpu【16.232033】 memory【15.0】
+2020-11-26 09:53:22.337 [INFO ] [VMS-A-TASK-14             ] 34020000001320000033_MAIN ----> BIND -------->  192.168.2.184#8000#DEFAULT#DEFAULT@@MTS
+2020-11-26 09:53:22.340 [INFO ] [VMS-A-TASK-14             ] 34020000001320000033_MAIN ----> APPLY --------> 192.168.2.184#8000#DEFAULT#DEFAULT@@MTS port 20002
+2020-11-26 09:53:22.345 [INFO ] [VMS-A-TASK-14             ] 1606355602345 ----> CALL --------> START_CALL start
+2020-11-26 09:53:22.447 [INFO ] [VMS-A-TASK-14             ] 1606355602345 ----> CALL --------> streamId【34020000001320000033_MAIN】 , START_CALL 192.168.2.184#9875#DEFAULT#DEFAULT@@CGS- cgs start stream callback code：1005
+2020-11-26 09:53:22.447 [INFO ] [VMS-A-TASK-14             ] 1606355602345 ----> CALL --------> use_time 【102】 , START_CALL end
+2020-11-26 09:53:22.451 [INFO ] [VMS-A-TASK-14             ] VMS-A-TASK-14 ----> TASK --------> restart fail 34020000001320000033_MAIN
+2020-11-26 09:53:27.348 [INFO ] [VMS-A-TASK-19             ] 1606355607348 ----> LOAD -------->  192.168.2.184#8000#DEFAULT#DEFAULT@@MTS info : currentCpu【0.821355】 max_cpu【98.0】 currentMemory【0.0】 max_memory【98.0】 currentStream【0】
+2020-11-26 09:53:27.348 [INFO ] [VMS-A-TASK-19             ] 1606355607348 ----> LOAD -------->  192.168.2.184#8000#DEFAULT#DEFAULT@@MTS estimate total : cpu【15.0】 memory【15.0】 stream【1】
+2020-11-26 09:53:27.348 [INFO ] [VMS-A-TASK-19             ] 1606355607348 ----> LOAD -------->  192.168.2.184#8000#DEFAULT#DEFAULT@@MTS estimate one : cpu【15.821355】 memory【15.0】
+2020-11-26 09:53:27.349 [INFO ] [VMS-A-TASK-19             ] 34020000001320000033_MAIN ----> BIND -------->  192.168.2.184#8000#DEFAULT#DEFAULT@@MTS
+2020-11-26 09:53:27.353 [INFO ] [VMS-A-TASK-19             ] 34020000001320000033_MAIN ----> APPLY --------> 192.168.2.184#8000#DEFAULT#DEFAULT@@MTS port 20004
+2020-11-26 09:53:27.359 [INFO ] [VMS-A-TASK-19             ] 1606355607359 ----> CALL --------> START_CALL start
+2020-11-26 09:53:27.462 [INFO ] [VMS-A-TASK-19             ] 1606355607359 ----> CALL --------> streamId【34020000001320000033_MAIN】 , START_CALL 192.168.2.184#9875#DEFAULT#DEFAULT@@CGS- cgs start stream callback code：1005
+2020-11-26 09:53:27.462 [INFO ] [VMS-A-TASK-19             ] 1606355607359 ----> CALL --------> use_time 【102】 , START_CALL end
+2020-11-26 09:53:27.466 [INFO ] [VMS-A-TASK-19             ] VMS-A-TASK-19 ----> TASK --------> restart fail 34020000001320000033_MAIN
+
+****************************************************************************************************
+
+**************************************************CGS**************************************************
+**192.168.2.184**:This is cgs log content:
+I1126 09:53:16.025806 60114 RegistrationServer.cpp:283] find this device and keepalive, DeviceID:34020000001110000213
+I1126 09:53:16.026059 60114 PagerMessageHandler.cpp:575] Receive keepalive DeviceID:34020000001110000213, And Response 200
+I1126 09:53:18.327380 60035 HttpService.cpp:161] recv request: POST /v1/stop_play HTTP/1.1
+Accept: application/json, application/*+json
+Accept-Encoding: gzip,deflate
+Connection: Keep-Alive
+Content-Length: 87
+Content-Type: application/json
+Host: 192.168.2.184:9875
+User-Agent: Apache-HttpClient/4.5.12 (Java/1.8.0_121)
+
+{"streamId":"34020000001320000033_MAIN","requestId":"81e0d473198a4a07a586ab04bca4d4a0"}from remote_address: 192.168.2.184
+I1126 09:53:18.327558 60124 Uas.cpp:140] receive stop play json:{"streamId":"34020000001320000033_MAIN","requestId":"81e0d473198a4a07a586ab04bca4d4a0"}
+I1126 09:53:18.327723 60124 InviteSessionHandler.cpp:647] onTerminated, streamid:34020000001320000033_MAIN,deviceid:34020000001320000033,errmsg:3
+I1126 09:53:18.328161 60124 InviteSessionHandler.cpp:303] stop stream success, streamid:34020000001320000033_MAIN
+E1126 09:53:18.328191 60124 Uas.cpp:1144] send errcode:0,errMsg:stop success
+W1126 09:53:18.330375 60082 NamingClient.cpp:850] realGetService, Response code: 200
+W1126 09:53:18.330639 60082 NamingClient.cpp:1294]  dom : VMS
+W1126 09:53:18.330718 60082 NamingClient.cpp:1301]  cacheMillis : 3000
+W1126 09:53:18.330935 60082 NamingClient.cpp:1315]  checksum : b328081a2e1531cadb116e54deb7a988
+W1126 09:53:18.330989 60082 NamingClient.cpp:1322]  lastRefTime : 1606355598329
+W1126 09:53:18.331046 60082 NamingClient.cpp:1329]  env : 
+W1126 09:53:18.331065 60082 NamingClient.cpp:1336]  clusters : DEFAULT
+E1126 09:53:18.331490 60082 NamingClient.cpp:230] checksum : b328081a2e1531cadb116e54deb7a988 DEFAULT VMS
+I1126 09:53:18.331574 60082 HttpClient.cpp:153] enter into CHttpClient::postRequest send url:http://192.168.2.184:8009/v1/cgs_callback_stop_play, send body:{
+   "errorCode" : "0",
+   "errorMsg" : "stop success",
+   "requestId" : "81e0d473198a4a07a586ab04bca4d4a0",
+   "streamId" : "34020000001320000033_MAIN"
+}
+I1126 09:53:18.335573 60082 HttpClient.cpp:164] CHttpClient::postRequest success, requestid:81e0d473198a4a07a586ab04bca4d4a0
+I1126 09:53:18.335726 60082 HttpClient.cpp:172] leave CHttpClient::postRequest, requestid:81e0d473198a4a07a586ab04bca4d4a0
+I1126 09:53:18.335788 60082 HttpClient.cpp:108] RunInLoop iret:0,requestid:81e0d473198a4a07a586ab04bca4d4a0
+I1126 09:53:18.385689 60023 HttpService.cpp:161] recv request: POST /v1/start_play HTTP/1.1
+Accept: application/json, application/*+json
+Accept-Encoding: gzip,deflate
+Connection: Keep-Alive
+Content-Length: 322
+Content-Type: application/json
+Host: 192.168.2.184:9875
+User-Agent: Apache-HttpClient/4.5.12 (Java/1.8.0_121)
+
+{"videoEncodingType":"2","streamType":"MAIN","streamId":"34020000001320000033_MAIN","mediaRecvPort":20000,"requestId":"81e0d473198a4a07a586ab04bca4d4a0","audioEncodingType":"1","mediaRecvIp":"192.168.2.184","setup":"0","deviceId":"34020000001110000213","audioSampleRate":"1","channelId":"34020000001320000033","timeOut":5}from remote_address: 192.168.2.184
+I1126 09:53:18.386015 60125 Uas.cpp:89] receive Play json:{"videoEncodingType":"2","streamType":"MAIN","streamId":"34020000001320000033_MAIN","mediaRecvPort":20000,"requestId":"81e0d473198a4a07a586ab04bca4d4a0","audioEncodingType":"1","mediaRecvIp":"192.168.2.184","setup":"0","deviceId":"34020000001110000213","audioSampleRate":"1","channelId":"34020000001320000033","timeOut":5}
+I1126 09:53:18.386107 60125 InviteSessionHandler.cpp:243] CInviteSessionHandler::Play, type:Play,streamid: 34020000001320000033_MAIN
+I1126 09:53:18.386831 60114 InviteSessionHandler.cpp:38] timer started, streamid:34020000001320000033_MAIN,playtype: Play
+I1126 09:53:18.428575 60114 InviteSessionHandler.cpp:495] onNewSession, streamid:34020000001320000033_MAIN,deviceid:34020000001320000033
+I1126 09:53:18.429064 60114 InviteSessionHandler.cpp:581] receive invite sdp in onAnswer, ip:192.168.2.213, port:62092, ssrc:0999999999, streamid:34020000001320000033_MAIN, deviceid:34020000001320000033
+I1126 09:53:18.429122 60114 InviteSessionHandler.cpp:557] proc onConnected success, streamid:34020000001320000033_MAIN,deviceid:34020000001320000033
+I1126 09:53:18.429153 60114 InviteSessionHandler.cpp:71] timer canceled, streamid:34020000001320000033_MAIN,playtype: Play
+W1126 09:53:18.431272 60083 NamingClient.cpp:850] realGetService, Response code: 200
+W1126 09:53:18.431521 60083 NamingClient.cpp:1294]  dom : VMS
+W1126 09:53:18.431628 60083 NamingClient.cpp:1301]  cacheMillis : 3000
+W1126 09:53:18.431659 60083 NamingClient.cpp:1315]  checksum : b328081a2e1531cadb116e54deb7a988
+W1126 09:53:18.431679 60083 NamingClient.cpp:1322]  lastRefTime : 1606355598430
+W1126 09:53:18.431712 60083 NamingClient.cpp:1329]  env : 
+W1126 09:53:18.431730 60083 NamingClient.cpp:1336]  clusters : DEFAULT
+E1126 09:53:18.431841 60083 NamingClient.cpp:230] checksum : b328081a2e1531cadb116e54deb7a988 DEFAULT VMS
+I1126 09:53:18.431890 60083 HttpClient.cpp:153] enter into CHttpClient::postRequest send url:http://192.168.2.184:8009/v1/cgs_callback_start_play, send body:{
+   "channelId" : "34020000001320000033",
+   "deviceId" : "34020000001110000213",
+   "errorCode" : "0",
+   "errorMsg" : "play response success with sdp info",
+   "requestId" : "81e0d473198a4a07a586ab04bca4d4a0",
+   "srcIp" : "192.168.2.213",
+   "srcPort" : 62092,
+   "ssrc" : "0999999999",
+   "streamId" : "34020000001320000033_MAIN"
+}
+I1126 09:53:18.443145 60083 HttpClient.cpp:164] CHttpClient::postRequest success, requestid:81e0d473198a4a07a586ab04bca4d4a0
+I1126 09:53:18.443207 60083 HttpClient.cpp:172] leave CHttpClient::postRequest, requestid:81e0d473198a4a07a586ab04bca4d4a0
+I1126 09:53:18.443343 60083 HttpClient.cpp:108] RunInLoop iret:0,requestid:81e0d473198a4a07a586ab04bca4d4a0
+I1126 09:53:22.344117 60020 HttpService.cpp:161] recv request: POST /v1/start_play HTTP/1.1
+Accept: application/json, application/*+json
+Accept-Encoding: gzip,deflate
+Connection: Keep-Alive
+Content-Length: 322
+Content-Type: application/json
+Host: 192.168.2.184:9875
+User-Agent: Apache-HttpClient/4.5.12 (Java/1.8.0_121)
+
+{"videoEncodingType":"2","streamType":"MAIN","streamId":"34020000001320000033_MAIN","mediaRecvPort":20002,"requestId":"81e0d473198a4a07a586ab04bca4d4a0","audioEncodingType":"1","mediaRecvIp":"192.168.2.184","setup":"0","deviceId":"34020000001110000213","audioSampleRate":"1","channelId":"34020000001320000033","timeOut":5}from remote_address: 192.168.2.184
+I1126 09:53:22.344627 60126 Uas.cpp:89] receive Play json:{"videoEncodingType":"2","streamType":"MAIN","streamId":"34020000001320000033_MAIN","mediaRecvPort":20002,"requestId":"81e0d473198a4a07a586ab04bca4d4a0","audioEncodingType":"1","mediaRecvIp":"192.168.2.184","setup":"0","deviceId":"34020000001110000213","audioSampleRate":"1","channelId":"34020000001320000033","timeOut":5}
+I1126 09:53:22.344735 60126 InviteSessionHandler.cpp:243] CInviteSessionHandler::Play, type:Play,streamid: 34020000001320000033_MAIN
+E1126 09:53:22.344770 60126 InviteSessionHandler.cpp:247] strStreamId is playing now, please wait or stop it begin
+E1126 09:53:22.344895 60126 Uas.cpp:1144] send errcode:1005,errMsg:strStreamId is playing now, please wait or stop it begin
+W1126 09:53:22.346911 60084 NamingClient.cpp:850] realGetService, Response code: 200
+W1126 09:53:22.347187 60084 NamingClient.cpp:1294]  dom : VMS
+W1126 09:53:22.347272 60084 NamingClient.cpp:1301]  cacheMillis : 3000
+W1126 09:53:22.347316 60084 NamingClient.cpp:1315]  checksum : b328081a2e1531cadb116e54deb7a988
+W1126 09:53:22.347347 60084 NamingClient.cpp:1322]  lastRefTime : 1606355602346
+W1126 09:53:22.347376 60084 NamingClient.cpp:1329]  env : 
+W1126 09:53:22.347404 60084 NamingClient.cpp:1336]  clusters : DEFAULT
+E1126 09:53:22.347575 60084 NamingClient.cpp:230] checksum : b328081a2e1531cadb116e54deb7a988 DEFAULT VMS
+I1126 09:53:22.347643 60084 HttpClient.cpp:153] enter into CHttpClient::postRequest send url:http://192.168.2.184:8009/v1/cgs_callback_start_play, send body:{
+   "errorCode" : "1005",
+   "errorMsg" : "strStreamId is playing now, please wait or stop it begin",
+   "requestId" : "81e0d473198a4a07a586ab04bca4d4a0",
+   "streamId" : "34020000001320000033_MAIN"
+}
+I1126 09:53:22.351729 60084 HttpClient.cpp:164] CHttpClient::postRequest success, requestid:81e0d473198a4a07a586ab04bca4d4a0
+I1126 09:53:22.351795 60084 HttpClient.cpp:172] leave CHttpClient::postRequest, requestid:81e0d473198a4a07a586ab04bca4d4a0
+I1126 09:53:22.351872 60084 HttpClient.cpp:108] RunInLoop iret:0,requestid:81e0d473198a4a07a586ab04bca4d4a0
+I1126 09:53:27.358258 60027 HttpService.cpp:161] recv request: POST /v1/start_play HTTP/1.1
+Accept: application/json, application/*+json
+Accept-Encoding: gzip,deflate
+Connection: Keep-Alive
+Content-Length: 322
+Content-Type: application/json
+Host: 192.168.2.184:9875
+User-Agent: Apache-HttpClient/4.5.12 (Java/1.8.0_121)
+
+{"videoEncodingType":"2","streamType":"MAIN","streamId":"34020000001320000033_MAIN","mediaRecvPort":20004,"requestId":"81e0d473198a4a07a586ab04bca4d4a0","audioEncodingType":"1","mediaRecvIp":"192.168.2.184","setup":"0","deviceId":"34020000001110000213","audioSampleRate":"1","channelId":"34020000001320000033","timeOut":5}from remote_address: 192.168.2.184
+I1126 09:53:27.358732 60127 Uas.cpp:89] receive Play json:{"videoEncodingType":"2","streamType":"MAIN","streamId":"34020000001320000033_MAIN","mediaRecvPort":20004,"requestId":"81e0d473198a4a07a586ab04bca4d4a0","audioEncodingType":"1","mediaRecvIp":"192.168.2.184","setup":"0","deviceId":"34020000001110000213","audioSampleRate":"1","channelId":"34020000001320000033","timeOut":5}
+I1126 09:53:27.358865 60127 InviteSessionHandler.cpp:243] CInviteSessionHandler::Play, type:Play,streamid: 34020000001320000033_MAIN
+E1126 09:53:27.358893 60127 InviteSessionHandler.cpp:247] strStreamId is playing now, please wait or stop it begin
+E1126 09:53:27.359019 60127 Uas.cpp:1144] send errcode:1005,errMsg:strStreamId is playing now, please wait or stop it begin
+W1126 09:53:27.361230 60085 NamingClient.cpp:850] realGetService, Response code: 200
+W1126 09:53:27.361557 60085 NamingClient.cpp:1294]  dom : VMS
+W1126 09:53:27.361696 60085 NamingClient.cpp:1301]  cacheMillis : 3000
+W1126 09:53:27.361783 60085 NamingClient.cpp:1315]  checksum : b328081a2e1531cadb116e54deb7a988
+W1126 09:53:27.361865 60085 NamingClient.cpp:1322]  lastRefTime : 1606355607360
+W1126 09:53:27.361945 60085 NamingClient.cpp:1329]  env : 
+W1126 09:53:27.362076 60085 NamingClient.cpp:1336]  clusters : DEFAULT
+E1126 09:53:27.362736 60085 NamingClient.cpp:230] checksum : b328081a2e1531cadb116e54deb7a988 DEFAULT VMS
+I1126 09:53:27.363111 60085 HttpClient.cpp:153] enter into CHttpClient::postRequest send url:http://192.168.2.184:8009/v1/cgs_callback_start_play, send body:{
+   "errorCode" : "1005",
+   "errorMsg" : "strStreamId is playing now, please wait or stop it begin",
+   "requestId" : "81e0d473198a4a07a586ab04bca4d4a0",
+   "streamId" : "34020000001320000033_MAIN"
+}
+I1126 09:53:27.367688 60085 HttpClient.cpp:164] CHttpClient::postRequest success, requestid:81e0d473198a4a07a586ab04bca4d4a0
+I1126 09:53:27.367853 60085 HttpClient.cpp:172] leave CHttpClient::postRequest, requestid:81e0d473198a4a07a586ab04bca4d4a0
+I1126 09:53:27.368046 60085 HttpClient.cpp:108] RunInLoop iret:0,requestid:81e0d473198a4a07a586ab04bca4d4a0
+I1126 09:53:35.007087 60024 HttpService.cpp:161] recv request: POST /v1/cgs_subscribe HTTP/1.1
+Accept: application/json, application/*+json
+Accept-Encoding: gzip,deflate
+Connection: Keep-Alive
+Content-Length: 261
+Content-Type: application/json
+Host: 192.168.2.184:9875
+User-Agent: Apache-HttpClient/4.5.12 (Java/1.8.0_121)
+
+from remote_address: 192.168.2.184
+I1126 09:53:35.007426 60128 Uas.cpp:544] receive Subscribe json:{"alarmEndTime":null,"expireTime":200,"alarmInterval":null,"requestId":"1606355615003","subcribeId":"34020000001110000213#dzIa1-J1r6-fT8d1K7YEpg..","alarmBeginTime":null,"subType":1,"alarmMethod":null,"operType":0,"deviceId":"34020000001110000213","timeOut":60}
+I1126 09:53:35.007516 60128 SubScribeHandler.cpp:474] unsubscribe success, subscribeId:34020000001110000213#dzIa1-J1r6-fT8d1K7YEpg..
+E1126 09:53:35.007534 60128 Uas.cpp:1144] send errcode:0,errMsg:unsubscribe success
+W1126 09:53:35.010471 60086 NamingClient.cpp:850] realGetService, Response code: 200
+W1126 09:53:35.010841 60086 NamingClient.cpp:1294]  dom : VMS
+W1126 09:53:35.010915 60086 NamingClient.cpp:1301]  cacheMillis : 3000
+W1126 09:53:35.010943 60086 NamingClient.cpp:1315]  checksum : b328081a2e1531cadb116e54deb7a988
+W1126 09:53:35.010982 60086 NamingClient.cpp:1322]  lastRefTime : 1606355615009
+W1126 09:53:35.011013 60086 NamingClient.cpp:1329]  env : 
+W1126 09:53:35.011037 60086 NamingClient.cpp:1336]  clusters : DEFAULT
+E1126 09:53:35.011157 60086 NamingClient.cpp:230] checksum : b328081a2e1531cadb116e54deb7a988 DEFAULT VMS
+I1126 09:53:35.011230 60086 HttpClient.cpp:153] enter into CHttpClient::postRequest send url:http://192.168.2.184:8009/v1/cgs_callback_subscribe, send body:{
+   "deviceId" : "34020000001110000213",
+   "errorCode" : "0",
+   "errorMsg" : "unsubscribe success",
+   "requestId" : "1606355615003"
+}
+I1126 09:53:35.017192 60086 HttpClient.cpp:164] CHttpClient::postRequest success, requestid:1606355615003
+I1126 09:53:35.017231 60086 HttpClient.cpp:172] leave CHttpClient::postRequest, requestid:1606355615003
+I1126 09:53:35.017330 60086 HttpClient.cpp:108] RunInLoop iret:0,requestid:1606355615003
+I1126 09:53:40.008592 60038 HttpService.cpp:161] recv request: POST /v1/cgs_subscribe HTTP/1.1
+Accept: application/json, application/*+json
+Accept-Encoding: gzip,deflate
+Connection: Keep-Alive
+Content-Length: 218
+Content-Type: application/json
+Host: 192.168.2.184:9875
+User-Agent: Apache-HttpClient/4.5.12 (Java/1.8.0_121)
+
+{"alarmEndTime":null,"expireTime":200,"alarmInterval":null,"requestId":"1606355620004","subcribeId":null,"alarmBeginTime":null,"subType":1,"alarmMethod":null,"operType":1,"deviceId":"34020000001110000213","timeOut":60}from remote_address: 192.168.2.184
+I1126 09:53:40.008905 60129 Uas.cpp:544] receive Subscribe json:{"alarmEndTime":null,"expireTime":200,"alarmInterval":null,"requestId":"1606355620004","subcribeId":null,"alarmBeginTime":null,"subType":1,"alarmMethod":null,"operType":1,"deviceId":"34020000001110000213","timeOut":60}
+I1126 09:53:40.009547 60114 SubScribeHandler.cpp:26] timer started, requestid:1606355620004, subtype:1
+I1126 09:53:40.035248 60114 SubScribeHandler.cpp:337] enter onNewSubscription, notify:SIP/2.0 200 OK
+Via: SIP/2.0/UDP 192.168.2.184:5062;branch=z9hG4bK-524287-1---9a50a7612785d460;rport=5062
+Contact: <sip:34020000001110000213@192.168.2.213:5060>
+To: <sip:34020000001110000213@192.168.2.213:5060>;tag=236467649
+From: <sip:34020000002000000001@192.168.2.184:5062>;tag=47bb9a58
+Call-ID: i1QnmdmGDwOUWAHwPWOzJw..
+CSeq: 1 SUBSCRIBE
+Expires: 200
+Content-Type: Application/MANSCDP+xml
+User-Agent: Embedded Net DVR/NVR/DVS
+Event: presence
+Content-Length: 172
+
+<?xml version="1.0" encoding="gb2312"?>
+<Response>
+<CmdType>Catalog</CmdType>
+<SN>251</SN>
+<DeviceID>34020000001110000213</DeviceID>
+<Result>OK</Result>
+</Response>
+I1126 09:53:40.035866 60114 SubScribeHandler.cpp:49] enter ResponseCallBack, requestid:1606355620004, errCode:0, errMsg:subscribe success
+I1126 09:53:40.035946 60114 SubScribeHandler.cpp:36] timer canceled, requestid:1606355620004, subtype:1
+W1126 09:53:40.038130 60087 NamingClient.cpp:850] realGetService, Response code: 200
+W1126 09:53:40.038357 60087 NamingClient.cpp:1294]  dom : VMS
+W1126 09:53:40.038401 60087 NamingClient.cpp:1301]  cacheMillis : 3000
+W1126 09:53:40.038519 60087 NamingClient.cpp:1315]  checksum : b328081a2e1531cadb116e54deb7a988
+W1126 09:53:40.038550 60087 NamingClient.cpp:1322]  lastRefTime : 1606355620037
+W1126 09:53:40.038586 60087 NamingClient.cpp:1329]  env : 
+W1126 09:53:40.038614 60087 NamingClient.cpp:1336]  clusters : DEFAULT
+E1126 09:53:40.038821 60087 NamingClient.cpp:230] checksum : b328081a2e1531cadb116e54deb7a988 DEFAULT VMS
+I1126 09:53:40.039088 60087 HttpClient.cpp:153] enter into CHttpClient::postRequest send url:http://192.168.2.184:8009/v1/cgs_callback_subscribe, send body:{
+   "deviceId" : "34020000001110000213",
+   "errorCode" : "0",
+   "errorMsg" : "subscribe success",
+   "requestId" : "1606355620004",
+   "subscribeId" : "34020000001110000213#i1QnmdmGDwOUWAHwPWOzJw.."
+}
+I1126 09:53:40.052235 60087 HttpClient.cpp:164] CHttpClient::postRequest success, requestid:1606355620004
+I1126 09:53:40.052302 60087 HttpClient.cpp:172] leave CHttpClient::postRequest, requestid:1606355620004
+I1126 09:53:40.052386 60087 HttpClient.cpp:108] RunInLoop iret:0,requestid:1606355620004
+
+****************************************************************************************************
+
+**************************************************MTS**************************************************
+E1126 09:53:15.643739 50557 StreamChannelUdp2nd.cpp:1029] deviceId: 34020000001320000033_MAIN##send h264 raw data failed!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11111111 ret= 1009
+E1126 09:53:15.643877 50557 StreamChannelUdp2nd.cpp:1030] deviceId: 34020000001320000033_MAIN##Type: 80pts:  67547980frame len = 5384unit-type: 9##header: 9
+E1126 09:53:16.046169 50557 StreamChannelUdp2nd.cpp:1222] simple handshake failed.
+E1126 09:53:16.046460 50557 StreamChannelUdp2nd.cpp:1272] 34020000001320000033_MAIN initRtmpClient failed!!!!
+E1126 09:53:16.046669 50557 StreamChannelUdp2nd.cpp:1222] simple handshake failed.
+E1126 09:53:16.046720 50557 StreamChannelUdp2nd.cpp:1272] 34020000001320000033_MAIN initRtmpClient failed!!!!
+E1126 09:53:16.142853 50557 StreamChannelUdp2nd.cpp:1222] simple handshake failed.
+E1126 09:53:16.143002 50557 StreamChannelUdp2nd.cpp:1272] 34020000001320000033_MAIN initRtmpClient failed!!!!
+E1126 09:53:16.143144 50557 StreamChannelUdp2nd.cpp:1222] simple handshake failed.
+E1126 09:53:16.143189 50557 StreamChannelUdp2nd.cpp:1272] 34020000001320000033_MAIN initRtmpClient failed!!!!
+E1126 09:53:16.143517 50557 StreamChannelUdp2nd.cpp:1222] simple handshake failed.
+E1126 09:53:16.143695 50557 StreamChannelUdp2nd.cpp:1272] 34020000001320000033_MAIN initRtmpClient failed!!!!
+E1126 09:53:16.339798 50557 StreamChannelUdp2nd.cpp:1222] simple handshake failed.
+E1126 09:53:16.339920 50557 StreamChannelUdp2nd.cpp:1272] 34020000001320000033_MAIN initRtmpClient failed!!!!
+W1126 09:53:16.689582 50557 StreamChannelUdp2nd.cpp:903] 34020000001320000033_MAIN 444444444444444444444444(putRtpPacketWithNoMark) ====== lost exception timer!!!!!!!!!!!!!!!!!!!!!
+E1126 09:53:16.940112 50542 StreamChannelUdp2nd.cpp:1425] 34020000001320000033_MAIN CStreamChannelUdp2nd::noMore_StreamOut_Timer_Routine~~~~~~~~~~~~~~~~~~~~~Beyond Rtmp Reconnect NUm~~~~~~~~~~~
+W1126 09:53:16.942598 50542 NamingClient.cpp:885] realGetService, Response code: 200
+E1126 09:53:16.943223 50542 NamingClient.cpp:264] checksum : b328081a2e1531cadb116e54deb7a988  VMS
+W1126 09:53:16.943269 50542 RestHandler.cpp:1027]  vms addr : 192.168.2.184:8009
+W1126 09:53:16.943365 50542 ProgramStreamManager.cpp:1208] 34020000001320000033_MAIN stopUdp NO_MORE_DATA_STOP
+W1126 09:53:16.943387 50542 ProgramStreamManager.cpp:1317] 34020000001320000033_MAIN find port : 20018
+I1126 09:53:18.321733 50587 RestHandler.cpp:442] ===========handlePost=======IN=====path: /v1/media_port_release u64RequestId: 197669
+I1126 09:53:18.322139 50587 RestHandler.cpp:44] R(POST): {"port":"20018","setup":"0"}
+I1126 09:53:18.322190 50587 RestHandler.cpp:473] ===========dealPostRequest============path: /v1/media_port_release u64RequestId: 197669
+I1126 09:53:18.342962 50586 RestHandler.cpp:442] ===========handlePost=======IN=====path: /v1/media_source_acquirement u64RequestId: 197670
+I1126 09:53:18.343340 50586 RestHandler.cpp:44] R(POST): {"tcp":"","udp":"1-1"}
+I1126 09:53:18.343394 50586 RestHandler.cpp:473] ===========dealPostRequest============path: /v1/media_source_acquirement u64RequestId: 197670
+W1126 09:53:18.343530 50542 ProgramStreamManager.cpp:1498] udp port get info : 1-1
+W1126 09:53:18.343637 50542 ProgramStreamManager.cpp:1547] udp port: 20000
+I1126 09:53:18.440687 50597 RestHandler.cpp:442] ===========handlePost=======IN=====path: /v1/set_stream_info u64RequestId: 197671
+I1126 09:53:18.440938 50597 RestHandler.cpp:44] R(POST): {"port":"20000","rtmpAddr":"rtmp://192.168.2.184:1035/live/34020000001320000033_MAIN","setup":"0","srcIp":"192.168.2.213","srcPort":"62092","ssrc":"0999999999","streamCheck":"0","streamId":"34020000001320000033_MAIN"}
+I1126 09:53:18.441040 50597 RestHandler.cpp:473] ===========dealPostRequest============path: /v1/set_stream_info u64RequestId: 197671
+W1126 09:53:18.441186 50542 StreamChannelUdp2nd.cpp:302] 34020000001320000033_MAIN CStreamChannelUdp2nd::initStreamOutTimer
+W1126 09:53:18.469916 50548 StreamChannelUdp2nd.cpp:450] CStreamChannelUdp2nd::onStreamMessage++++data has came, cancel stream out timer+++initRateAndUpdateTimers+++
+W1126 09:53:18.470059 50548 StreamChannelUdp2nd.cpp:1349] CStreamChannelUdp2nd::initRateAndUpdateTimers
+W1126 09:53:18.471731 50542 NamingClient.cpp:885] realGetService, Response code: 200
+E1126 09:53:18.472018 50542 NamingClient.cpp:264] checksum : b328081a2e1531cadb116e54deb7a988  VMS
+W1126 09:53:18.472052 50542 RestHandler.cpp:1027]  vms addr : 192.168.2.184:8009
+E1126 09:53:18.620730 50548 StreamChannelUdp2nd.cpp:1222] simple handshake failed.
+E1126 09:53:18.620816 50548 StreamChannelUdp2nd.cpp:1272] 34020000001320000033_MAIN initRtmpClient failed!!!!
+E1126 09:53:18.620946 50548 StreamChannelUdp2nd.cpp:1222] simple handshake failed.
+E1126 09:53:18.621008 50548 StreamChannelUdp2nd.cpp:1272] 34020000001320000033_MAIN initRtmpClient failed!!!!
+E1126 09:53:18.719874 50548 StreamChannelUdp2nd.cpp:1222] simple handshake failed.
+E1126 09:53:18.720005 50548 StreamChannelUdp2nd.cpp:1272] 34020000001320000033_MAIN initRtmpClient failed!!!!
+E1126 09:53:18.720146 50548 StreamChannelUdp2nd.cpp:1222] simple handshake failed.
+E1126 09:53:18.720182 50548 StreamChannelUdp2nd.cpp:1272] 34020000001320000033_MAIN initRtmpClient failed!!!!
+E1126 09:53:18.720299 50548 StreamChannelUdp2nd.cpp:1222] simple handshake failed.
+E1126 09:53:18.720481 50548 StreamChannelUdp2nd.cpp:1272] 34020000001320000033_MAIN initRtmpClient failed!!!!
+E1126 09:53:18.886225 50548 StreamChannelUdp2nd.cpp:1222] simple handshake failed.
+E1126 09:53:18.886376 50548 StreamChannelUdp2nd.cpp:1272] 34020000001320000033_MAIN initRtmpClient failed!!!!
+W1126 09:53:19.430058 50548 StreamChannelUdp2nd.cpp:903] 34020000001320000033_MAIN 444444444444444444444444(putRtpPacketWithNoMark) ====== lost exception timer!!!!!!!!!!!!!!!!!!!!!
+W1126 09:53:19.430212 50548 StreamChannelUdp2nd.cpp:1188] 34020000001320000033_MAIN ~~~~~~~~~~~~~~~~~~~m_pRtp2PsRawFrame->Clean######################
+E1126 09:53:19.473278 50542 StreamChannelUdp2nd.cpp:1425] 34020000001320000033_MAIN CStreamChannelUdp2nd::noMore_StreamOut_Timer_Routine~~~~~~~~~~~~~~~~~~~~~Beyond Rtmp Reconnect NUm~~~~~~~~~~~
+W1126 09:53:19.475170 50542 NamingClient.cpp:885] realGetService, Response code: 200
+E1126 09:53:19.475569 50542 NamingClient.cpp:264] checksum : b328081a2e1531cadb116e54deb7a988  VMS
+W1126 09:53:19.475610 50542 RestHandler.cpp:1027]  vms addr : 192.168.2.184:8009
+W1126 09:53:19.475749 50542 ProgramStreamManager.cpp:1208] 34020000001320000033_MAIN stopUdp NO_MORE_DATA_STOP
+W1126 09:53:19.475782 50542 ProgramStreamManager.cpp:1317] 34020000001320000033_MAIN find port : 20000
+I1126 09:53:19.501431 50589 RestHandler.cpp:442] ===========handlePost=======IN=====path: /v1/media_port_release u64RequestId: 197672
+I1126 09:53:19.501502 50589 RestHandler.cpp:44] R(POST): {"port":"20000","setup":"0"}
+I1126 09:53:19.501526 50589 RestHandler.cpp:473] ===========dealPostRequest============path: /v1/media_port_release u64RequestId: 197672
+I1126 09:53:22.340097 50588 RestHandler.cpp:442] ===========handlePost=======IN=====path: /v1/media_source_acquirement u64RequestId: 197675
+I1126 09:53:22.340289 50588 RestHandler.cpp:44] R(POST): {"tcp":"","udp":"1-1"}
+I1126 09:53:22.340327 50588 RestHandler.cpp:473] ===========dealPostRequest============path: /v1/media_source_acquirement u64RequestId: 197675
+W1126 09:53:22.340431 50542 ProgramStreamManager.cpp:1498] udp port get info : 1-1
+W1126 09:53:22.340489 50542 ProgramStreamManager.cpp:1547] udp port: 20002
+I1126 09:53:22.449597 50574 RestHandler.cpp:442] ===========handlePost=======IN=====path: /v1/media_port_release u64RequestId: 197676
+I1126 09:53:22.449697 50574 RestHandler.cpp:44] R(POST): {"port":"20002","setup":"0"}
+I1126 09:53:22.449717 50574 RestHandler.cpp:473] ===========dealPostRequest============path: /v1/media_port_release u64RequestId: 197676
+I1126 09:53:27.352576 50585 RestHandler.cpp:442] ===========handlePost=======IN=====path: /v1/media_source_acquirement u64RequestId: 197679
+I1126 09:53:27.352809 50585 RestHandler.cpp:44] R(POST): {"tcp":"","udp":"1-1"}
+I1126 09:53:27.352851 50585 RestHandler.cpp:473] ===========dealPostRequest============path: /v1/media_source_acquirement u64RequestId: 197679
+W1126 09:53:27.353184 50542 ProgramStreamManager.cpp:1498] udp port get info : 1-1
+W1126 09:53:27.353287 50542 ProgramStreamManager.cpp:1547] udp port: 20004
+I1126 09:53:27.464643 50604 RestHandler.cpp:442] ===========handlePost=======IN=====path: /v1/media_port_release u64RequestId: 197680
+I1126 09:53:27.464771 50604 RestHandler.cpp:44] R(POST): {"port":"20004","setup":"0"}
+I1126 09:53:27.464813 50604 RestHandler.cpp:473] ===========dealPostRequest============path: /v1/media_port_release u64RequestId: 197680
+
+****************************************************************************************************
+
+**************************************************MPS**************************************************
+**192.168.2.184**:This is mps log content:
+[2020-11-26 09:53:05.008][Trace][stream_service_cycle][125100][455] client identified, type=fmle-publish, vhost=192.168.2.184, app=live, stream=34020000001320000033_MAIN, param=, duration=0ms
+[2020-11-26 09:53:05.008][Trace][stream_service_cycle][125100][475] connected stream, tcUrl=rtmp://192.168.2.184:1035/live, pageUrl=, swfUrl=, schema=rtmp, vhost=__defaultVhost__, port=1035, app=live, stream=34020000001320000033_MAIN, param=, args=null
+[2020-11-26 09:53:05.009][Trace][fetch_or_create][125100][1765] new source, stream_url=/live/34020000001320000033_MAIN
+[2020-11-26 09:53:05.009][Trace][stream_service_cycle][125100][524] source url=/live/34020000001320000033_MAIN, ip=192.168.2.184, cache=1, is_edge=0, source_id=[125100][-1]
+[2020-11-26 09:53:05.051][Trace][process_request][125100][1864] HTTP API GET http://192.168.2.184:1985/v1/streams2, content-length=-1, chunked=0/0
+[2020-11-26 09:53:05.053][Trace][on_publish][125100][169] http: on_publish ok, client_id=550, url=http://192.168.2.184:8009/v1/mps_on_publish, request={"action":"on_publish","client_id":550,"ip":"192.168.2.184","vhost":"__defaultVhost__","app":"live","tcUrl":"rtmp://192.168.2.184:1035/live","stream":"34020000001320000033_MAIN","param":""}, response={"errorCode":"0","errorMsg":"SUCCESS"}
+[2020-11-26 09:53:05.053][Trace][parse_exec_publish][125100][145] ignore disabled exec for vhost=__defaultVhost__
+[2020-11-26 09:53:05.054][Trace][http_mount][125100][968] http: mount flv stream for sid=/live/34020000001320000033_MAIN, mount=/live/34020000001320000033_MAIN.flv
+[2020-11-26 09:53:05.054][Trace][do_publishing][125100][891] start publish mr=0/350, p1stpt=20000, pnt=5000, tcp_nodelay=0
+[2020-11-26 09:53:05.156][Trace][process_request][125100][1864] HTTP API GET http://192.168.2.184:1985/v1/streams2?stream_id=34020000001320000033_MAIN, content-length=-1, chunked=0/0
+[2020-11-26 09:53:06.094][Trace][on_video][125100][1074] 56B video sh,  codec(7, profile=High, level=3.1, 128x1072, 0kbps, 0.0fps, 0.0s)
+[2020-11-26 09:53:10.051][Trace][process_request][125100][1864] HTTP API GET http://192.168.2.184:1985/v1/streams2, content-length=-1, chunked=0/0
+[2020-11-26 09:53:12.461][Trace][process_request][125100][1864] HTTP API GET http://192.168.2.184:1985/v1/streams2?stream_id=34020000001320000033_MAIN, content-length=-1, chunked=0/0
+[2020-11-26 09:53:15.050][Trace][process_request][125100][1864] HTTP API GET http://192.168.2.184:1985/v1/streams2, content-length=-1, chunked=0/0
+
+****************************************************************************************************
+
+====================================================================================================
+==================================================用例27==================================================
+==================================================11-26 09:58:34==================================================
+step1:POST /api/v1/stream/start
+result:{"code":"0","message":"SUCCESS","data":[{"streamId":"34020000001320000033_MAIN","errorMsg":"192.168.2.184#9875#DEFAULT#DEFAULT@@CGS- cgs start stream callback codeï¼š1005","RTSPAddr":null,"FLVAddr":null,"RTMPAddr":null,"HLSAddr":null}]}
+step2:SHELL pkill -9 mps;sleep 10
+result:
+step3:GET /api/v1/stream
+result:{"code":"400","message":"server error"}
+step4:SHELL cd wj/MPS/MPS;nohup ./mps -c mps.conf &>/dev/null &
+result:52
+step5:GET /api/v1/stream/stop
+result:{"code":"400","message":"server error : stream not found"}
+
+**************************************************VMS**************************************************
+**192.168.2.184**:This is vms log content:
+2020-11-26 09:58:53.956 [ERROR] [http-nio-8009-exec-30     ] null
+java.lang.NullPointerException: null
+	at org.springframework.cglib.empty.Object$$BeanCopierByCGLIB$$5063ae23.copy(<generated>)
+	at com.secusoft.base.api.service.impl.ApiStreamInfoServiceImpl.stream(ApiStreamInfoServiceImpl.java:50)
+	at com.secusoft.base.api.controller.VmsStreamController.stream(VmsStreamController.java:123)
+	at com.secusoft.base.api.controller.VmsStreamController$$FastClassBySpringCGLIB$$ce5d8464.invoke(<generated>)
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:771)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:749)
+	at org.springframework.validation.beanvalidation.MethodValidationInterceptor.invoke(MethodValidationInterceptor.java:119)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:749)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:95)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:749)
+	at org.springframework.aop.aspectj.MethodInvocationProceedingJoinPoint.proceed(MethodInvocationProceedingJoinPoint.java:88)
+	at com.secusoft.base.aop.RequestLogAspect.metrics(RequestLogAspect.java:63)
+	at sun.reflect.GeneratedMethodAccessor243.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethodWithGivenArgs(AbstractAspectJAdvice.java:644)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethod(AbstractAspectJAdvice.java:633)
+	at org.springframework.aop.aspectj.AspectJAroundAdvice.invoke(AspectJAroundAdvice.java:70)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:749)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:691)
+	at com.secusoft.base.api.controller.VmsStreamController$$EnhancerBySpringCGLIB$$6208fbd5.stream(<generated>)
+	at sun.reflect.GeneratedMethodAccessor479.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:190)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:138)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:105)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:879)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:793)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1040)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:943)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:898)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:634)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:741)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.boot.actuate.metrics.web.servlet.WebMvcMetricsFilter.doFilterInternal(WebMvcMetricsFilter.java:109)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:202)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:96)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:541)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:139)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:343)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:373)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:868)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1590)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.lang.Thread.run(Thread.java:745)
+2020-11-26 09:59:06.400 [ERROR] [http-nio-8009-exec-34     ] stream not found
+
+****************************************************************************************************
+
+**************************************************CGS**************************************************
+**192.168.2.184**:This is cgs log content:
+I1126 09:58:46.659060 60114 RegistrationServer.cpp:283] find this device and keepalive, DeviceID:34020000001110000213
+I1126 09:58:46.659204 60114 PagerMessageHandler.cpp:575] Receive keepalive DeviceID:34020000001110000213, And Response 200
+I1126 09:59:16.644706 60114 RegistrationServer.cpp:283] find this device and keepalive, DeviceID:34020000001110000213
+I1126 09:59:16.645519 60114 PagerMessageHandler.cpp:575] Receive keepalive DeviceID:34020000001110000213, And Response 200
+
+****************************************************************************************************
+
+**************************************************MTS**************************************************
+MTSContent is filtered out
+****************************************************************************************************
+
+**************************************************MPS**************************************************
+**192.168.2.184**:This is mps log content:
+[2020-11-26 09:59:04.535][Trace][do_main][127278][138] SRS/3.0.0.00(Leo), MIT
+[2020-11-26 09:59:04.535][Trace][do_main][127278][139] authors: Winlin,Wenjie,Runner365,John,B.P.Y,Lixin
+[2020-11-26 09:59:04.535][Trace][check_normal_config][127278][3556] srs checking config...
+[2020-11-26 09:59:04.537][Trace][retrieve_local_ips][127278][293] ips, iface[0] ens33 ipv4 0x11043 192.168.2.184, iface[1] ens33 ipv6 0x11043 fe80::710c:65f1:643a:8956.948481e-310ns33
+[2020-11-26 09:59:04.537][Trace][retrieve_local_ips][127278][294] devices, intranet ens33 192.168.2.184, intranet ens33 fe80::710c:65f1:643a:8956.948481e-310ns33
+[2020-11-26 09:59:04.537][Warn][check_normal_config][127278][3695][2] stats network use index=0, ip=192.168.2.184, ifname=ens33
+[2020-11-26 09:59:04.537][Warn][check_normal_config][127278][3707][2] stats disk list: sda sdb xvda xvdb 
+[2020-11-26 09:59:04.537][Trace][check_normal_config][127278][3734] write log to file mps.log
+[2020-11-26 09:59:04.537][Trace][check_normal_config][127278][3735] you can: tailf mps.log
+[2020-11-26 09:59:04.537][Trace][check_normal_config][127278][3736] @see: https://github.com/ossrs/srs/wiki/v1_CN_SrsLog
+[2020-11-26 09:59:04.537][Trace][show_macro_features][127278][260] features, rch:on, dash:on, hls:on, hds:off, srt:off, hc:on, ha:on, hs:on, hp:on, dvr:on, trans:on, inge:on, stat:on, sc:on
+[2020-11-26 09:59:04.537][Trace][show_macro_features][127278][289] SRS on  amd64 x86_64, conf:mps.conf, limit:1000, writev:1024, encoding:little-endian, HZ:100
+[2020-11-26 09:59:04.537][Trace][show_macro_features][127278][307] mw sleep:350ms. mr enabled:on, default:0, sleep:350ms
+[2020-11-26 09:59:04.537][Trace][show_macro_features][127278][343] gc:on, pq:30000ms, cscc:[0,16), csa:on, tn:on(may hurts performance), ss:auto(guess by merged write)
+[2020-11-26 09:59:04.537][Trace][show_macro_features][127278][352] system default latency(ms): mw(0-350) + mr(0-350) + play-queue(0-30000)
+[2020-11-26 09:59:04.537][Warn][show_macro_features][127278][361][2] SRS/3.0.0.00 is develop
+[2020-11-26 09:59:04.540][Trace][run_directly_or_daemon][127278][425] start daemon mode...
+[2020-11-26 09:59:04.541][Trace][run_directly_or_daemon][127279][449] father process exit
+[2020-11-26 09:59:04.541][Trace][run_directly_or_daemon][127280][454] son(daemon) process running.
+[2020-11-26 09:59:04.541][Trace][run_directly_or_daemon][127278][437] grandpa process exit.
+[2020-11-26 09:59:04.542][Trace][srs_st_init][127280][77] st_init success, use epoll
+[2020-11-26 09:59:04.542][Trace][nacos_initiation][127280][472] ip= 192.168.2.184, port = 8848
+[2020-11-26 09:59:04.543][Trace][set_socket_buffer][127280][157] UDP #5 LISTEN at 0.0.0.0:37380, SO_SNDBUF(default=212992, expect=10485760, actual=425984, r0=0), SO_RCVBUF(default=212992, expect=10485760, actual=425984, r0=0)
+[2020-11-26 09:59:04.546][Warn][srs_get_public_internet_address][127280][343][11] use private address as ip: 192.168.2.184, ifname=ens33
+[2020-11-26 09:59:04.546][Trace][RegisterInstance][127280][176] nacos register instance success
+[2020-11-26 09:59:04.547][Trace][initialize_flv_entry][127280][1223] http flv live stream, vhost=__defaultVhost__, mount=[vhost]/[app]/[stream].flv
+[2020-11-26 09:59:04.547][Trace][initialize][127280][238] http: root mount to ./nginx/html
+[2020-11-26 09:59:04.547][Trace][initialize_st][127280][829] server main cid=191, pid=127280, ppid=1, asprocess=0
+[2020-11-26 09:59:04.547][Trace][listen][127280][166] RTMP listen at tcp://0.0.0.0:1035, fd=9
+[2020-11-26 09:59:04.548][Trace][listen][127280][166] HTTP-API listen at tcp://192.168.2.184:1985, fd=10
+[2020-11-26 09:59:04.548][Trace][listen][127280][166] HTTP-Server listen at tcp://192.168.2.184:1945, fd=11
+[2020-11-26 09:59:04.548][Trace][start][127280][453] signal installed, reload=1, reopen=10, fast_quit=15, grace_quit=3
+[2020-11-26 09:59:04.548][Trace][http_handle][127280][1041] http: api mount /console to ./nginx/html/console
+[2020-11-26 09:59:05.050][Trace][fd2conn][127280][1541] accept conn ip= 192.168.2.184, port = 56584
+[2020-11-26 09:59:05.050][Trace][do_cycle][127280][1790] API server client, ip=192.168.2.184
+[2020-11-26 09:59:05.051][Trace][process_request][127280][1864] HTTP API GET http://192.168.2.184:1985/v1/streams2, content-length=-1, chunked=0/0
+[2020-11-26 09:59:06.380][Trace][on_signal][127280][1111] reload config, signo=1
+[2020-11-26 09:59:06.548][Trace][read_token][127280][1017] config parse complete
+[2020-11-26 09:59:06.548][Trace][check_normal_config][127280][3556] srs checking config...
+[2020-11-26 09:59:06.548][Warn][check_normal_config][127280][3695][0] stats network use index=0, ip=192.168.2.184, ifname=ens33
+[2020-11-26 09:59:06.548][Warn][check_normal_config][127280][3707][0] stats disk list: sda sdb xvda xvdb 
+[2020-11-26 09:59:06.548][Trace][check_normal_config][127280][3734] write log to file mps.log
+[2020-11-26 09:59:06.548][Trace][check_normal_config][127280][3735] you can: tailf mps.log
+[2020-11-26 09:59:06.548][Trace][check_normal_config][127280][3736] @see: https://github.com/ossrs/srs/wiki/v1_CN_SrsLog
+[2020-11-26 09:59:06.548][Trace][reload_http_api][127280][1637] reload http_api success, nothing changed.
+[2020-11-26 09:59:06.548][Trace][reload_http_stream][127280][1705] reload http stream success, nothing changed.
+[2020-11-26 09:59:06.548][Trace][reload_rtc_server][127280][1739] reload rtc server success, nothing changed.
+[2020-11-26 09:59:06.548][Trace][reload_vhost][127280][1287] vhost __defaultVhost__ maybe modified, reload its detail.
+[2020-11-26 09:59:06.548][Trace][reload_ingest][127280][1910] ingest nothing changed for vhost=__defaultVhost__
+[2020-11-26 09:59:06.548][Trace][do_cycle][127280][1244] reload config success.
+[2020-11-26 09:59:10.051][Trace][process_request][127280][1864] HTTP API GET http://192.168.2.184:1985/v1/streams2, content-length=-1, chunked=0/0
+[2020-11-26 09:59:15.049][Trace][process_request][127280][1864] HTTP API GET http://192.168.2.184:1985/v1/streams2, content-length=-1, chunked=0/0
+[2020-11-26 09:59:20.057][Trace][process_request][127280][1864] HTTP API GET http://192.168.2.184:1985/v1/streams2, content-length=-1, chunked=0/0
+[2020-11-26 09:58:35.050][Trace][process_request][126258][1864] HTTP API GET http://192.168.2.184:1985/v1/streams2, content-length=-1, chunked=0/0
+[2020-11-26 09:58:40.051][Trace][process_request][126258][1864] HTTP API GET http://192.168.2.184:1985/v1/streams2, content-length=-1, chunked=0/0
+
+****************************************************************************************************
